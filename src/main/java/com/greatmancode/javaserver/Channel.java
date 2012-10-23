@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.codecs.JoinCodec;
+import com.greatmancode.javaserver.net.codecs.ModeCodec;
+import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
 
 public class Channel {
 
@@ -16,10 +19,13 @@ public class Channel {
 		this.name = name;
 	}
 	public void addUser(Connection conn) {
+		if (userList.contains(conn)) {
+			return;
+		}
 		userList.add(conn);
-		conn.send(conn.getNickname() + "!" + conn.getRealName() + "@" + conn.getHost() + " JOIN " + name);
-		conn.send(":test MODE " + name + " +nt");
-		conn.send(":test 331 " + conn.getNickname() + " " + name + " :test");
+		conn.send(new JoinCodec(conn, name));
+		conn.send(new ModeCodec(conn, name, "+nt"));
+		conn.send(new NoTopicCodec(conn, name));
 		for (Connection channelMember : this.userList)
         {// 353,366
             conn.send(":test 353 " + conn.getNickname() + " = " + name

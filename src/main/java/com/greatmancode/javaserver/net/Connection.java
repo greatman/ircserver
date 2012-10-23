@@ -52,11 +52,11 @@ public class Connection extends Thread {
 	    
 	}
 	
-	public void send(String content) {
+	public void send(Codec content) {
 		try {
-                content = content.replace("\n", "").replace("\r", "");
-                content = content + "\r\n";
-                socket.getOutputStream().write(content.getBytes());
+                /*content = content.replace("\n", "").replace("\r", "");
+                content = content + "\r\n";*/
+                socket.getOutputStream().write(content.encode());
                 socket.getOutputStream().flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
