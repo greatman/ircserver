@@ -10,8 +10,11 @@ public class MotdContentCodec implements Codec {
 		this.conn = conn;
 	}
 	public byte[] encode() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer string = new StringBuffer();
+		string.append(PREFIX).append(" ");
+		string.append("372").append(conn.getNickname()).append(":");
+		string.append("Content of MOTD");
+		return string.toString().getBytes();
 	}
 
 }
