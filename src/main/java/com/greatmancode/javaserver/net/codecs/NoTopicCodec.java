@@ -3,7 +3,7 @@ package com.greatmancode.javaserver.net.codecs;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.Connection;
 
-public class NoTopicCodec implements Codec {
+public class NoTopicCodec extends Codec {
 
 	private final Connection conn;
 	private final String channelName;
@@ -12,13 +12,13 @@ public class NoTopicCodec implements Codec {
 		this.channelName = channelName;
 	}
 
-	public byte[] encode() {
+	public String encode() {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
 		string.append("331").append(" ");
 		string.append(conn.getNickname()).append(" ");
 		string.append(channelName).append(" :No Topic is set");
-		return string.toString().getBytes();
+		return string.toString();
 	}
 	
 	

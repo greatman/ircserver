@@ -7,6 +7,7 @@ import com.greatmancode.javaserver.net.codecs.ModeCodec;
 public class ModeCommand implements Command {
 
 	public void run(Connection conn, String[] args) {
+		
 		conn.send(new ModeCodec(conn, args[0], args[1]));
 
 	}

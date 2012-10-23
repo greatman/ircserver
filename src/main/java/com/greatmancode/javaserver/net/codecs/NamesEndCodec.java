@@ -1,25 +1,26 @@
 package com.greatmancode.javaserver.net.codecs;
 
+import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.Connection;
 
-public class ModeCodec extends Codec {
+public class NamesEndCodec extends Codec {
 
-	private final String userChannel, mode;
 	private final Connection conn;
+	private final Channel chan;
 
-	public ModeCodec(Connection conn, String userChannel, String mode) {
-		this.userChannel = userChannel;
-		this.mode = mode;
+	public NamesEndCodec(Connection conn, Channel chan) {
 		this.conn = conn;
+		this.chan = chan;
 	}
 
 	public String encode() {
-		StringBuilder string = new StringBuilder();
+		StringBuffer string = new StringBuffer();
 		string.append(PREFIX);
+		string.append("366").append(" ");
 		string.append(conn.getNickname()).append(" ");
-		string.append(userChannel).append(" ");
-		string.append(mode);
+		string.append(chan.getName()).append(" :End of /NAMES list");
 		return string.toString();
 	}
+
 }

@@ -4,17 +4,17 @@ import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.Connection;
 
-public class WelcomeCodec implements Codec {
+public class WelcomeCodec extends Codec {
 
 	private final Connection conn;
 	public WelcomeCodec(Connection conn) {
 		this.conn = conn;
 	}
-	public byte[] encode() {
+	public String encode() {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
 		string.append("001 ").append(conn.getNickname()).append(" :");
 		string.append("Welcome to ").append(App.getServerName()).append(", a Java-powered IRC network!");
-		return string.toString().getBytes();
+		return string.toString();
 	}	
 }

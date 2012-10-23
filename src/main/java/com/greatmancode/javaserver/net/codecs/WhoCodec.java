@@ -1,24 +1,31 @@
 package com.greatmancode.javaserver.net.codecs;
 
+import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.Connection;
 
-public class WhoCodec implements Codec {
+public class WhoCodec extends Codec {
 
-	private Connection conn;
-	private Channel chan;
-	public void WhoCodec(Connection conn, Channel chan) {
+	private final Connection conn, connMember;
+	private final Channel chan;
+
+	public WhoCodec(Connection conn, Connection connMember, Channel chan) {
 		this.conn = conn;
 		this.chan = chan;
+		this.connMember = connMember;
 	}
-	public byte[] encode() {
+
+	public String encode() {
 		StringBuffer string = new StringBuffer();
-		string.append("352")
-		con.sendGlobal("352 " + con.nick + " " + person
-                + " " + channelMember.username + " " + channelMember.hostname
-                + " " + globalServerName + " " + channelMember.nick
-                + " H :0 " + channelMember.description);
-    
+		string.append("352").append(" ").append(conn.getNickname()).append(" ");
+		string.append(chan.getName()).append(" ");
+		string.append(connMember.getName()).append(" ").append(connMember.getHost());
+		string.append(App.getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ");
+		// TODO: Add version
+		String content = string.toString().replace("\n", "").replace("\r", "");
+        content = content + "\r\n";
+        return string.toString();
 	}
 
 }

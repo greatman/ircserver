@@ -56,7 +56,8 @@ public class Connection extends Thread {
 		try {
                 /*content = content.replace("\n", "").replace("\r", "");
                 content = content + "\r\n";*/
-                socket.getOutputStream().write(content.encode());
+				
+                socket.getOutputStream().write(content.toSend());
                 socket.getOutputStream().flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -7,12 +7,14 @@ import java.util.List;
 import com.greatmancode.javaserver.net.Connection;
 import com.greatmancode.javaserver.net.codecs.JoinCodec;
 import com.greatmancode.javaserver.net.codecs.ModeCodec;
+import com.greatmancode.javaserver.net.codecs.NamesCodec;
+import com.greatmancode.javaserver.net.codecs.NamesEndCodec;
 import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
 
 public class Channel {
 
 	private List<Connection> userList = new ArrayList<Connection>();
-	private String name;
+	private final String name;
 	private String topic;
 	
 	public Channel(String name) {
@@ -28,10 +30,14 @@ public class Channel {
 		conn.send(new NoTopicCodec(conn, name));
 		for (Connection channelMember : this.userList)
         {// 353,366
-            conn.send(":test 353 " + conn.getNickname() + " = " + name
-                    + " :" + channelMember.getNickname());
+			
+			conn.send(new NamesCodec(conn, this, channelMember));
         }
-		conn.send(":test 366 " + conn.getNickname() + " " + name + " : End of /NAMES list");
+		conn.send(new NamesEndCodec(conn, this));
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public void kickUser(String username) {
@@ -40,5 +46,10 @@ public class Channel {
 	
 	public List<Connection> getUserList() {
 		return userList;
+	}
+	public void sendMessage(Connection conn, String[] message) {
+		for (Connection chanList : userList) {
+			
+		}
 	}
 }

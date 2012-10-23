@@ -17,17 +17,12 @@ public class UserCommand implements Command {
 		conn.setRealName(args[0]);
 		conn.setHost(args[2]);
 		conn.send(new WelcomeCodec(conn));
-				System.out.println("SENT");
 		conn.send(new MyInfoCodec(conn));
-		System.out.println("SENT");
 		
 		//TODO: Read motd cmd.
 		conn.send(new MotdStartCodec(conn));
-		System.out.println("SENT");
 		conn.send(new MotdContentCodec(conn));
-		System.out.println("SENT");
 		conn.send(new MotdEndCodec(conn));
-		System.out.println("SENT");
 
 	}
 
