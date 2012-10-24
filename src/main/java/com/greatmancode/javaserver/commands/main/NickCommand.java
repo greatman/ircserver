@@ -3,6 +3,7 @@ package com.greatmancode.javaserver.commands.main;
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.commands.Command;
 import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.codecs.NicknameInUseCodec;
 
 public class NickCommand implements Command {
 
@@ -19,8 +20,7 @@ public class NickCommand implements Command {
 			conn.setNickname(args[0]);
 			
 		} else {
-			//TODO: Temp
-			conn.disconnect();
+			conn.send(new NicknameInUseCodec(args[0]));
 		}
 		
 	}
