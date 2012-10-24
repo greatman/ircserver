@@ -17,7 +17,7 @@ public class PrivMsgCodec extends Codec {
 	@Override
 	public String encode() {
 		StringBuffer string = new StringBuffer();
-		string.append(":" + sender.getNickname()).append("!").append(sender.getRealName()).append("@").append(sender.getHost()).append(" ");
+		string.append(":").append(sender.getReprensentation()).append(" ");
 		string.append("PRIVMSG ").append(chan.getName()).append(" ").append(msg);
 		return string.toString();
 		

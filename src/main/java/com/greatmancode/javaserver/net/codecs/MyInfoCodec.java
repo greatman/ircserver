@@ -1,5 +1,6 @@
 package com.greatmancode.javaserver.net.codecs;
 
+import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.Connection;
 
@@ -15,8 +16,8 @@ public class MyInfoCodec extends Codec {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
 		string.append("004 ").append(conn.getNickname()).append(":");
-		string.append("JavaIrc").append(" ");
-		string.append("0.1").append(" ");
+		string.append(App.getServerName()).append(" ");
+		string.append("JavaIRCServer0.1").append(" ");
 		string.append("+rs").append(" ");
 		string.append("+mn");
 		return string.toString();

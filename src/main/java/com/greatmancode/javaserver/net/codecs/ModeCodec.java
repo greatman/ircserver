@@ -17,7 +17,7 @@ public class ModeCodec extends Codec {
 	public String encode() {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
-		string.append(conn.getNickname()).append(" ");
+		string.append("MODE").append(" ");
 		string.append(userChannel).append(" ");
 		string.append(mode);
 		return string.toString();

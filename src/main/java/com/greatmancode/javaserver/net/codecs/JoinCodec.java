@@ -15,7 +15,7 @@ public class JoinCodec extends Codec {
 	@Override
 	public String encode() {
 		StringBuilder string = new StringBuilder();
-		string.append(":").append(conn.getNickname()).append("!").append(conn.getRealName()).append("@").append(conn.getHost());
+		string.append(":").append(conn.getReprensentation());
 		string.append(" JOIN ").append(channel);
 		return string.toString();
 	}

@@ -13,9 +13,7 @@ import com.greatmancode.javaserver.net.codecs.WelcomeCodec;
 public class UserCommand implements Command {
 
 	public void run(Connection conn, String[] args) {
-		System.out.println(Arrays.toString(args));
 		conn.setRealName(args[0]);
-		conn.setHost(args[2]);
 		conn.send(new WelcomeCodec(conn));
 		conn.send(new MyInfoCodec(conn));
 		

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.greatmancode.javaserver.commands.main.JoinCommand;
 import com.greatmancode.javaserver.commands.main.ModeCommand;
 import com.greatmancode.javaserver.commands.main.NickCommand;
+import com.greatmancode.javaserver.commands.main.PartCommand;
 import com.greatmancode.javaserver.commands.main.PingCommand;
 import com.greatmancode.javaserver.commands.main.PrivMsgCommand;
 import com.greatmancode.javaserver.commands.main.QuitCommand;
@@ -32,5 +33,6 @@ public class CommandManager {
 		commandList.put("PRIVMSG", new PrivMsgCommand());
 		commandList.put("QUIT", new QuitCommand());
 		commandList.put("PING", new PingCommand());
+		commandList.put("PART", new PartCommand());
 	}
 }

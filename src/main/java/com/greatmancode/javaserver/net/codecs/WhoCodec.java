@@ -20,7 +20,7 @@ public class WhoCodec extends Codec {
 		StringBuffer string = new StringBuffer();
 		string.append("352").append(" ").append(conn.getNickname()).append(" ");
 		string.append(chan.getName()).append(" ");
-		string.append(connMember.getName()).append(" ").append(connMember.getHost());
+		string.append(connMember.getRealName()).append(" ").append(connMember.getHost()).append(" ");
 		string.append(App.getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ");
 		// TODO: Add version
 		String content = string.toString().replace("\n", "").replace("\r", "");

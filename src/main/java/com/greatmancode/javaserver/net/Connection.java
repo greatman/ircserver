@@ -6,7 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Map;
+import java.util.Set;
 
+import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.commands.CommandManager;
 
 public class Connection extends Thread {
@@ -29,8 +33,8 @@ public class Connection extends Thread {
 	public void run() {
 		InetSocketAddress address = (InetSocketAddress) socket
 	            .getRemoteSocketAddress();
-	    String hostname = address.getAddress().getHostAddress();
-	    System.out.println("Connection from host " + hostname);
+	    host = address.getAddress().getHostAddress();
+	    System.out.println("Connection from host " + host);
 	    InputStream socketIn;
 		try {
 			socketIn = socket.getInputStream();
@@ -55,7 +59,7 @@ public class Connection extends Thread {
 		try {
                 /*content = content.replace("\n", "").replace("\r", "");
                 content = content + "\r\n";*/
-				
+				System.out.println("Sending a packet to : " + this.nickname);
                 socket.getOutputStream().write(content.toSend());
                 socket.getOutputStream().flush();
 		} catch (IOException e) {
@@ -64,6 +68,10 @@ public class Connection extends Thread {
 		}
 	}
 
+	public String getReprensentation() {
+		return nickname + "!" + realName + "@" + host;
+	}
+	
 	public String getRealName() {
 		return realName;
 	}
@@ -81,6 +89,12 @@ public class Connection extends Thread {
 	}
 	
 	public void disconnect() {
+		for (Map.Entry<String, Channel> channel : App.channelList.entrySet())
+		{
+			if (channel.getValue().getUserList().contains(this)) {
+				channel.getValue().removeUser(this, true);
+			}
+		}
 		try {
 			this.socket.close();
 		} catch (IOException e) {
