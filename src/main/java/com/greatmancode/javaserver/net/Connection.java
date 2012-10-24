@@ -15,7 +15,9 @@ import com.greatmancode.javaserver.net.codecs.MotdContentCodec;
 import com.greatmancode.javaserver.net.codecs.MotdEndCodec;
 import com.greatmancode.javaserver.net.codecs.MotdStartCodec;
 import com.greatmancode.javaserver.net.codecs.MyInfoCodec;
+import com.greatmancode.javaserver.net.codecs.ServerLaunchCodec;
 import com.greatmancode.javaserver.net.codecs.WelcomeCodec;
+import com.greatmancode.javaserver.net.codecs.YourHostCodec;
 
 public class Connection extends Thread {
 
@@ -34,6 +36,8 @@ public class Connection extends Thread {
 	private void confLoggedIn() {
 		if (!loggedIn && this.nickname != null && this.host != null) {
 			this.send(new WelcomeCodec(this));
+			this.send(new YourHostCodec(this));
+			this.send(new ServerLaunchCodec(this)); 
 			this.send(new MyInfoCodec(this));
 			
 			//TODO: Read motd cmd.

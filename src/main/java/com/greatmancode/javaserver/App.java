@@ -3,7 +3,9 @@ package com.greatmancode.javaserver;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,10 +19,14 @@ public class App
 {
 	public static final HashMap<String, Channel> channelList = new HashMap<String, Channel>();
 	public static final List<Connection> connectionList = new ArrayList<Connection>();
+	public static final String version = "JIrcServer-0.1";
+	public static final String launchDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 	private static String serverName = "";
+	
 	public static void main( String[] args )
     {
-		serverName = "IrcNetwork";
+		
+		serverName = "irc.greatmancode.com";
 		ServerSocket ss;
 		try {
 			ss = new ServerSocket(6667);

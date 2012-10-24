@@ -14,7 +14,7 @@ public class MotdEndCodec extends Codec {
 	public String encode() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(PREFIX);
-		buffer.append("376").append(" ").append(conn.getNickname()).append(":");
+		buffer.append("376").append(" ").append(conn.getNickname()).append(" :");
 		buffer.append("END of /MOTD command");
 		return buffer.toString();
 	}
