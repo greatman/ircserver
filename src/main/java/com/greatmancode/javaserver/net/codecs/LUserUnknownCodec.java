@@ -1,13 +1,13 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class LUserUnknownCodec extends Codec {
 
-	private final Connection conn;
+	private final User conn;
 
-	public LUserUnknownCodec(Connection conn) {
+	public LUserUnknownCodec(User conn) {
 		this.conn = conn;
 	}
 

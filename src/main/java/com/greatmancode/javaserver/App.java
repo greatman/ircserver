@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 /**
  * Hello world!
@@ -18,7 +18,7 @@ import com.greatmancode.javaserver.net.Connection;
 public class App 
 {
 	public static final HashMap<String, Channel> channelList = new HashMap<String, Channel>();
-	public static final List<Connection> connectionList = new ArrayList<Connection>();
+	public static final List<User> connectionList = new ArrayList<User>();
 	public static final String version = "JIrcServer-0.1";
 	public static final String launchDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 	private static String serverName = "";
@@ -33,7 +33,7 @@ public class App
 			while (true)
 	        {
 	            Socket s = ss.accept();
-	            Connection jircs = new Connection(s);
+	            User jircs = new User(s);
 	            connectionList.add(jircs);
 	        }
 		} catch (IOException e) {
@@ -46,9 +46,9 @@ public class App
 		return serverName;
 	}
 	
-	public static Connection getUser(String username) {
-		Connection conn = null;
-		for (Connection entry: connectionList) {
+	public static User getUser(String username) {
+		User conn = null;
+		for (User entry: connectionList) {
 			if (entry.getNickname().contains(username)) {
 				conn = entry;
 				break;

@@ -2,13 +2,13 @@ package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class MyInfoCodec extends Codec {
 
-	private final Connection conn;
+	private final User conn;
 
-	public MyInfoCodec(Connection conn) {
+	public MyInfoCodec(User conn) {
 		this.conn = conn;
 	}
 

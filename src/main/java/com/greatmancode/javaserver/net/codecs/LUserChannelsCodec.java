@@ -2,12 +2,12 @@ package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class LUserChannelsCodec extends Codec {
 
-	private final Connection conn;
-	public LUserChannelsCodec(Connection conn) {
+	private final User conn;
+	public LUserChannelsCodec(User conn) {
 		this.conn = conn;
 	}
 

@@ -3,11 +3,11 @@ package com.greatmancode.javaserver.commands.main;
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.commands.Command;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class JoinCommand implements Command{
 
-	public void run(Connection conn, String[] args) {
+	public void run(User conn, String[] args) {
 		if (App.channelList.containsKey(args[0])) {
 			App.channelList.get(args[0]).addUser(conn);
 		} else {

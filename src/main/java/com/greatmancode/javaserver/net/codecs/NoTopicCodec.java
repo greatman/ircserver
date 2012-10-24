@@ -1,13 +1,13 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class NoTopicCodec extends Codec {
 
-	private final Connection conn;
+	private final User conn;
 	private final String channelName;
-	public NoTopicCodec(Connection conn, String channelName) {
+	public NoTopicCodec(User conn, String channelName) {
 		this.conn = conn;
 		this.channelName = channelName;
 	}

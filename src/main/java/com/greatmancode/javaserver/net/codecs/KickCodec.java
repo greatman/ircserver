@@ -2,15 +2,15 @@ package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class KickCodec extends Codec {
 
-	private final Connection operator, kicked;
+	private final User operator, kicked;
 	private final Channel chan;
 	private final String reason;
 
-	public KickCodec(Connection operator, Connection kicked, Channel chan,
+	public KickCodec(User operator, User kicked, Channel chan,
 			String reason) {
 		this.operator = operator;
 		this.kicked = kicked;

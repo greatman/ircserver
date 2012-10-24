@@ -19,11 +19,12 @@ import com.greatmancode.javaserver.net.codecs.ServerLaunchCodec;
 import com.greatmancode.javaserver.net.codecs.WelcomeCodec;
 import com.greatmancode.javaserver.net.codecs.YourHostCodec;
 
-public class Connection extends Thread {
+public class User {
 
-	private Socket socket;
+	private final NetworkThread network;
 	private String nickname, realName, host;
 	private boolean loggedIn = false;
+	
 	public String getNickname() {
 		return nickname;
 	}
@@ -47,44 +48,17 @@ public class Connection extends Thread {
 			loggedIn = true;
 		}
 	}
-	public Connection(Socket s) {
-		this.socket = s;
-		this.start();
+	public User(Socket socket) {
+		network = new NetworkThread(this, socket);
+		network.start();
 	}
 
-	public void run() {
-		InetSocketAddress address = (InetSocketAddress) socket
-	            .getRemoteSocketAddress();
-	    host = address.getAddress().getHostAddress();
-	    System.out.println("Connection from host " + host);
-	    InputStream socketIn;
-		try {
-			socketIn = socket.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-		            socketIn));
-		    String line;
-		    while ((line = reader.readLine()) != null)
-		    {
-		    	String[] split = line.split(" ");
-		        String cmd = split[0];
-		        String[] args = new String[split.length - 1];
-		        System.arraycopy(split, 1, args, 0, split.length - 1);
-		        CommandManager.run(this, cmd, args);
-		    }
-		} catch (Exception e) {
-			this.disconnect();
-			System.out.println(nickname + " disconnected!");
-		}
-	    
-	}
+	
 	
 	public void send(Codec content) {
 		try {
-                /*content = content.replace("\n", "").replace("\r", "");
-                content = content + "\r\n";*/
-				System.out.println("Sending a packet to : " + this.nickname);
-                socket.getOutputStream().write(content.toSend());
-                socket.getOutputStream().flush();
+			System.out.println("Sending a packet to : " + this.nickname);	
+			network.getSocket().getOutputStream().write(content.toSend());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -121,7 +95,7 @@ public class Connection extends Thread {
 		}
 		App.connectionList.remove(this);
 		try {
-			this.socket.close();
+			network.getSocket().close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

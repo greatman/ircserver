@@ -15,12 +15,12 @@ import com.greatmancode.javaserver.commands.main.QuitCommand;
 import com.greatmancode.javaserver.commands.main.TopicCommand;
 import com.greatmancode.javaserver.commands.main.UserCommand;
 import com.greatmancode.javaserver.commands.main.WhoCommand;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class CommandManager {
 
 	private static final HashMap<String, Command> commandList = new HashMap<String, Command>();
-	public static void run(Connection conn, String command, String[] args) {
+	public static void run(User conn, String command, String[] args) {
 		System.out.println(command + " : " + Arrays.toString(args));
 		if (commandList.containsKey(command.toUpperCase())) {
 			commandList.get(command.toUpperCase()).run(conn, args);

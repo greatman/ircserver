@@ -3,14 +3,14 @@ package com.greatmancode.javaserver.net.codecs;
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class WhoCodec extends Codec {
 
-	private final Connection conn, connMember;
+	private final User conn, connMember;
 	private final Channel chan;
 
-	public WhoCodec(Connection conn, Connection connMember, Channel chan) {
+	public WhoCodec(User conn, User connMember, Channel chan) {
 		this.conn = conn;
 		this.chan = chan;
 		this.connMember = connMember;

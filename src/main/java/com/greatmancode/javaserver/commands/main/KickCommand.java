@@ -3,16 +3,16 @@ package com.greatmancode.javaserver.commands.main;
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.commands.Command;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class KickCommand implements Command {
 
-	public void run(Connection conn, String[] args) {
+	public void run(User conn, String[] args) {
 		if (args.length >= 2) {
 			if (App.channelList.containsKey(args[0])) {
 				Channel chan = App.channelList.get(args[0]);
 				if (chan.getOpList().contains(conn)) {
-					Connection kicked = App.getUser(args[1]);
+					User kicked = App.getUser(args[1]);
 					if (kicked != null) {
 						if (chan.getUserList().contains(kicked)) {
 							if (args.length >= 3) {

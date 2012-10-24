@@ -1,13 +1,13 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class MotdEndCodec extends Codec {
 
-	private Connection conn;
+	private User conn;
 
-	public MotdEndCodec(Connection conn) {
+	public MotdEndCodec(User conn) {
 		this.conn = conn;
 	}
 

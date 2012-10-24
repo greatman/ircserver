@@ -2,13 +2,13 @@ package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class ChannelQuitCodec extends Codec {
 
-	private final Connection conn;
+	private final User conn;
 	private final Channel chan;
-	public ChannelQuitCodec(Connection conn, Channel chan) {
+	public ChannelQuitCodec(User conn, Channel chan) {
 		this.conn = conn;
 		this.chan = chan;
 	}

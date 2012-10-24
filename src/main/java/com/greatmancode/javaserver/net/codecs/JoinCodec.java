@@ -1,13 +1,13 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 
 public class JoinCodec extends Codec {
 
-	private final Connection conn;
+	private final User conn;
 	private final String channel;
-	public JoinCodec(Connection conn, String channel) {
+	public JoinCodec(User conn, String channel) {
 		this.conn = conn;
 		this.channel = channel;
 	}

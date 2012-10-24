@@ -3,7 +3,7 @@ package com.greatmancode.javaserver;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.greatmancode.javaserver.net.Connection;
+import com.greatmancode.javaserver.net.User;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;
@@ -17,8 +17,8 @@ import com.greatmancode.javaserver.net.codecs.TopicCodec;
 
 public class Channel {
 
-	private ArrayList<Connection> userList = new ArrayList<Connection>();
-	private List<Connection> opList = new ArrayList<Connection>();
+	private ArrayList<User> userList = new ArrayList<User>();
+	private List<User> opList = new ArrayList<User>();
 	private final String name;
 	private String topic, modes = "+nt";
 
@@ -30,17 +30,17 @@ public class Channel {
 		return modes;
 	}
 
-	public void addOp(Connection conn) {
+	public void addOp(User conn) {
 		if (!opList.contains(conn)) {
 			opList.add(conn);
 		}
 	}
 
-	public List<Connection> getOpList() {
+	public List<User> getOpList() {
 		return opList;
 	}
 
-	public void addUser(Connection conn) {
+	public void addUser(User conn) {
 		if (userList.contains(conn)) {
 			return;
 		}
@@ -48,7 +48,7 @@ public class Channel {
 		// conn.send(new ModeCodec(name, modes));
 		conn.send(new NoTopicCodec(conn, name));
 
-		for (Connection users : userList) {
+		for (User users : userList) {
 			users.send(new ChannelJoinCodec(conn, this));
 		}
 		userList.add(conn);
@@ -60,27 +60,27 @@ public class Channel {
 		return name;
 	}
 
-	public void KickUser(Connection kicker, Connection kicked) {
+	public void KickUser(User kicker, User kicked) {
 		kickUser(kicker, kicked, kicked.getNickname());
 	}
 
-	public void kickUser(Connection kicker, Connection kicked, String reason) {
-		for (Connection user : userList) {
+	public void kickUser(User kicker, User kicked, String reason) {
+		for (User user : userList) {
 			user.send(new KickCodec(kicker, kicked, this, reason));
 		}
 		userList.remove(kicked);
 	}
 
-	public List<Connection> getUserList() {
+	public List<User> getUserList() {
 		return userList;
 	}
 
-	public void sendMessage(Connection conn, String[] message) {
+	public void sendMessage(User conn, String[] message) {
 		String msg = "";
 		for (int i = 0; i < message.length; i++) {
 			msg += message[i] + " ";
 		}
-		for (Connection chanList : userList) {
+		for (User chanList : userList) {
 			if (!chanList.equals(conn)) {
 				chanList.send(new PrivMsgCodec(conn, this, msg));
 			}
@@ -88,7 +88,7 @@ public class Channel {
 		}
 	}
 
-	public void removeUser(Connection connection, boolean disconnect) {
+	public void removeUser(User connection, boolean disconnect) {
 		if (userList.contains(connection)) {
 			userList.remove(connection);
 		}
@@ -97,7 +97,7 @@ public class Channel {
 		} else {
 			connection.send(new ChannelQuitCodec(connection, this));
 		}
-		for (Connection users : userList) {
+		for (User users : userList) {
 			if (disconnect) {
 				users.send(new ChannelQuitCodec(connection, this));
 			} else {
@@ -113,9 +113,9 @@ public class Channel {
 
 	}
 
-	public void setTopic(Connection modifier, String topic) {
+	public void setTopic(User modifier, String topic) {
 		this.topic = topic;
-		for (Connection conn : userList) {
+		for (User conn : userList) {
 			conn.send(new TopicCodec(modifier, this));
 		}
 	}
