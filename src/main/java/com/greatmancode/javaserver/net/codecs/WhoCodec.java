@@ -18,13 +18,11 @@ public class WhoCodec extends Codec {
 
 	public String encode() {
 		StringBuffer string = new StringBuffer();
-		string.append("352").append(" ").append(conn.getNickname()).append(" ");
+		string.append(PREFIX).append("352").append(" ").append(conn.getNickname()).append(" ");
 		string.append(chan.getName()).append(" ");
-		string.append(connMember.getRealName()).append(" ").append(connMember.getHost()).append(" ");
-		string.append(App.getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ");
+		string.append(connMember.getNickname()).append(" ").append(connMember.getHost()).append(" ");
+		string.append(App.getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ").append(connMember.getRealName());
 		// TODO: Add version
-		String content = string.toString().replace("\n", "").replace("\r", "");
-        content = content + "\r\n";
         return string.toString();
 	}
 

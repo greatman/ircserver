@@ -17,6 +17,7 @@ import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
 public class Channel {
 
 	private List<Connection> userList = new ArrayList<Connection>();
+	private List<Connection> opList = new ArrayList<Connection>();
 	private final String name;
 	private String topic, modes = "+nt";
 
@@ -28,22 +29,29 @@ public class Channel {
 		return modes;
 	}
 
+	public void addOp(Connection conn) {
+		if (!opList.contains(conn)) {
+			opList.add(conn);
+		}
+	}
+	
+	public List<Connection> getOpList() {
+		return opList;
+	}
 	public void addUser(Connection conn) {
 		if (userList.contains(conn)) {
 			return;
 		}
-		userList.add(conn);
 		conn.send(new JoinCodec(conn, name));
-		conn.send(new ModeCodec(conn, name, modes));
+		conn.send(new ModeCodec(name, modes));
 		conn.send(new NoTopicCodec(conn, name));
-		for (Connection channelMember : this.userList) {// 353,366
-
-			conn.send(new NamesCodec(conn, this, channelMember));
-		}
-		conn.send(new NamesEndCodec(conn, this));
+		
 		for (Connection users : userList) {
 			users.send(new ChannelJoinCodec(conn, this));
 		}
+		userList.add(conn);
+		conn.send(new NamesCodec(conn, this));
+		conn.send(new NamesEndCodec(conn, this));
 	}
 
 	public String getName() {
@@ -77,18 +85,17 @@ public class Channel {
 		}
 		if (!disconnect) {
 			connection.send(new ChannelPartCodec(connection, this));
+		} else {
+			connection.send(new ChannelQuitCodec(connection, this));
 		}
 		for (Connection users : userList) {
 			if (disconnect) {
 				users.send(new ChannelQuitCodec(connection, this));
-			}
-			else {
+			} else {
 				users.send(new ChannelPartCodec(connection, this));
 			}
-			
+
 		}
-		
-		
-		
+
 	}
 }

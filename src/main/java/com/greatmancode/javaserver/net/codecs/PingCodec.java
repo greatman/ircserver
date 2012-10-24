@@ -2,14 +2,11 @@ package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.Connection;
 
 public class PingCodec extends Codec {
 
 	private final String ping;
-	private final Connection conn;
-	public PingCodec(Connection conn, String ping) {
-		this.conn = conn;
+	public PingCodec(String ping) {
 		this.ping = ping;
 	}
 	@Override

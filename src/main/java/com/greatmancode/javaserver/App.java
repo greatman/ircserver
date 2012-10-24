@@ -3,7 +3,9 @@ package com.greatmancode.javaserver;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.greatmancode.javaserver.net.Connection;
 
@@ -14,6 +16,7 @@ import com.greatmancode.javaserver.net.Connection;
 public class App 
 {
 	public static final HashMap<String, Channel> channelList = new HashMap<String, Channel>();
+	public static final List<Connection> connectionList = new ArrayList<Connection>();
 	private static String serverName = "";
 	public static void main( String[] args )
     {
@@ -25,8 +28,7 @@ public class App
 	        {
 	            Socket s = ss.accept();
 	            Connection jircs = new Connection(s);
-	            Thread thread = new Thread(jircs);
-	            thread.start();
+	            connectionList.add(jircs);
 	        }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

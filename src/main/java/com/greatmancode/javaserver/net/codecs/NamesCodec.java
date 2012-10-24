@@ -6,13 +6,12 @@ import com.greatmancode.javaserver.net.Connection;
 
 public class NamesCodec extends Codec {
 
-	private final Connection conn, user;
+	private final Connection conn;
 	private final Channel chan;
 
-	public NamesCodec(Connection conn, Channel chan, Connection user) {
+	public NamesCodec(Connection conn, Channel chan) {
 		this.conn = conn;
 		this.chan = chan;
-		this.user = user;
 	}
 
 	public String encode() {
@@ -20,7 +19,12 @@ public class NamesCodec extends Codec {
 		string.append(PREFIX);
 		string.append("353").append(" ");
 		string.append(conn.getNickname()).append(" = ").append(chan.getName()).append(" :");
-		string.append(user.getNickname());
+		for (Connection user : chan.getUserList()) {
+			if (chan.getOpList().contains(user)) {
+				string.append("@");
+			}
+			string.append(user.getNickname()).append(" ");
+		}
 		return string.toString();
 	}
 

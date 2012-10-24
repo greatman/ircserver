@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Map;
-import java.util.Set;
 
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
@@ -95,6 +94,7 @@ public class Connection extends Thread {
 				channel.getValue().removeUser(this, true);
 			}
 		}
+		App.connectionList.remove(this);
 		try {
 			this.socket.close();
 		} catch (IOException e) {

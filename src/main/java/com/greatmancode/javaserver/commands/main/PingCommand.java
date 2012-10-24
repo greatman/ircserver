@@ -8,7 +8,16 @@ public class PingCommand implements Command {
 
 	public void run(Connection conn, String[] args) {
 		String ping = args[0];
-		conn.send(new PingCodec(conn, ping));
+		if (args.length > 1) {
+			ping += " :";
+			for (int i = 1; i < args.length; i++) {
+				ping += args[i];
+				if (i < args.length) {
+					ping += " ";
+				}
+			}
+		}
+		conn.send(new PingCodec(ping));
 
 	}
 
