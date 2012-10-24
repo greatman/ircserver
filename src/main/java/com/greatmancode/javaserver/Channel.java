@@ -1,7 +1,6 @@
 package com.greatmancode.javaserver;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.greatmancode.javaserver.net.Connection;
@@ -10,6 +9,7 @@ import com.greatmancode.javaserver.net.codecs.ModeCodec;
 import com.greatmancode.javaserver.net.codecs.NamesCodec;
 import com.greatmancode.javaserver.net.codecs.NamesEndCodec;
 import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
+import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
 
 public class Channel {
 
@@ -48,7 +48,14 @@ public class Channel {
 		return userList;
 	}
 	public void sendMessage(Connection conn, String[] message) {
+		String msg = "";
+		for (int i = 0; i < message.length; i++) {
+			 msg += message[i] + " ";			
+		}
 		for (Connection chanList : userList) {
+			if (!chanList.equals(conn)) {
+				chanList.send(new PrivMsgCodec(conn,this,msg));
+			}
 			
 		}
 	}

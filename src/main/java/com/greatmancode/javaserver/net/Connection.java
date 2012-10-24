@@ -46,8 +46,7 @@ public class Connection extends Thread {
 		        CommandManager.run(this, cmd, args);
 		    }
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(nickname + " disconnected!");
 		}
 	    
 	}
@@ -79,6 +78,15 @@ public class Connection extends Thread {
 
 	public void setHost(String host) {
 		this.host = host;
+	}
+	
+	public void disconnect() {
+		try {
+			this.socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
