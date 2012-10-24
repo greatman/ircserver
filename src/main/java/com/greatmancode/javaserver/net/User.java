@@ -1,16 +1,11 @@
 package com.greatmancode.javaserver.net;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Map;
 
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
-import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.net.codecs.MotdContentCodec;
 import com.greatmancode.javaserver.net.codecs.MotdEndCodec;
 import com.greatmancode.javaserver.net.codecs.MotdStartCodec;

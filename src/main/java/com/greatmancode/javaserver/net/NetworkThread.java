@@ -34,6 +34,7 @@ public class NetworkThread extends Thread {
 		    String line;
 		    while ((line = reader.readLine()) != null)
 		    {
+		    	System.out.println("Received this from + " + user.getNickname() + ": " + line);
 		    	String cmd = Tools.makeNiceCommand(line);
 		    	String[] args = Tools.makeNiceArguments(line);
 		    	System.out.println("test");

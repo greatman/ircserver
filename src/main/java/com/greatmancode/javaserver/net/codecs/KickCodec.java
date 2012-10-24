@@ -23,7 +23,7 @@ public class KickCodec extends Codec {
 		StringBuffer string = new StringBuffer();
 		string.append(":").append(operator.getReprensentation()).append(" ");
 		string.append("KICK").append(" ").append(chan.getName()).append(" ");
-		string.append(kicked.getNickname()).append(" ").append(reason);
+		string.append(kicked.getNickname()).append(" :").append(reason);
 		return string.toString();
 	}
 
