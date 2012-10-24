@@ -8,15 +8,16 @@ import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;
 import com.greatmancode.javaserver.net.codecs.JoinCodec;
-import com.greatmancode.javaserver.net.codecs.ModeCodec;
+import com.greatmancode.javaserver.net.codecs.KickCodec;
 import com.greatmancode.javaserver.net.codecs.NamesCodec;
 import com.greatmancode.javaserver.net.codecs.NamesEndCodec;
 import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
 import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
+import com.greatmancode.javaserver.net.codecs.TopicCodec;
 
 public class Channel {
 
-	private List<Connection> userList = new ArrayList<Connection>();
+	private ArrayList<Connection> userList = new ArrayList<Connection>();
 	private List<Connection> opList = new ArrayList<Connection>();
 	private final String name;
 	private String topic, modes = "+nt";
@@ -34,18 +35,19 @@ public class Channel {
 			opList.add(conn);
 		}
 	}
-	
+
 	public List<Connection> getOpList() {
 		return opList;
 	}
+
 	public void addUser(Connection conn) {
 		if (userList.contains(conn)) {
 			return;
 		}
 		conn.send(new JoinCodec(conn, name));
-		//conn.send(new ModeCodec(name, modes));
+		// conn.send(new ModeCodec(name, modes));
 		conn.send(new NoTopicCodec(conn, name));
-		
+
 		for (Connection users : userList) {
 			users.send(new ChannelJoinCodec(conn, this));
 		}
@@ -58,8 +60,15 @@ public class Channel {
 		return name;
 	}
 
-	public void kickUser(String username) {
+	public void KickUser(Connection kicker, Connection kicked) {
+		kickUser(kicker, kicked, kicked.getNickname());
+	}
 
+	public void kickUser(Connection kicker, Connection kicked, String reason) {
+		for (Connection user : userList) {
+			user.send(new KickCodec(kicker, kicked, this, reason));
+		}
+		userList.remove(kicked);
 	}
 
 	public List<Connection> getUserList() {
@@ -96,6 +105,22 @@ public class Channel {
 			}
 
 		}
+		if (userList.size() == 0) {
+			if (App.channelList.containsKey(name)) {
+				App.channelList.remove(name);
+			}
+		}
 
+	}
+
+	public void setTopic(Connection modifier, String topic) {
+		this.topic = topic;
+		for (Connection conn : userList) {
+			conn.send(new TopicCodec(modifier, this));
+		}
+	}
+	
+	public String getTopic() {
+		return topic;
 	}
 }

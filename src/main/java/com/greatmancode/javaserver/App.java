@@ -45,4 +45,15 @@ public class App
 	public static String getServerName() {
 		return serverName;
 	}
+	
+	public static Connection getUser(String username) {
+		Connection conn = null;
+		for (Connection entry: connectionList) {
+			if (entry.getNickname().contains(username)) {
+				conn = entry;
+				break;
+			}
+		}
+		return conn;
+	}
 }

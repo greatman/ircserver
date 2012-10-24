@@ -71,7 +71,8 @@ public class Connection extends Thread {
 		        System.arraycopy(split, 1, args, 0, split.length - 1);
 		        CommandManager.run(this, cmd, args);
 		    }
-		} catch (IOException e) {
+		} catch (Exception e) {
+			this.disconnect();
 			System.out.println(nickname + " disconnected!");
 		}
 	    

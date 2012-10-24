@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import com.greatmancode.javaserver.commands.main.JoinCommand;
+import com.greatmancode.javaserver.commands.main.KickCommand;
 import com.greatmancode.javaserver.commands.main.LUsersCommand;
 import com.greatmancode.javaserver.commands.main.ModeCommand;
 import com.greatmancode.javaserver.commands.main.NickCommand;
@@ -11,6 +12,7 @@ import com.greatmancode.javaserver.commands.main.PartCommand;
 import com.greatmancode.javaserver.commands.main.PingCommand;
 import com.greatmancode.javaserver.commands.main.PrivMsgCommand;
 import com.greatmancode.javaserver.commands.main.QuitCommand;
+import com.greatmancode.javaserver.commands.main.TopicCommand;
 import com.greatmancode.javaserver.commands.main.UserCommand;
 import com.greatmancode.javaserver.commands.main.WhoCommand;
 import com.greatmancode.javaserver.net.Connection;
@@ -36,5 +38,7 @@ public class CommandManager {
 		commandList.put("PING", new PingCommand());
 		commandList.put("PART", new PartCommand());
 		commandList.put("LUSERS", new LUsersCommand());
+		commandList.put("KICK", new KickCommand());
+		commandList.put("TOPIC", new TopicCommand());
 	}
 }
