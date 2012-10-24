@@ -18,7 +18,6 @@ public class NickCommand implements Command {
 		}
 		if (!exist) {
 			conn.setNickname(args[0]);
-			
 		} else {
 			conn.send(new NicknameInUseCodec(args[0]));
 		}

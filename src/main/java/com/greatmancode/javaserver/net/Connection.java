@@ -11,19 +11,38 @@ import java.util.Map;
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.commands.CommandManager;
+import com.greatmancode.javaserver.net.codecs.MotdContentCodec;
+import com.greatmancode.javaserver.net.codecs.MotdEndCodec;
+import com.greatmancode.javaserver.net.codecs.MotdStartCodec;
+import com.greatmancode.javaserver.net.codecs.MyInfoCodec;
+import com.greatmancode.javaserver.net.codecs.WelcomeCodec;
 
 public class Connection extends Thread {
 
 	private Socket socket;
 	private String nickname, realName, host;
+	private boolean loggedIn = false;
 	public String getNickname() {
 		return nickname;
 	}
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+		confLoggedIn();
 	}
 
+	private void confLoggedIn() {
+		if (!loggedIn && this.nickname != null && this.host != null) {
+			this.send(new WelcomeCodec(this));
+			this.send(new MyInfoCodec(this));
+			
+			//TODO: Read motd cmd.
+			this.send(new MotdStartCodec(this));
+			this.send(new MotdContentCodec(this));
+			this.send(new MotdEndCodec(this));
+			loggedIn = true;
+		}
+	}
 	public Connection(Socket s) {
 		this.socket = s;
 		this.start();
@@ -77,6 +96,7 @@ public class Connection extends Thread {
 
 	public void setRealName(String realName) {
 		this.realName = realName;
+		confLoggedIn();
 	}
 
 	public String getHost() {

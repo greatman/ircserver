@@ -12,14 +12,6 @@ public class UserCommand implements Command {
 
 	public void run(Connection conn, String[] args) {
 		conn.setRealName(args[0]);
-		conn.send(new WelcomeCodec(conn));
-		conn.send(new MyInfoCodec(conn));
-		
-		//TODO: Read motd cmd.
-		conn.send(new MotdStartCodec(conn));
-		conn.send(new MotdContentCodec(conn));
-		conn.send(new MotdEndCodec(conn));
-
 	}
 
 }
