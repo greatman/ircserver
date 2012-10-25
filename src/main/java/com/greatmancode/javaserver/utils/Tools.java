@@ -7,10 +7,9 @@ public class Tools {
 		String[] parts = line.split(":");
 		return parts[0].split(" ")[0];
 	}
-	
+
 	public static String[] makeNiceArguments(String line) {
-		//TODO: Bugs out with : in the code
-		String[] parts = line.split(":"); 
+		String[] parts = line.split(":", 2);
 		String[] commandPart = parts[0].split(" ");
 		String[] array1and2 = new String[commandPart.length];
 		if (parts.length == 1) {
@@ -19,7 +18,7 @@ public class Tools {
 		System.arraycopy(commandPart, 1, array1and2, 0, commandPart.length - 1);
 		if (parts.length > 1) {
 			System.arraycopy(parts, 1, array1and2, commandPart.length - 1, 1);
-			
+
 		}
 		return array1and2;
 	}
