@@ -2,11 +2,11 @@ package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.net.Codec;
 
-public class ModeCodec extends Codec {
+public class ModeChannelCodec extends Codec {
 
 	private final String userChannel, mode;
 
-	public ModeCodec(String userChannel, String mode) {
+	public ModeChannelCodec(String userChannel, String mode) {
 		this.userChannel = userChannel;
 		this.mode = mode;
 	}

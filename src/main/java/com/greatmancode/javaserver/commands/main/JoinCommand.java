@@ -12,7 +12,6 @@ public class JoinCommand implements Command{
 			App.channelList.get(args[0]).addUser(conn);
 		} else {
 			Channel chan = new Channel(args[0]);
-			chan.addOp(conn);
 			chan.addUser(conn);
 			App.channelList.put(args[0], chan);
 		}

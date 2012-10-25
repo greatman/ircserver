@@ -32,6 +32,7 @@ public class User {
 
 	private void confLoggedIn() {
 		if (!loggedIn && this.nickname != null && this.host != null) {
+			network.setName("Thread for " + this.nickname);
 			this.send(new WelcomeCodec(this));
 			this.send(new YourHostCodec(this));
 			this.send(new ServerLaunchCodec(this)); 
@@ -58,6 +59,7 @@ public class User {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			this.disconnect();
 		}
 	}
 
@@ -85,7 +87,7 @@ public class User {
 	public void disconnect() {
 		for (Map.Entry<String, Channel> channel : App.channelList.entrySet())
 		{
-			if (channel.getValue().getUserList().contains(this)) {
+			if (channel.getValue().getUserList().containsKey(this)) {
 				channel.getValue().removeUser(this, true);
 			}
 		}

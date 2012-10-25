@@ -1,6 +1,9 @@
 package com.greatmancode.javaserver.commands.main;
 
+import java.util.Iterator;
+
 import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.commands.Command;
 import com.greatmancode.javaserver.net.User;
 import com.greatmancode.javaserver.net.codecs.WhoCodec;
@@ -8,10 +11,16 @@ import com.greatmancode.javaserver.net.codecs.WhoCodec;
 public class WhoCommand implements Command {
 
 	public void run(User conn, String[] args) {
-		for (User channelMember : App.channelList.get(args[0]).getUserList())
-        {
-			conn.send(new WhoCodec(conn, channelMember, App.channelList.get(args[0])));
-        }
+		//TODO: Support more than just chans
+		if (App.channelList.containsKey(args[0])) {
+			Channel chan = App.channelList.get(args[0]);
+			Iterator<User> iterator = chan.getUserList().keySet().iterator();
+			while (iterator.hasNext()) {
+				
+				conn.send(new WhoCodec(conn, iterator.next(), chan));
+	        }
+		}
+		
 
 	}
 

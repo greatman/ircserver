@@ -9,7 +9,7 @@ public class PartCommand implements Command {
 	public void run(User conn, String[] args) {
 		if (args.length >= 1) {
 			if (App.channelList.containsKey(args[0])) {
-				if (App.channelList.get(args[0]).getUserList().contains(conn)) {
+				if (App.channelList.get(args[0]).getUserList().containsKey(conn)) {
 					App.channelList.get(args[0]).removeUser(conn, false);
 				}
 			}

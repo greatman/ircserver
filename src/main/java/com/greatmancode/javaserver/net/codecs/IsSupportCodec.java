@@ -1,6 +1,5 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.User;
 

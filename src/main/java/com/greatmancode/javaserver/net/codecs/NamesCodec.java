@@ -1,6 +1,12 @@
 package com.greatmancode.javaserver.net.codecs;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import com.greatmancode.javaserver.Channel;
+import com.greatmancode.javaserver.ChannelUser;
+import com.greatmancode.javaserver.ChannelUserModes;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.User;
 
@@ -19,12 +25,15 @@ public class NamesCodec extends Codec {
 		string.append(PREFIX);
 		string.append("353").append(" ");
 		string.append(conn.getNickname()).append(" = ").append(chan.getName()).append(" :");
-		for (User user : chan.getUserList()) {
-			if (chan.getOpList().contains(user)) {
+		Iterator<Entry<User, ChannelUser>> iterator = chan.getUserList().entrySet().iterator();
+		while (iterator.hasNext()) {
+			Entry<User, ChannelUser> entry = iterator.next();
+			System.out.println(Arrays.toString(entry.getValue().getUserModes().toArray()));
+			if (entry.getValue().getUserModes().contains(ChannelUserModes.OP)) {
 				string.append("@");
 			}
-			string.append(user.getNickname()).append(" ");
-		}
+			string.append(entry.getKey().getNickname()).append(" ");
+        }
 		return string.toString();
 	}
 

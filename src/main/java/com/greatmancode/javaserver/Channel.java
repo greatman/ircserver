@@ -1,7 +1,7 @@
 package com.greatmancode.javaserver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import com.greatmancode.javaserver.net.User;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
@@ -9,6 +9,7 @@ import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;
 import com.greatmancode.javaserver.net.codecs.JoinCodec;
 import com.greatmancode.javaserver.net.codecs.KickCodec;
+import com.greatmancode.javaserver.net.codecs.ModeUserChannelCodec;
 import com.greatmancode.javaserver.net.codecs.NamesCodec;
 import com.greatmancode.javaserver.net.codecs.NamesEndCodec;
 import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
@@ -17,8 +18,7 @@ import com.greatmancode.javaserver.net.codecs.TopicCodec;
 
 public class Channel {
 
-	private ArrayList<User> userList = new ArrayList<User>();
-	private List<User> opList = new ArrayList<User>();
+	private HashMap<User, ChannelUser> userList = new HashMap<User,ChannelUser>();
 	private final String name;
 	private String topic, modes = "+nt";
 
@@ -29,29 +29,39 @@ public class Channel {
 	public String getModes() {
 		return modes;
 	}
-
-	public void addOp(User conn) {
-		if (!opList.contains(conn)) {
-			opList.add(conn);
+	
+	public void addOp(User changer, User user) {
+		if (userList.containsKey(user)) {
+			ChannelUser chanUser = userList.get(user);
+			if (!chanUser.getUserModes().contains(ChannelUserModes.OP)) {
+				System.out.println("Adding OP");
+				chanUser.getUserModes().add(ChannelUserModes.OP);
+				Iterator<User> iterator = userList.keySet().iterator();
+				while (iterator.hasNext()) {
+					iterator.next().send(new ModeUserChannelCodec(changer, user, this, ChannelUserModes.OP, true));
+				}
+			}
 		}
 	}
 
-	public List<User> getOpList() {
-		return opList;
-	}
-
 	public void addUser(User conn) {
-		if (userList.contains(conn)) {
+		if (userList.containsKey(conn)) {
 			return;
 		}
 		conn.send(new JoinCodec(conn, name));
 		// conn.send(new ModeCodec(name, modes));
 		conn.send(new NoTopicCodec(conn, name));
 
-		for (User users : userList) {
-			users.send(new ChannelJoinCodec(conn, this));
+		Iterator<User> iterator = userList.keySet().iterator();
+		while (iterator.hasNext()) {
+			iterator.next().send(new ChannelJoinCodec(conn, this));
 		}
-		userList.add(conn);
+		ChannelUser chanUser = new ChannelUser();
+		if (userList.size() == 0) {
+			chanUser.getUserModes().add(ChannelUserModes.OP);
+		}
+		userList.put(conn, chanUser);
+		
 		conn.send(new NamesCodec(conn, this));
 		conn.send(new NamesEndCodec(conn, this));
 	}
@@ -65,13 +75,14 @@ public class Channel {
 	}
 
 	public void kickUser(User kicker, User kicked, String reason) {
-		for (User user : userList) {
-			user.send(new KickCodec(kicker, kicked, this, reason));
+		Iterator<User> iterator = userList.keySet().iterator();
+		while (iterator.hasNext()) {
+			iterator.next().send(new KickCodec(kicker, kicked, this, reason));
 		}
 		userList.remove(kicked);
 	}
 
-	public List<User> getUserList() {
+	public HashMap<User, ChannelUser> getUserList() {
 		return userList;
 	}
 
@@ -80,16 +91,18 @@ public class Channel {
 		for (int i = 0; i < message.length; i++) {
 			msg += message[i] + " ";
 		}
-		for (User chanList : userList) {
-			if (!chanList.equals(conn)) {
-				chanList.send(new PrivMsgCodec(conn, this, msg));
+		Iterator<User> iterator = userList.keySet().iterator();
+		while (iterator.hasNext()) {
+			User user = iterator.next();
+			if (!user.equals(conn)) {
+				user.send(new PrivMsgCodec(conn, this, msg));
 			}
 
 		}
 	}
 
 	public void removeUser(User connection, boolean disconnect) {
-		if (userList.contains(connection)) {
+		if (userList.containsKey(connection)) {
 			userList.remove(connection);
 		}
 		if (!disconnect) {
@@ -97,11 +110,12 @@ public class Channel {
 		} else {
 			connection.send(new ChannelQuitCodec(connection, this));
 		}
-		for (User users : userList) {
+		Iterator<User> iterator = userList.keySet().iterator();
+		while (iterator.hasNext()) {
 			if (disconnect) {
-				users.send(new ChannelQuitCodec(connection, this));
+				iterator.next().send(new ChannelQuitCodec(connection, this));
 			} else {
-				users.send(new ChannelPartCodec(connection, this));
+				iterator.next().send(new ChannelPartCodec(connection, this));
 			}
 
 		}
@@ -115,8 +129,9 @@ public class Channel {
 
 	public void setTopic(User modifier, String topic) {
 		this.topic = topic;
-		for (User conn : userList) {
-			conn.send(new TopicCodec(modifier, this));
+		Iterator<User> iterator = userList.keySet().iterator();
+		while (iterator.hasNext()) {
+			iterator.next().send(new TopicCodec(modifier, this));
 		}
 	}
 	
