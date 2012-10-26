@@ -1,6 +1,6 @@
 package com.greatmancode.javaserver.utils;
 
-public class Tools {
+public final class Tools {
 
 	private Tools() {
 		throw new UnsupportedOperationException();

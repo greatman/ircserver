@@ -18,7 +18,7 @@ import com.greatmancode.javaserver.commands.main.UserCommand;
 import com.greatmancode.javaserver.commands.main.WhoCommand;
 import com.greatmancode.javaserver.net.User;
 
-public class CommandManager {
+public final class CommandManager {
 
 	private CommandManager() {
 		

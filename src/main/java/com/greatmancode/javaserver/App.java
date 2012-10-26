@@ -16,7 +16,7 @@ import com.greatmancode.javaserver.net.User;
  * Hello world!
  * 
  */
-public class App {
+public final class App {
 	public static final Map<String, Channel> CHANNEL_LIST = new HashMap<String, Channel>();
 	public static final List<User> CONNECTION_LIST = new ArrayList<User>();
 	public static final String VERSION = "JIrcServer-0.1";
