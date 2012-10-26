@@ -2,10 +2,13 @@ package com.greatmancode.javaserver.net;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
+import com.greatmancode.javaserver.UserModes;
 import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
 import com.greatmancode.javaserver.net.codecs.MotdContentCodec;
@@ -21,6 +24,12 @@ public class User {
 	private final NetworkThread network;
 	private String nickname, realName, host;
 	private boolean loggedIn = false;
+	private final List<UserModes> userModes = new ArrayList<UserModes>();
+	
+	public User(Socket socket) {
+		network = new NetworkThread(this, socket);
+		network.start();
+	}
 	
 	public String getNickname() {
 		return nickname;
@@ -47,12 +56,6 @@ public class User {
 			loggedIn = true;
 		}
 	}
-	public User(Socket socket) {
-		network = new NetworkThread(this, socket);
-		network.start();
-	}
-
-	
 	
 	public void send(Codec content) {
 		try {
@@ -100,6 +103,10 @@ public class User {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public List<UserModes> getUserModes() {
+		return userModes;
 	}
 
 }

@@ -23,36 +23,39 @@ public class ModeCommand implements Command {
 					Channel chan = App.channelList.get(args[0]);
 					if (chan.getUserList().containsKey(conn) && chan.getUserList().get(conn).getUserModes().contains(ChannelUserModes.OP)) {
 						if (args[1].contains("+")) {
-							String[] temp = args[1].split("\\+");
-							char[] modes = temp[1].toCharArray();
-							for (int i = 0; i < modes.length; i++) {
-								ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
-								System.out.println(mode);
-								User user = App.getUser(args[i + 2]);
-								if (mode != null && user != null) {
-									if (chan.getUserList().containsKey(user)) {
-										chan.addUserMode(conn, user, mode);
-									}
-								}
-							}
+							addRemoveModeChannel(args, chan, conn, true);
 						} else if (args[1].contains("-")) {
-							String[] temp = args[1].split("\\-");
-							char[] modes = temp[1].toCharArray();
-							for (int i = 0; i < modes.length; i++) {
-								ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
-								User user = App.getUser(args[i + 2]);
-								if (mode != null && user != null) {
-									if (chan.getUserList().containsKey(user)) {
-										chan.removeUserMode(conn, user, mode);
-									}
-								}
-							}
+							addRemoveModeChannel(args, chan, conn, false);
 						}
 					}
 				}
 			}
 		}
 
+	}
+	
+	private void addRemoveModeChannel(String[] args, Channel chan, User conn, boolean add) {
+		String[] temp;
+		if (add) {
+			temp = args[1].split("\\+");
+		} else {
+			temp = args[1].split("\\-");
+		}
+		char[] modes = temp[1].toCharArray();
+		for (int i = 0; i < modes.length; i++) {
+			ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
+			System.out.println(mode);
+			User user = App.getUser(args[i + 2]);
+			if (mode != null && user != null) {
+				if (chan.getUserList().containsKey(user)) {
+					if (add) {
+						chan.addUserMode(conn, user, mode);
+					} else {
+						chan.removeUserMode(conn, user, mode);
+					}
+				}
+			}
+		}
 	}
 
 }
