@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
+import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
 import com.greatmancode.javaserver.net.codecs.MotdContentCodec;
 import com.greatmancode.javaserver.net.codecs.MotdEndCodec;
@@ -38,6 +39,7 @@ public class User {
 			this.send(new ServerLaunchCodec(this)); 
 			this.send(new MyInfoCodec(this));
 			this.send(new IsSupportCodec(this));
+			CommandManager.run(this, "LUSERS", null);
 			//TODO: Read motd cmd.
 			this.send(new MotdStartCodec(this));
 			this.send(new MotdContentCodec(this));

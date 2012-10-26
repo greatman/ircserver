@@ -30,19 +30,34 @@ public class Channel {
 		return modes;
 	}
 	
-	public void addOp(User changer, User user) {
+	public void addUserMode(User changer, User user, ChannelUserModes mode) {
+		System.out.println("I enter here!");
 		if (userList.containsKey(user)) {
 			ChannelUser chanUser = userList.get(user);
-			if (!chanUser.getUserModes().contains(ChannelUserModes.OP)) {
+			if (!chanUser.getUserModes().contains(mode)) {
 				System.out.println("Adding OP");
-				chanUser.getUserModes().add(ChannelUserModes.OP);
+				chanUser.getUserModes().add(mode);
 				Iterator<User> iterator = userList.keySet().iterator();
 				while (iterator.hasNext()) {
-					iterator.next().send(new ModeUserChannelCodec(changer, user, this, ChannelUserModes.OP, true));
+					iterator.next().send(new ModeUserChannelCodec(changer, user, this, mode, true));
 				}
 			}
 		}
 	}
+	public void removeUserMode(User changer, User user, ChannelUserModes mode) {
+		if (userList.containsKey(user)) {
+			ChannelUser chanUser = userList.get(user);
+			if (chanUser.getUserModes().contains(mode)) {
+				System.out.println("Removing OP");
+				chanUser.getUserModes().remove(mode);
+				Iterator<User> iterator = userList.keySet().iterator();
+				while (iterator.hasNext()) {
+					iterator.next().send(new ModeUserChannelCodec(changer, user, this, mode, false));
+				}
+			}
+		}
+	}
+	
 
 	public void addUser(User conn) {
 		if (userList.containsKey(conn)) {

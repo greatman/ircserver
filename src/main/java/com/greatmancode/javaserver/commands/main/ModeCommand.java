@@ -27,12 +27,24 @@ public class ModeCommand implements Command {
 							char[] modes = temp[1].toCharArray();
 							for (int i = 0; i < modes.length; i++) {
 								ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
+								System.out.println(mode);
 								User user = App.getUser(args[i + 2]);
 								if (mode != null && user != null) {
 									if (chan.getUserList().containsKey(user)) {
-										chan.addOp(conn, user);
+										chan.addUserMode(conn, user, mode);
 									}
-
+								}
+							}
+						} else if (args[1].contains("-")) {
+							String[] temp = args[1].split("\\-");
+							char[] modes = temp[1].toCharArray();
+							for (int i = 0; i < modes.length; i++) {
+								ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
+								User user = App.getUser(args[i + 2]);
+								if (mode != null && user != null) {
+									if (chan.getUserList().containsKey(user)) {
+										chan.removeUserMode(conn, user, mode);
+									}
 								}
 							}
 						}

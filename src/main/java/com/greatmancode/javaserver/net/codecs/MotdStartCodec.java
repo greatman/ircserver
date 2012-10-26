@@ -1,5 +1,6 @@
 package com.greatmancode.javaserver.net.codecs;
 
+import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.User;
 
@@ -16,7 +17,7 @@ public class MotdStartCodec extends Codec {
 		string.append(PREFIX);
 		string.append("375").append(" ");
 		string.append(conn.getNickname()).append(" :");
-		string.append("Message of the day");
+		string.append("--- ").append(App.getServerName()).append(" Message of the day ---");
 
 		return string.toString();
 	}
