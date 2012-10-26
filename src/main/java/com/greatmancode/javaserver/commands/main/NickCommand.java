@@ -9,7 +9,7 @@ public class NickCommand implements Command {
 
 	public void run(User conn, String[] args) {
 		boolean exist = false;
-		for (User list : App.connectionList) {
+		for (User list : App.CONNECTION_LIST) {
 			if (list.getNickname() != null && list.getNickname().equals(args[0])) 
 			{
 				exist = true;

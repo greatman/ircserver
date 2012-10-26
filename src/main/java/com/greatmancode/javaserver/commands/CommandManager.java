@@ -20,26 +20,30 @@ import com.greatmancode.javaserver.net.User;
 
 public class CommandManager {
 
-	private static final Map<String, Command> commandList = new HashMap<String, Command>();
+	private CommandManager() {
+		
+	}
+	
+	private static final Map<String, Command> COMMAND_LIST = new HashMap<String, Command>();
 	public static void run(User conn, String command, String[] args) {
 		System.out.println(command + " : " + Arrays.toString(args));
-		if (commandList.containsKey(command.toUpperCase())) {
-			commandList.get(command.toUpperCase()).run(conn, args);
+		if (COMMAND_LIST.containsKey(command.toUpperCase())) {
+			COMMAND_LIST.get(command.toUpperCase()).run(conn, args);
 		}
 	}
 	
 	static {
-		commandList.put("USER", new UserCommand());
-		commandList.put("NICK", new NickCommand());
-		commandList.put("JOIN", new JoinCommand());
-		commandList.put("MODE", new ModeCommand());
-		commandList.put("WHO", new WhoCommand());
-		commandList.put("PRIVMSG", new PrivMsgCommand());
-		commandList.put("QUIT", new QuitCommand());
-		commandList.put("PING", new PingCommand());
-		commandList.put("PART", new PartCommand());
-		commandList.put("LUSERS", new LUsersCommand());
-		commandList.put("KICK", new KickCommand());
-		commandList.put("TOPIC", new TopicCommand());
+		COMMAND_LIST.put("USER", new UserCommand());
+		COMMAND_LIST.put("NICK", new NickCommand());
+		COMMAND_LIST.put("JOIN", new JoinCommand());
+		COMMAND_LIST.put("MODE", new ModeCommand());
+		COMMAND_LIST.put("WHO", new WhoCommand());
+		COMMAND_LIST.put("PRIVMSG", new PrivMsgCommand());
+		COMMAND_LIST.put("QUIT", new QuitCommand());
+		COMMAND_LIST.put("PING", new PingCommand());
+		COMMAND_LIST.put("PART", new PartCommand());
+		COMMAND_LIST.put("LUSERS", new LUsersCommand());
+		COMMAND_LIST.put("KICK", new KickCommand());
+		COMMAND_LIST.put("TOPIC", new TopicCommand());
 	}
 }

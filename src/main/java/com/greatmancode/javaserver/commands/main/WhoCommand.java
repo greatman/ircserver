@@ -12,8 +12,8 @@ public class WhoCommand implements Command {
 
 	public void run(User conn, String[] args) {
 		//TODO: Support more than just chans
-		if (App.channelList.containsKey(args[0])) {
-			Channel chan = App.channelList.get(args[0]);
+		if (App.CHANNEL_LIST.containsKey(args[0])) {
+			Channel chan = App.CHANNEL_LIST.get(args[0]);
 			Iterator<User> iterator = chan.getUserList().keySet().iterator();
 			while (iterator.hasNext()) {
 				

@@ -8,12 +8,12 @@ import com.greatmancode.javaserver.net.User;
 public class JoinCommand implements Command{
 
 	public void run(User conn, String[] args) {
-		if (App.channelList.containsKey(args[0])) {
-			App.channelList.get(args[0]).addUser(conn);
+		if (App.CHANNEL_LIST.containsKey(args[0])) {
+			App.CHANNEL_LIST.get(args[0]).addUser(conn);
 		} else {
 			Channel chan = new Channel(args[0]);
 			chan.addUser(conn);
-			App.channelList.put(args[0], chan);
+			App.CHANNEL_LIST.put(args[0], chan);
 		}
 		
 	}

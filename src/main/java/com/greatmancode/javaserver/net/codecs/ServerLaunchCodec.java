@@ -18,7 +18,7 @@ public class ServerLaunchCodec extends Codec {
 		string.append(PREFIX);
 		string.append("003").append(" ");
 		string.append(conn.getNickname()).append(" :");
-		string.append("This server was created ").append(App.launchDate);
+		string.append("This server was created ").append(App.LAUNCH_DATE);
 		return string.toString();
 	}
 

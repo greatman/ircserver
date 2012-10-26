@@ -2,7 +2,7 @@ package com.greatmancode.javaserver.utils;
 
 public class Tools {
 
-	protected Tools() {
+	private Tools() {
 		throw new UnsupportedOperationException();
 	}
 	

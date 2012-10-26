@@ -7,7 +7,7 @@ public enum ChannelUserModes {
 
 	OP("o"), VOICED("v");
 
-	private static Map<String, ChannelUserModes> nameMap = new HashMap<String, ChannelUserModes>();
+	private static final Map<String, ChannelUserModes> NAME_MAP = new HashMap<String, ChannelUserModes>();
 	
 	private final String mode;
 
@@ -20,7 +20,7 @@ public enum ChannelUserModes {
 	}
 
 	public static ChannelUserModes get(String name) {
-		return nameMap.get(name);
+		return NAME_MAP.get(name);
 	}
 
 	public static void main(String[] args) {
@@ -36,7 +36,7 @@ public enum ChannelUserModes {
 	
 	static {
 		for (ChannelUserModes type : ChannelUserModes.values()) {
-			nameMap.put(type.getMode(), type);
+			NAME_MAP.put(type.getMode(), type);
 		}
 	}
 }

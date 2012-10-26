@@ -1,12 +1,13 @@
 package com.greatmancode.javaserver;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public enum ChannelModes {
 
 	AWAY("a"), INVISIBLE("i"), GLOBAL_OPERATOR("o"), LOCAL_OPERATOR("O"), REGISTERED("r"), SERVER_NOTICES("s"), WALLOPS("w"), SERVICE("S");
 
-	private static HashMap<String, ChannelModes> nameMap = new HashMap<String, ChannelModes>();
+	private static final Map<String, ChannelModes> NAME_MAP = new HashMap<String, ChannelModes>();
 	
 	private final String mode;
 
@@ -19,7 +20,7 @@ public enum ChannelModes {
 	}
 
 	public static ChannelModes get(String name) {
-		return nameMap.get(name);
+		return NAME_MAP.get(name);
 	}
 
 	public static void main(String[] args) {
@@ -35,7 +36,7 @@ public enum ChannelModes {
 	
 	static {
 		for (ChannelModes type : ChannelModes.values()) {
-			nameMap.put(type.getMode(), type);
+			NAME_MAP.put(type.getMode(), type);
 		}
 	}
 }

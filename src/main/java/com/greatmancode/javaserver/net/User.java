@@ -90,13 +90,13 @@ public class User {
 	}
 	
 	public void disconnect() {
-		for (Map.Entry<String, Channel> channel : App.channelList.entrySet())
+		for (Map.Entry<String, Channel> channel : App.CHANNEL_LIST.entrySet())
 		{
 			if (channel.getValue().getUserList().containsKey(this)) {
 				channel.getValue().removeUser(this, true);
 			}
 		}
-		App.connectionList.remove(this);
+		App.CONNECTION_LIST.remove(this);
 		try {
 			network.getSocket().close();
 		} catch (IOException e) {

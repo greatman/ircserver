@@ -7,7 +7,7 @@ public enum UserModes {
 
 	AWAY("a"), INVISIBLE("i"), GLOBAL_OPERATOR("o"), LOCAL_OPERATOR("O"), REGISTERED("r"), SERVER_NOTICES("s"), WALLOPS("w"), SERVICE("S");
 
-	private static Map<String, UserModes> nameMap = new HashMap<String, UserModes>();
+	private static final Map<String, UserModes> NAME_MAP = new HashMap<String, UserModes>();
 	
 	private final String mode;
 
@@ -20,7 +20,7 @@ public enum UserModes {
 	}
 
 	public static UserModes get(String name) {
-		return nameMap.get(name);
+		return NAME_MAP.get(name);
 	}
 
 	public static void main(String[] args) {
@@ -36,7 +36,7 @@ public enum UserModes {
 	
 	static {
 		for (UserModes type : UserModes.values()) {
-			nameMap.put(type.getMode(), type);
+			NAME_MAP.put(type.getMode(), type);
 		}
 	}
 }

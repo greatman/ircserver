@@ -19,7 +19,7 @@ import com.greatmancode.javaserver.net.codecs.TopicCodec;
 
 public class Channel {
 
-	private Map<User, ChannelUser> userList = new HashMap<User,ChannelUser>();
+	private Map<User, ChannelUser> userList = new HashMap<User, ChannelUser>();
 	private final String name;
 	private String topic, modes = "+nt";
 
@@ -30,7 +30,7 @@ public class Channel {
 	public String getModes() {
 		return modes;
 	}
-	
+
 	public void addUserMode(User changer, User user, ChannelUserModes mode) {
 		System.out.println("I enter here!");
 		if (userList.containsKey(user)) {
@@ -45,6 +45,7 @@ public class Channel {
 			}
 		}
 	}
+
 	public void removeUserMode(User changer, User user, ChannelUserModes mode) {
 		if (userList.containsKey(user)) {
 			ChannelUser chanUser = userList.get(user);
@@ -58,7 +59,6 @@ public class Channel {
 			}
 		}
 	}
-	
 
 	public void addUser(User conn) {
 		if (userList.containsKey(conn)) {
@@ -77,7 +77,7 @@ public class Channel {
 			chanUser.getUserModes().add(ChannelUserModes.OP);
 		}
 		userList.put(conn, chanUser);
-		
+
 		conn.send(new NamesCodec(conn, this));
 		conn.send(new NamesEndCodec(conn, this));
 	}
@@ -135,10 +135,8 @@ public class Channel {
 			}
 
 		}
-		if (userList.size() == 0) {
-			if (App.channelList.containsKey(name)) {
-				App.channelList.remove(name);
-			}
+		if (userList.size() == 0 && App.CHANNEL_LIST.containsKey(name)) {
+			App.CHANNEL_LIST.remove(name);
 		}
 
 	}
@@ -150,7 +148,7 @@ public class Channel {
 			iterator.next().send(new TopicCodec(modifier, this));
 		}
 	}
-	
+
 	public String getTopic() {
 		return topic;
 	}
