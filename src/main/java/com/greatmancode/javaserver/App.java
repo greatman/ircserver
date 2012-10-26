@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.greatmancode.javaserver.net.User;
 
@@ -17,7 +18,7 @@ import com.greatmancode.javaserver.net.User;
  */
 public class App 
 {
-	public static final HashMap<String, Channel> channelList = new HashMap<String, Channel>();
+	public static final Map<String, Channel> channelList = new HashMap<String, Channel>();
 	public static final List<User> connectionList = new ArrayList<User>();
 	public static final String version = "JIrcServer-0.1";
 	public static final String launchDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());

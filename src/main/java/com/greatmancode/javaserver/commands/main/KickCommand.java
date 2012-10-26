@@ -24,7 +24,7 @@ public class KickCommand implements Command {
 								}
 								chan.kickUser(conn, kicked, reason);
 							} else {
-								chan.KickUser(conn, kicked);
+								chan.kickUser(conn, kicked);
 							}
 						}
 					}

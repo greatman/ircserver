@@ -15,7 +15,7 @@ public class QuitCodec extends Codec {
 	public String encode() {
 		//TODO: SUpport custom quit msgs.
 		StringBuffer string = new StringBuffer();
-		string.append(":" + conn.getNickname()).append("!").append(conn.getRealName()).append("@").append(conn.getHost()).append(" ");
+		string.append(":").append(conn.getReprensentation()).append(" ");
 		string.append("QUIT ").append(":Client Quit");
 		return string.toString();
 	}

@@ -2,6 +2,7 @@ package com.greatmancode.javaserver;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import com.greatmancode.javaserver.net.User;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
@@ -18,7 +19,7 @@ import com.greatmancode.javaserver.net.codecs.TopicCodec;
 
 public class Channel {
 
-	private HashMap<User, ChannelUser> userList = new HashMap<User,ChannelUser>();
+	private Map<User, ChannelUser> userList = new HashMap<User,ChannelUser>();
 	private final String name;
 	private String topic, modes = "+nt";
 
@@ -85,7 +86,7 @@ public class Channel {
 		return name;
 	}
 
-	public void KickUser(User kicker, User kicked) {
+	public void kickUser(User kicker, User kicked) {
 		kickUser(kicker, kicked, kicked.getNickname());
 	}
 
@@ -97,7 +98,7 @@ public class Channel {
 		userList.remove(kicked);
 	}
 
-	public HashMap<User, ChannelUser> getUserList() {
+	public Map<User, ChannelUser> getUserList() {
 		return userList;
 	}
 

@@ -2,6 +2,7 @@ package com.greatmancode.javaserver.commands;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.greatmancode.javaserver.commands.main.JoinCommand;
 import com.greatmancode.javaserver.commands.main.KickCommand;
@@ -19,7 +20,7 @@ import com.greatmancode.javaserver.net.User;
 
 public class CommandManager {
 
-	private static final HashMap<String, Command> commandList = new HashMap<String, Command>();
+	private static final Map<String, Command> commandList = new HashMap<String, Command>();
 	public static void run(User conn, String command, String[] args) {
 		System.out.println(command + " : " + Arrays.toString(args));
 		if (commandList.containsKey(command.toUpperCase())) {

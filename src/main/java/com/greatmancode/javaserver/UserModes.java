@@ -1,12 +1,13 @@
 package com.greatmancode.javaserver;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public enum UserModes {
 
 	AWAY("a"), INVISIBLE("i"), GLOBAL_OPERATOR("o"), LOCAL_OPERATOR("O"), REGISTERED("r"), SERVER_NOTICES("s"), WALLOPS("w"), SERVICE("S");
 
-	private static HashMap<String, UserModes> nameMap = new HashMap<String, UserModes>();
+	private static Map<String, UserModes> nameMap = new HashMap<String, UserModes>();
 	
 	private final String mode;
 

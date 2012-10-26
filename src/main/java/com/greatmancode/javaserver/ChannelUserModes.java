@@ -1,12 +1,13 @@
 package com.greatmancode.javaserver;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public enum ChannelUserModes {
 
 	OP("o"), VOICED("v");
 
-	private static HashMap<String, ChannelUserModes> nameMap = new HashMap<String, ChannelUserModes>();
+	private static Map<String, ChannelUserModes> nameMap = new HashMap<String, ChannelUserModes>();
 	
 	private final String mode;
 

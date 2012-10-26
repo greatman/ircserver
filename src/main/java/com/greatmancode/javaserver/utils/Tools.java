@@ -2,6 +2,10 @@ package com.greatmancode.javaserver.utils;
 
 public class Tools {
 
+	protected Tools() {
+		throw new UnsupportedOperationException();
+	}
+	
 	public static String makeNiceCommand(String line) {
 
 		String[] parts = line.split(":");

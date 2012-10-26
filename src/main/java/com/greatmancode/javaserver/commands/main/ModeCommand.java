@@ -18,22 +18,20 @@ public class ModeCommand implements Command {
 				}
 			}
 		} else if (args.length >= 3) {
-			if (args[0].contains("#")) {
-				if (App.channelList.containsKey(args[0])) {
-					Channel chan = App.channelList.get(args[0]);
-					if (chan.getUserList().containsKey(conn) && chan.getUserList().get(conn).getUserModes().contains(ChannelUserModes.OP)) {
-						if (args[1].contains("+")) {
-							addRemoveModeChannel(args, chan, conn, true);
-						} else if (args[1].contains("-")) {
-							addRemoveModeChannel(args, chan, conn, false);
-						}
+			if (args[0].contains("#") && App.channelList.containsKey(args[0])) {
+				Channel chan = App.channelList.get(args[0]);
+				if (chan.getUserList().containsKey(conn) && chan.getUserList().get(conn).getUserModes().contains(ChannelUserModes.OP)) {
+					if (args[1].contains("+")) {
+						addRemoveModeChannel(args, chan, conn, true);
+					} else if (args[1].contains("-")) {
+						addRemoveModeChannel(args, chan, conn, false);
 					}
 				}
 			}
 		}
 
 	}
-	
+
 	private void addRemoveModeChannel(String[] args, Channel chan, User conn, boolean add) {
 		String[] temp;
 		if (add) {
@@ -46,13 +44,11 @@ public class ModeCommand implements Command {
 			ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
 			System.out.println(mode);
 			User user = App.getUser(args[i + 2]);
-			if (mode != null && user != null) {
-				if (chan.getUserList().containsKey(user)) {
-					if (add) {
-						chan.addUserMode(conn, user, mode);
-					} else {
-						chan.removeUserMode(conn, user, mode);
-					}
+			if (mode != null && user != null && chan.getUserList().containsKey(user)) {
+				if (add) {
+					chan.addUserMode(conn, user, mode);
+				} else {
+					chan.removeUserMode(conn, user, mode);
 				}
 			}
 		}
