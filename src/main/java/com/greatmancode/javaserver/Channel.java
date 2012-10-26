@@ -102,16 +102,12 @@ public class Channel {
 		return userList;
 	}
 
-	public void sendMessage(User conn, String[] message) {
-		String msg = "";
-		for (int i = 0; i < message.length; i++) {
-			msg += message[i] + " ";
-		}
+	public void sendMessage(User conn, String message) {
 		Iterator<User> iterator = userList.keySet().iterator();
 		while (iterator.hasNext()) {
 			User user = iterator.next();
 			if (!user.equals(conn)) {
-				user.send(new PrivMsgCodec(conn, this, msg));
+				user.send(new PrivMsgCodec(conn, this, message));
 			}
 
 		}

@@ -16,7 +16,6 @@ public class ChannelJoinCodec extends Codec {
 	public String encode() {
 		StringBuffer string = new StringBuffer();
 		string.append(":").append(conn.getReprensentation()).append(" JOIN ").append(chan.getName());
-		// TODO Auto-generated method stub
 		return string.toString();
 	}
 

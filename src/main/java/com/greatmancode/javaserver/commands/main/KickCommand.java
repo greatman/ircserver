@@ -14,13 +14,8 @@ public class KickCommand implements Command {
 			if (chan.getUserList().containsKey(conn) && chan.getUserList().get(conn).getUserModes().contains(ChannelUserModes.OP)) {
 				User kicked = App.getUser(args[1]);
 				if (kicked != null && chan.getUserList().containsKey(kicked)) {
-					// TODO : Need fixes? Probably
 					if (args.length >= 3) {
-						String reason = "";
-						for (int i = 2; i < args.length; i++) {
-							reason += args[i] + " ";
-						}
-						chan.kickUser(conn, kicked, reason);
+						chan.kickUser(conn, kicked, args[2]);
 					} else {
 						chan.kickUser(conn, kicked);
 					}

@@ -16,7 +16,6 @@ public class ChannelQuitCodec extends Codec {
 	public String encode() {
 		StringBuffer string = new StringBuffer();
 		string.append(":").append(conn.getReprensentation()).append(" PART ").append(chan.getName());
-		// TODO Auto-generated method stub
 		return string.toString();
 	}
 

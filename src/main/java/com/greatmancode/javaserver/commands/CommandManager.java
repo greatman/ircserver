@@ -8,6 +8,7 @@ import com.greatmancode.javaserver.commands.main.JoinCommand;
 import com.greatmancode.javaserver.commands.main.KickCommand;
 import com.greatmancode.javaserver.commands.main.LUsersCommand;
 import com.greatmancode.javaserver.commands.main.ModeCommand;
+import com.greatmancode.javaserver.commands.main.MotdCommand;
 import com.greatmancode.javaserver.commands.main.NickCommand;
 import com.greatmancode.javaserver.commands.main.PartCommand;
 import com.greatmancode.javaserver.commands.main.PingCommand;
@@ -45,5 +46,6 @@ public final class CommandManager {
 		COMMAND_LIST.put("LUSERS", new LUsersCommand());
 		COMMAND_LIST.put("KICK", new KickCommand());
 		COMMAND_LIST.put("TOPIC", new TopicCommand());
+		COMMAND_LIST.put("MOTD", new MotdCommand());
 	}
 }
