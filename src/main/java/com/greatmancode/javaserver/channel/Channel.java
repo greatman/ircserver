@@ -185,8 +185,8 @@ public class Channel {
 			}
 
 		}
-		if (userList.size() == 0 && Server.CHANNEL_LIST.containsKey(name)) {
-			Server.CHANNEL_LIST.remove(name);
+		if (userList.size() == 0 && Server.getChannelHandler().getChannel(name) != null) {
+			Server.getChannelHandler().removeChannel(name);
 		}
 
 	}

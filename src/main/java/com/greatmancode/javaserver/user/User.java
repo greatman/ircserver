@@ -75,10 +75,8 @@ public class User {
 	}
 
 	public void disconnect() {
-		for (Map.Entry<String, Channel> channel : Server.CHANNEL_LIST.entrySet()) {
-			if (channel.getValue().getUserList().containsKey(this)) {
-				channel.getValue().removeUser(this, true);
-			}
+		for (Channel channel : Server.getChannelHandler().getUserChannels(this)) {
+				channel.removeUser(this, true);
 		}
 		Server.getUserHandler().removeUser(this);
 		network.close();

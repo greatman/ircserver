@@ -11,7 +11,7 @@ public class PrivMsgCommand implements Command {
 
 	public void run(User conn, String[] args) {
 		if (args[0].contains("#")) {
-			Channel chan = Server.CHANNEL_LIST.get(args[0]);
+			Channel chan = Server.getChannelHandler().getChannel(args[0]);
 			String[] message = new String[args.length - 1];
 			System.arraycopy(args, 1, message, 0, args.length - 1);
 			if (chan != null) {

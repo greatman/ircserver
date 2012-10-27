@@ -13,13 +13,13 @@ public class ModeCommand implements Command {
 		if (args.length == 1) {
 			// TODO: Support user modes
 			if (args[0].contains("#")) {
-				if (Server.CHANNEL_LIST.containsKey(args[0])) {
-					conn.send(new ModeChannelCodec(args[0], Server.CHANNEL_LIST.get(args[0]).getModes()));
+				if (Server.getChannelHandler().getChannel(args[0]) != null) {
+					conn.send(new ModeChannelCodec(args[0], Server.getChannelHandler().getChannel(args[0]).getModes()));
 				}
 			}
 		} else if (args.length >= 3) {
-			if (args[0].contains("#") && Server.CHANNEL_LIST.containsKey(args[0])) {
-				Channel chan = Server.CHANNEL_LIST.get(args[0]);
+			if (args[0].contains("#") && Server.getChannelHandler().getChannel(args[0]) != null) {
+				Channel chan = Server.getChannelHandler().getChannel(args[0]);
 				if (chan.getUserList().containsKey(conn) && chan.getUserList().get(conn).getUserModes().contains(ChannelUserModes.OP)) {
 					if (args[1].contains("+")) {
 						addRemoveModeChannel(args, chan, conn, true);

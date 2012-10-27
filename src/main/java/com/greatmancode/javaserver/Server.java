@@ -3,8 +3,6 @@ package com.greatmancode.javaserver;
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +11,7 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelException;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
-import com.greatmancode.javaserver.channel.Channel;
+import com.greatmancode.javaserver.channel.ChannelHandler;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
 import com.greatmancode.javaserver.user.UserHandler;
 
@@ -22,8 +20,7 @@ public final class Server {
 	/**
 	 * Contains the list of currently used channels.
 	 */
-	// TODO: Private / Class that.
-	public static final Map<String, Channel> CHANNEL_LIST = new HashMap<String, Channel>();
+	private static final ChannelHandler CHANNEL_HANDLER = new ChannelHandler();
 
 	/**
 	 * The server logger.
@@ -95,5 +92,13 @@ public final class Server {
 	 */
 	public static Logger getLogger() {
 		return log;
+	}
+
+	/**
+	 * Retrieve the channel handler.
+	 * @return The channel handler.
+	 */
+	public static ChannelHandler getChannelHandler() {
+		return CHANNEL_HANDLER;
 	}
 }
