@@ -16,10 +16,8 @@ public class LUserClientCodec extends Codec {
 	public String encode() {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
-		string.append("251").append(" ").append(conn.getNickname())
-				.append(" :");
-		string.append("There are ").append(App.CONNECTION_LIST.size())
-				.append(" users and 0 invisible on 1 servers");
+		string.append("251").append(" ").append(conn.getNickname()).append(" :");
+		string.append("There are ").append(App.getSessionHandler().size()).append(" users and 0 invisible on 1 servers");
 		return string.toString();
 	}
 

@@ -43,7 +43,7 @@ public class ModeCommand implements Command {
 		for (int i = 0; i < modes.length; i++) {
 			ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
 			System.out.println(mode);
-			User user = App.getUser(args[i + 2]);
+			User user = App.getSessionHandler().getUser(args[i + 2]);
 			if (mode != null && user != null && chan.getUserList().containsKey(user)) {
 				if (add) {
 					chan.addUserMode(conn, user, mode);

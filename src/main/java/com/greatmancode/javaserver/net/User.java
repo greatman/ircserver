@@ -1,7 +1,6 @@
 package com.greatmancode.javaserver.net;
 
-import java.io.IOException;
-import java.net.Socket;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +17,11 @@ import com.greatmancode.javaserver.net.codecs.YourHostCodec;
 
 public class User {
 
-	private final NetworkThread network;
+	private final org.jboss.netty.channel.Channel channel;
 	private String nickname, realName, host;
 	private boolean loggedIn = false;
 	private final List<UserModes> userModes = new ArrayList<UserModes>();
-	
-	public User(Socket socket) {
-		network = new NetworkThread(this, socket);
-		network.start();
-	}
-	
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -39,10 +33,9 @@ public class User {
 
 	private void confLoggedIn() {
 		if (!loggedIn && this.nickname != null && this.host != null) {
-			network.setName("Thread for " + this.nickname);
 			this.send(new WelcomeCodec(this));
 			this.send(new YourHostCodec(this));
-			this.send(new ServerLaunchCodec(this)); 
+			this.send(new ServerLaunchCodec(this));
 			this.send(new MyInfoCodec(this));
 			this.send(new IsSupportCodec(this));
 			CommandManager.run(this, "LUSERS", null);
@@ -50,22 +43,21 @@ public class User {
 			loggedIn = true;
 		}
 	}
+
+	public User(org.jboss.netty.channel.Channel channel) {
+		this.channel = channel;
+		this.host = ((InetSocketAddress)channel.getRemoteAddress()).getHostName();
+	}
 	
 	public void send(Codec content) {
-		try {
-			System.out.println("Sending a packet to : " + this.nickname);	
-			network.getSocket().getOutputStream().write(content.toSend());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			this.disconnect();
-		}
+		System.out.println("Sending a packet to : " + this.nickname);
+		channel.write(content.toSend());
 	}
 
 	public String getReprensentation() {
 		return nickname + "!" + realName + "@" + host;
 	}
-	
+
 	public String getRealName() {
 		return realName;
 	}
@@ -82,7 +74,7 @@ public class User {
 	public void setHost(String host) {
 		this.host = host;
 	}
-	
+
 	public void disconnect() {
 		for (Map.Entry<String, Channel> channel : App.CHANNEL_LIST.entrySet())
 		{
@@ -90,13 +82,8 @@ public class User {
 				channel.getValue().removeUser(this, true);
 			}
 		}
-		App.CONNECTION_LIST.remove(this);
-		try {
-			network.getSocket().close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		App.getSessionHandler().removeUser(this);
+		channel.close();
 	}
 
 	public List<UserModes> getUserModes() {

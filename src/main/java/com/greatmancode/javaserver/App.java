@@ -1,6 +1,7 @@
 package com.greatmancode.javaserver;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -9,16 +10,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
-import com.greatmancode.javaserver.net.User;
+import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.ChannelException;
+import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+
+import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
+import com.greatmancode.javaserver.net.UserHandler;
 
 /**
  * Hello world!
  * 
  */
-public final class App {
+public class App 
+{
 	public static final Map<String, Channel> CHANNEL_LIST = new HashMap<String, Channel>();
-	public static final List<User> CONNECTION_LIST = new ArrayList<User>();
+	private static final UserHandler userHandler = new UserHandler();
 	public static final String VERSION = "JIrcServer-0.1";
 	public static final String LAUNCH_DATE = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 	private static String serverName = "";
@@ -30,32 +38,29 @@ public final class App {
 	public static void main(String[] args) {
 
 		serverName = "irc.greatmancode.com";
-		ServerSocket ss;
-		try {
-			ss = new ServerSocket(6667);
-			while (true) {
-				Socket s = ss.accept();
-				User jircs = new User(s);
-				CONNECTION_LIST.add(jircs);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		ServerBootstrap bootstrap = new ServerBootstrap(
+				new NioServerSocketChannelFactory(
+						Executors.newCachedThreadPool(),
+						Executors.newCachedThreadPool())
+				);
+		bootstrap.setPipelineFactory(new IRCServerPipelineFactory());
+		
+		try
+		{
+			bootstrap.bind(new InetSocketAddress(6667));
+			System.out.println("Binded to port 6667! Happy IRC! CTRL + C to stop the server.");
+		}
+		catch(ChannelException e) {
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 
 	public static String getServerName() {
 		return serverName;
 	}
-
-	public static User getUser(String username) {
-		User conn = null;
-		for (User entry : CONNECTION_LIST) {
-			if (entry.getNickname().contains(username)) {
-				conn = entry;
-				break;
-			}
-		}
-		return conn;
+	
+	public static UserHandler getSessionHandler() {
+		return userHandler;
 	}
 }

@@ -8,20 +8,11 @@ import com.greatmancode.javaserver.net.codecs.NicknameInUseCodec;
 public class NickCommand implements Command {
 
 	public void run(User conn, String[] args) {
-		boolean exist = false;
-		for (User list : App.CONNECTION_LIST) {
-			if (list.getNickname() != null && list.getNickname().equals(args[0])) 
-			{
-				exist = true;
-				break;
-			}
-		}
-		if (!exist) {
+		User user = App.getSessionHandler().getUser(args[0]);
+		if (user == null) {
 			conn.setNickname(args[0]);
 		} else {
 			conn.send(new NicknameInUseCodec(args[0]));
 		}
-		
 	}
-
 }

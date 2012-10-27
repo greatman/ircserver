@@ -6,11 +6,11 @@ public abstract class Codec {
 
 	public static final String PREFIX = ":" + App.getServerName() + " ";
 	
-	public byte[] toSend() {
+	public String toSend() {
 		String content = encode().replace("\n", "").replace("\r", "");
         content = content + "\r\n";
-        System.out.println("Gonna send: " + content);
-		return content.getBytes();
+        System.out.println("Sending: " + content);
+		return content;
 	}
 	
 	public abstract String encode();

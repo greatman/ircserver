@@ -12,7 +12,7 @@ public class KickCommand implements Command {
 		if (args.length >= 2 && App.CHANNEL_LIST.containsKey(args[0])) {
 			Channel chan = App.CHANNEL_LIST.get(args[0]);
 			if (chan.getUserList().containsKey(conn) && chan.getUserList().get(conn).getUserModes().contains(ChannelUserModes.OP)) {
-				User kicked = App.getUser(args[1]);
+				User kicked = App.getSessionHandler().getUser(args[1]);
 				if (kicked != null && chan.getUserList().containsKey(kicked)) {
 					if (args.length >= 3) {
 						chan.kickUser(conn, kicked, args[2]);

@@ -17,7 +17,7 @@ public class PrivMsgCommand implements Command {
 				chan.sendMessage(conn, args[1]);
 			}
 		} else {
-			User user = App.getUser(args[0]);
+			User user = App.getSessionHandler().getUser(args[0]);
 			if (user != null) {
 				user.send(new PrivMsgCodec(conn, user, args[1]));
 			}
