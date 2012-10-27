@@ -17,7 +17,7 @@ import com.greatmancode.javaserver.net.codecs.YourHostCodec;
 
 public class User {
 
-	private final org.jboss.netty.channel.Channel channel;
+	private final org.jboss.netty.channel.Channel network;
 	private String nickname, realName, host;
 	private boolean loggedIn = false;
 	private final List<UserModes> userModes = new ArrayList<UserModes>();
@@ -45,13 +45,13 @@ public class User {
 	}
 
 	public User(org.jboss.netty.channel.Channel channel) {
-		this.channel = channel;
-		this.host = ((InetSocketAddress)channel.getRemoteAddress()).getHostName();
+		this.network = channel;
+		this.host = ((InetSocketAddress) channel.getRemoteAddress()).getHostName();
 	}
-	
+
 	public void send(Codec content) {
 		System.out.println("Sending a packet to : " + this.nickname);
-		channel.write(content.toSend());
+		network.write(content.toSend());
 	}
 
 	public String getReprensentation() {
@@ -76,14 +76,13 @@ public class User {
 	}
 
 	public void disconnect() {
-		for (Map.Entry<String, Channel> channel : App.CHANNEL_LIST.entrySet())
-		{
+		for (Map.Entry<String, Channel> channel : App.CHANNEL_LIST.entrySet()) {
 			if (channel.getValue().getUserList().containsKey(this)) {
 				channel.getValue().removeUser(this, true);
 			}
 		}
 		App.getSessionHandler().removeUser(this);
-		channel.close();
+		network.close();
 	}
 
 	public List<UserModes> getUserModes() {

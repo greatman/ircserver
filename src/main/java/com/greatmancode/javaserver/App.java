@@ -1,14 +1,9 @@
 package com.greatmancode.javaserver;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
@@ -19,14 +14,9 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
 import com.greatmancode.javaserver.net.UserHandler;
 
-/**
- * Hello world!
- * 
- */
-public class App 
-{
+public final class App {
 	public static final Map<String, Channel> CHANNEL_LIST = new HashMap<String, Channel>();
-	private static final UserHandler userHandler = new UserHandler();
+	private static final UserHandler USER_HANDLER = new UserHandler();
 	public static final String VERSION = "JIrcServer-0.1";
 	public static final String LAUNCH_DATE = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 	private static String serverName = "";
@@ -38,19 +28,13 @@ public class App
 	public static void main(String[] args) {
 
 		serverName = "irc.greatmancode.com";
-		ServerBootstrap bootstrap = new ServerBootstrap(
-				new NioServerSocketChannelFactory(
-						Executors.newCachedThreadPool(),
-						Executors.newCachedThreadPool())
-				);
+		ServerBootstrap bootstrap = new ServerBootstrap(new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
 		bootstrap.setPipelineFactory(new IRCServerPipelineFactory());
-		
-		try
-		{
+
+		try {
 			bootstrap.bind(new InetSocketAddress(6667));
 			System.out.println("Binded to port 6667! Happy IRC! CTRL + C to stop the server.");
-		}
-		catch(ChannelException e) {
+		} catch (ChannelException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -59,8 +43,8 @@ public class App
 	public static String getServerName() {
 		return serverName;
 	}
-	
+
 	public static UserHandler getSessionHandler() {
-		return userHandler;
+		return USER_HANDLER;
 	}
 }

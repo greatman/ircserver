@@ -10,7 +10,7 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 
 public class IRCServerPipelineFactory implements ChannelPipelineFactory {
 
-	public ChannelPipeline getPipeline() throws Exception {
+	public ChannelPipeline getPipeline() {
 		ChannelPipeline pipeline = Channels.pipeline();
 
 		pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));

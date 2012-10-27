@@ -1,7 +1,6 @@
 package com.greatmancode.javaserver.net;
 
 import org.jboss.netty.channel.ChannelEvent;
-import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
@@ -15,7 +14,7 @@ import com.greatmancode.javaserver.utils.Tools;
 public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
-	public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
+	public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) {
 		if (e instanceof ChannelStateEvent) {
 			System.out.println(e.toString());
 		}
@@ -23,7 +22,7 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 	}
 
 	@Override
-	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
 		ctx.setAttachment(new User(e.getChannel()));
 		App.getSessionHandler().addUser((User) ctx.getAttachment());
 	}

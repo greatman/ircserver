@@ -65,7 +65,6 @@ public class Channel {
 			return;
 		}
 		conn.send(new JoinCodec(conn, name));
-		// conn.send(new ModeCodec(name, modes));
 		conn.send(new NoTopicCodec(conn, name));
 
 		Iterator<User> iterator = userList.keySet().iterator();
