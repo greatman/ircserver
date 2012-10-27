@@ -14,7 +14,7 @@ import com.greatmancode.javaserver.utils.Tools;
 public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
-	public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) {
+	public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
 		if (e instanceof ChannelStateEvent) {
 			System.out.println(e.toString());
 		}
