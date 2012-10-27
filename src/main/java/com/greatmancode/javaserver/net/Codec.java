@@ -9,7 +9,6 @@ public abstract class Codec {
 	public String toSend() {
 		String content = encode().replace("\n", "").replace("\r", "");
         content = content + "\r\n";
-        System.out.println("Sending: " + content);
 		return content;
 	}
 	

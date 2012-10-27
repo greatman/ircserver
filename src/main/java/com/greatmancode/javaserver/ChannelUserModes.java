@@ -23,12 +23,6 @@ public enum ChannelUserModes {
 		return NAME_MAP.get(name);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(ChannelUserModes.get("o"));
-		System.out.println(ChannelUserModes.get("v"));
-		System.out.println(ChannelUserModes.get("x"));
-	}
-	
 	@Override
 	public String toString() {
 		return mode;

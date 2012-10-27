@@ -1,6 +1,5 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -28,7 +27,6 @@ public class NamesCodec extends Codec {
 		Iterator<Entry<User, ChannelUser>> iterator = chan.getUserList().entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<User, ChannelUser> entry = iterator.next();
-			System.out.println(Arrays.toString(entry.getValue().getUserModes().toArray()));
 			if (entry.getValue().getUserModes().contains(ChannelUserModes.OP)) {
 				string.append("@");
 			}

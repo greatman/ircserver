@@ -32,11 +32,9 @@ public class Channel {
 	}
 
 	public void addUserMode(User changer, User user, ChannelUserModes mode) {
-		System.out.println("I enter here!");
 		if (userList.containsKey(user)) {
 			ChannelUser chanUser = userList.get(user);
 			if (!chanUser.getUserModes().contains(mode)) {
-				System.out.println("Adding OP");
 				chanUser.getUserModes().add(mode);
 				Iterator<User> iterator = userList.keySet().iterator();
 				while (iterator.hasNext()) {
@@ -50,7 +48,6 @@ public class Channel {
 		if (userList.containsKey(user)) {
 			ChannelUser chanUser = userList.get(user);
 			if (chanUser.getUserModes().contains(mode)) {
-				System.out.println("Removing OP");
 				chanUser.getUserModes().remove(mode);
 				Iterator<User> iterator = userList.keySet().iterator();
 				while (iterator.hasNext()) {

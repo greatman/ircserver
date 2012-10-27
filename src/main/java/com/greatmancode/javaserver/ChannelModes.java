@@ -22,12 +22,6 @@ public enum ChannelModes {
 	public static ChannelModes get(String name) {
 		return NAME_MAP.get(name);
 	}
-
-	public static void main(String[] args) {
-		System.out.println(ChannelModes.get("o"));
-		System.out.println(ChannelModes.get("v"));
-		System.out.println(ChannelModes.get("x"));
-	}
 	
 	@Override
 	public String toString() {

@@ -50,7 +50,6 @@ public class User {
 	}
 
 	public void send(Codec content) {
-		System.out.println("Sending a packet to : " + this.nickname);
 		network.write(content.toSend());
 	}
 

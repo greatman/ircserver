@@ -22,12 +22,6 @@ public enum UserModes {
 	public static UserModes get(String name) {
 		return NAME_MAP.get(name);
 	}
-
-	public static void main(String[] args) {
-		System.out.println(UserModes.get("o"));
-		System.out.println(UserModes.get("v"));
-		System.out.println(UserModes.get("x"));
-	}
 	
 	@Override
 	public String toString() {
