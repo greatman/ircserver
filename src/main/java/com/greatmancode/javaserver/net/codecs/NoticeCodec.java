@@ -7,11 +7,13 @@ public class NoticeCodec extends Codec {
 
 	private final User sender, receiver;
 	private final String text;
+
 	public NoticeCodec(User sender, User receiver, String text) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.text = text;
 	}
+
 	@Override
 	public String encode() {
 		StringBuffer string = new StringBuffer();

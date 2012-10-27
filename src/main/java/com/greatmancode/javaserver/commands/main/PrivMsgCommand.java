@@ -4,6 +4,7 @@ import com.greatmancode.javaserver.App;
 import com.greatmancode.javaserver.Channel;
 import com.greatmancode.javaserver.commands.Command;
 import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.net.codecs.NoSuchNicknameChannelCodec;
 import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
 
 public class PrivMsgCommand implements Command {
@@ -20,6 +21,8 @@ public class PrivMsgCommand implements Command {
 			User user = App.getSessionHandler().getUser(args[0]);
 			if (user != null) {
 				user.send(new PrivMsgCodec(conn, user, args[1]));
+			} else {
+				conn.send(new NoSuchNicknameChannelCodec(conn, args[1]));
 			}
 		}
 
