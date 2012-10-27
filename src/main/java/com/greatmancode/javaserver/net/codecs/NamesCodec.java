@@ -3,11 +3,11 @@ package com.greatmancode.javaserver.net.codecs;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import com.greatmancode.javaserver.Channel;
-import com.greatmancode.javaserver.ChannelUser;
-import com.greatmancode.javaserver.ChannelUserModes;
+import com.greatmancode.javaserver.channel.Channel;
+import com.greatmancode.javaserver.channel.ChannelUser;
+import com.greatmancode.javaserver.channel.ChannelUserModes;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 public class NamesCodec extends Codec {
 

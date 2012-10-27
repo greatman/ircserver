@@ -1,9 +1,9 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.App;
-import com.greatmancode.javaserver.Channel;
+import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 public class WhoCodec extends Codec {
 
@@ -21,7 +21,7 @@ public class WhoCodec extends Codec {
 		string.append(PREFIX).append("352").append(" ").append(conn.getNickname()).append(" ");
 		string.append(chan.getName()).append(" ");
 		string.append(connMember.getNickname()).append(" ").append(connMember.getHost()).append(" ");
-		string.append(App.getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ").append(connMember.getRealName());
+		string.append(Server.getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ").append(connMember.getRealName());
 		// TODO: Add version
         return string.toString();
 	}

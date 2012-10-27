@@ -1,6 +1,6 @@
 package com.greatmancode.javaserver.net;
 
-import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Server;
 
 /**
  * Represents a codec. Also manage the how to make the codec send.
@@ -9,7 +9,7 @@ import com.greatmancode.javaserver.App;
  */
 public abstract class Codec {
 
-	public static final String PREFIX = ":" + App.getServerName() + " ";
+	public static final String PREFIX = ":" + Server.getServerName() + " ";
 	
 	/**
 	 * The codec formatted to be sent.

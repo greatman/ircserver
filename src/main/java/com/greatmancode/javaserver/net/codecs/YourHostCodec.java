@@ -1,8 +1,8 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 public class YourHostCodec extends Codec {
 
@@ -18,8 +18,8 @@ public class YourHostCodec extends Codec {
 		string.append(PREFIX);
 		string.append("002").append(" ");
 		string.append(conn.getNickname()).append(" :");
-		string.append("Your host is ").append(App.getServerName())
-				.append(", running version ").append(App.VERSION);
+		string.append("Your host is ").append(Server.getServerName())
+				.append(", running version ").append(Server.VERSION);
 		return string.toString();
 	}
 }

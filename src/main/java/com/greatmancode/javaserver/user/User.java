@@ -1,14 +1,14 @@
-package com.greatmancode.javaserver.net;
+package com.greatmancode.javaserver.user;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.greatmancode.javaserver.App;
-import com.greatmancode.javaserver.Channel;
-import com.greatmancode.javaserver.UserModes;
+import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.commands.CommandManager;
+import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
 import com.greatmancode.javaserver.net.codecs.MyInfoCodec;
 import com.greatmancode.javaserver.net.codecs.ServerLaunchCodec;
@@ -75,12 +75,12 @@ public class User {
 	}
 
 	public void disconnect() {
-		for (Map.Entry<String, Channel> channel : App.CHANNEL_LIST.entrySet()) {
+		for (Map.Entry<String, Channel> channel : Server.CHANNEL_LIST.entrySet()) {
 			if (channel.getValue().getUserList().containsKey(this)) {
 				channel.getValue().removeUser(this, true);
 			}
 		}
-		App.getUserHandler().removeUser(this);
+		Server.getUserHandler().removeUser(this);
 		network.close();
 	}
 

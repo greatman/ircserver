@@ -1,9 +1,9 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.Channel;
-import com.greatmancode.javaserver.ChannelUserModes;
+import com.greatmancode.javaserver.channel.Channel;
+import com.greatmancode.javaserver.channel.ChannelUserModes;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 public class ModeUserChannelCodec extends Codec {
 

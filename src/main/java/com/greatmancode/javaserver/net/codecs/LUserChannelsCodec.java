@@ -1,8 +1,8 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 public class LUserChannelsCodec extends Codec {
 
@@ -17,7 +17,7 @@ public class LUserChannelsCodec extends Codec {
 		string.append(PREFIX);
 		string.append("254").append(" ");
 		string.append(conn.getNickname()).append(" ");
-		string.append(App.CHANNEL_LIST.size()).append(" :Channels formed");
+		string.append(Server.CHANNEL_LIST.size()).append(" :Channels formed");
 		return string.toString();
 	}
 

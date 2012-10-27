@@ -1,8 +1,8 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 public class LUserClientCodec extends Codec {
 
@@ -17,7 +17,7 @@ public class LUserClientCodec extends Codec {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
 		string.append("251 ").append(conn.getNickname()).append(" :");
-		string.append("There are ").append(App.getUserHandler().size()).append(" users and 0 invisible on 1 servers");
+		string.append("There are ").append(Server.getUserHandler().size()).append(" users and 0 invisible on 1 servers");
 		return string.toString();
 	}
 

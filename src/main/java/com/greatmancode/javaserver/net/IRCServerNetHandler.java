@@ -8,8 +8,9 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
-import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.commands.CommandManager;
+import com.greatmancode.javaserver.user.User;
 import com.greatmancode.javaserver.utils.Tools;
 
 public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
@@ -17,7 +18,7 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
 		ctx.setAttachment(new User(e.getChannel()));
-		App.getUserHandler().addUser((User) ctx.getAttachment());
+		Server.getUserHandler().addUser((User) ctx.getAttachment());
 	}
 
 	@Override
@@ -30,6 +31,6 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-		App.getLogger().log(Level.SEVERE, "Unexpected exception from downstream. ", e.getCause());
+		Server.getLogger().log(Level.SEVERE, "Unexpected exception from downstream. ", e.getCause());
 	}
 }

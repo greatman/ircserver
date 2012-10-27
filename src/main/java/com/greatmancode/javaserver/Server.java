@@ -13,10 +13,11 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelException;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
+import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
-import com.greatmancode.javaserver.net.UserHandler;
+import com.greatmancode.javaserver.user.UserHandler;
 
-public final class App {
+public final class Server {
 	
 	/**
 	 * Contains the list of currently used channels.
@@ -50,7 +51,7 @@ public final class App {
 	 */
 	private static String serverName = "";
 
-	private App() {
+	private Server() {
 
 	}
 

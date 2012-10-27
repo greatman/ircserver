@@ -1,11 +1,11 @@
 package com.greatmancode.javaserver.commands.main;
 
 import com.greatmancode.javaserver.commands.Command;
-import com.greatmancode.javaserver.net.User;
 import com.greatmancode.javaserver.net.codecs.LUserChannelsCodec;
 import com.greatmancode.javaserver.net.codecs.LUserClientCodec;
 import com.greatmancode.javaserver.net.codecs.LUserOpCodec;
 import com.greatmancode.javaserver.net.codecs.LUserUnknownCodec;
+import com.greatmancode.javaserver.user.User;
 
 public class LUsersCommand implements Command {
 

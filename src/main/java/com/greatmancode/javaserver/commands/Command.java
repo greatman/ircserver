@@ -1,6 +1,6 @@
 package com.greatmancode.javaserver.commands;
 
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 /**
  * Represents a command

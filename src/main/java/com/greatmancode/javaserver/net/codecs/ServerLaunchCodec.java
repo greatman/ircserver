@@ -1,8 +1,8 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.App;
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
 
 public class ServerLaunchCodec extends Codec {
 
@@ -18,7 +18,7 @@ public class ServerLaunchCodec extends Codec {
 		string.append(PREFIX);
 		string.append("003").append(" ");
 		string.append(conn.getNickname()).append(" :");
-		string.append("This server was created ").append(App.LAUNCH_DATE);
+		string.append("This server was created ").append(Server.LAUNCH_DATE);
 		return string.toString();
 	}
 

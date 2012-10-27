@@ -1,7 +1,8 @@
-package com.greatmancode.javaserver;
+package com.greatmancode.javaserver.channel;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ChannelUser {
 

@@ -1,7 +1,8 @@
-package com.greatmancode.javaserver.net;
+package com.greatmancode.javaserver.user;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class UserHandler {
 

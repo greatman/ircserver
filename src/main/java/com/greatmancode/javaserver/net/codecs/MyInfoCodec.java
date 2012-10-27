@@ -1,9 +1,9 @@
 package com.greatmancode.javaserver.net.codecs;
 
-import com.greatmancode.javaserver.App;
-import com.greatmancode.javaserver.UserModes;
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.user.User;
+import com.greatmancode.javaserver.user.UserModes;
 
 public class MyInfoCodec extends Codec {
 
@@ -17,7 +17,7 @@ public class MyInfoCodec extends Codec {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
 		string.append("004 ").append(conn.getNickname()).append(" ");
-		string.append(App.getServerName()).append(" ");
+		string.append(Server.getServerName()).append(" ");
 		string.append("JavaIRCServer0.1").append(" ");
 		for (UserModes type : UserModes.values()) {
 			string.append(type);

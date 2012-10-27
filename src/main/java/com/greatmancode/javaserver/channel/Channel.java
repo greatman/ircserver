@@ -1,10 +1,10 @@
-package com.greatmancode.javaserver;
+package com.greatmancode.javaserver.channel;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.greatmancode.javaserver.net.User;
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;
@@ -16,6 +16,7 @@ import com.greatmancode.javaserver.net.codecs.NamesEndCodec;
 import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
 import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
 import com.greatmancode.javaserver.net.codecs.TopicCodec;
+import com.greatmancode.javaserver.user.User;
 
 /**
  * Represents a channel.
@@ -184,8 +185,8 @@ public class Channel {
 			}
 
 		}
-		if (userList.size() == 0 && App.CHANNEL_LIST.containsKey(name)) {
-			App.CHANNEL_LIST.remove(name);
+		if (userList.size() == 0 && Server.CHANNEL_LIST.containsKey(name)) {
+			Server.CHANNEL_LIST.remove(name);
 		}
 
 	}
