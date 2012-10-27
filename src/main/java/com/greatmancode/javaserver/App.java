@@ -17,11 +17,37 @@ import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
 import com.greatmancode.javaserver.net.UserHandler;
 
 public final class App {
+	
+	/**
+	 * Contains the list of currently used channels.
+	 */
+	// TODO: Private / Class that.
 	public static final Map<String, Channel> CHANNEL_LIST = new HashMap<String, Channel>();
+
+	/**
+	 * The server logger.
+	 */
 	private static final Logger log = Logger.getLogger("ircserver");
+
+	/**
+	 * The user handler.
+	 */
 	private static final UserHandler USER_HANDLER = new UserHandler();
+	
+	/**
+	 * The version of the server.
+	 */
+	//TODO: Make it modified by Maven.
 	public static final String VERSION = "JIrcServer-0.1";
+	
+	/**
+	 * Contains the time of when the server started.
+	 */
 	public static final String LAUNCH_DATE = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
+	
+	/**
+	 * Contains the server name.
+	 */
 	private static String serverName = "";
 
 	private App() {
@@ -43,14 +69,29 @@ public final class App {
 		}
 	}
 
+	/**
+	 * Retrieve the server name
+	 * 
+	 * @return The server name
+	 */
 	public static String getServerName() {
 		return serverName;
 	}
 
-	public static UserHandler getSessionHandler() {
+	/**
+	 * Retrieve the User handler.
+	 * 
+	 * @return The user handler.
+	 */
+	public static UserHandler getUserHandler() {
 		return USER_HANDLER;
 	}
-	
+
+	/**
+	 * Retrieve the logger associated with the server.
+	 * 
+	 * @return The logger.
+	 */
 	public static Logger getLogger() {
 		return log;
 	}

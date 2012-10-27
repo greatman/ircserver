@@ -17,7 +17,7 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
 		ctx.setAttachment(new User(e.getChannel()));
-		App.getSessionHandler().addUser((User) ctx.getAttachment());
+		App.getUserHandler().addUser((User) ctx.getAttachment());
 	}
 
 	@Override

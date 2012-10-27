@@ -17,6 +17,14 @@ import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
 import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
 import com.greatmancode.javaserver.net.codecs.TopicCodec;
 
+/**
+ * Represents a channel.
+ * @author greatman
+ *
+ */
+//TODO: Support mode chan modes.
+//TODO: Support banning.
+//TODO: Support voice
 public class Channel {
 
 	private Map<User, ChannelUser> userList = new HashMap<User, ChannelUser>();
@@ -27,10 +35,20 @@ public class Channel {
 		this.name = name;
 	}
 
+	/**
+	 * Retrieve the channel modes.
+	 * @return The channel modes.
+	 */
 	public String getModes() {
 		return modes;
 	}
 
+	/**
+	 * Add a mode to a user in the channel.
+	 * @param changer The user that is changing the mode. If the server set to null.
+	 * @param user The user that is being changed.
+	 * @param mode The mode we want to add to the player.
+	 */
 	public void addUserMode(User changer, User user, ChannelUserModes mode) {
 		if (userList.containsKey(user)) {
 			ChannelUser chanUser = userList.get(user);
@@ -44,6 +62,12 @@ public class Channel {
 		}
 	}
 
+	/**
+	 * Remove a mode to a user in the channel.
+	 * @param changer The user that is changing the mode. If the server set to null.
+	 * @param user The user that is being changed.
+	 * @param mode The mode we want to remove to the player.
+	 */
 	public void removeUserMode(User changer, User user, ChannelUserModes mode) {
 		if (userList.containsKey(user)) {
 			ChannelUser chanUser = userList.get(user);
@@ -57,35 +81,54 @@ public class Channel {
 		}
 	}
 
-	public void addUser(User conn) {
-		if (userList.containsKey(conn)) {
+	/**
+	 * Add a user in the channel.
+	 * @param user The user to add
+	 */
+	public void addUser(User user) {
+		if (userList.containsKey(user)) {
 			return;
 		}
-		conn.send(new JoinCodec(conn, name));
-		conn.send(new NoTopicCodec(conn, name));
+		user.send(new JoinCodec(user, name));
+		user.send(new NoTopicCodec(user, name));
 
 		Iterator<User> iterator = userList.keySet().iterator();
 		while (iterator.hasNext()) {
-			iterator.next().send(new ChannelJoinCodec(conn, this));
+			iterator.next().send(new ChannelJoinCodec(user, this));
 		}
 		ChannelUser chanUser = new ChannelUser();
 		if (userList.size() == 0) {
 			chanUser.getUserModes().add(ChannelUserModes.OP);
 		}
-		userList.put(conn, chanUser);
+		userList.put(user, chanUser);
 
-		conn.send(new NamesCodec(conn, this));
-		conn.send(new NamesEndCodec(conn, this));
+		user.send(new NamesCodec(user, this));
+		user.send(new NamesEndCodec(user, this));
 	}
 
+	/**
+	 * Retrieve the name of the channel. Example: #lobby
+	 * @return The name of the channel.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Kick a player from the channel
+	 * @param kicker The kicker.
+ 	 * @param kicked The kicked.
+	 */
 	public void kickUser(User kicker, User kicked) {
 		kickUser(kicker, kicked, kicked.getNickname());
 	}
 
+	/**
+	 * Kick a player from the channel
+	 * @param kicker The kicker.
+ 	 * @param kicked The kicked.
+ 	 * @param reason The reason of the kick
+	 */
 	public void kickUser(User kicker, User kicked, String reason) {
 		Iterator<User> iterator = userList.keySet().iterator();
 		while (iterator.hasNext()) {
@@ -94,36 +137,50 @@ public class Channel {
 		userList.remove(kicked);
 	}
 
+	/**
+	 * Retrieve a list of all the users in the channel.
+	 * @return The channel user list.
+	 */
 	public Map<User, ChannelUser> getUserList() {
 		return userList;
 	}
 
-	public void sendMessage(User conn, String message) {
+	/**
+	 * Send a message to all the users in the channel
+	 * @param user The user that sent the message.
+	 * @param message The message to send to all the users.
+	 */
+	public void sendMessage(User user, String message) {
 		Iterator<User> iterator = userList.keySet().iterator();
 		while (iterator.hasNext()) {
-			User user = iterator.next();
-			if (!user.equals(conn)) {
-				user.send(new PrivMsgCodec(conn, this, message));
+			User receiver = iterator.next();
+			if (!receiver.equals(user)) {
+				receiver.send(new PrivMsgCodec(user, this, message));
 			}
 
 		}
 	}
 
-	public void removeUser(User connection, boolean disconnect) {
-		if (userList.containsKey(connection)) {
-			userList.remove(connection);
+	/**
+	 * Remove a user from the channel.
+	 * @param user The user to remove
+	 * @param disconnect If the user is disconnecting or not.
+	 */
+	public void removeUser(User user, boolean disconnect) {
+		if (userList.containsKey(user)) {
+			userList.remove(user);
 		}
 		if (!disconnect) {
-			connection.send(new ChannelPartCodec(connection, this));
+			user.send(new ChannelPartCodec(user, this));
 		} else {
-			connection.send(new ChannelQuitCodec(connection, this));
+			user.send(new ChannelQuitCodec(user, this));
 		}
 		Iterator<User> iterator = userList.keySet().iterator();
 		while (iterator.hasNext()) {
 			if (disconnect) {
-				iterator.next().send(new ChannelQuitCodec(connection, this));
+				iterator.next().send(new ChannelQuitCodec(user, this));
 			} else {
-				iterator.next().send(new ChannelPartCodec(connection, this));
+				iterator.next().send(new ChannelPartCodec(user, this));
 			}
 
 		}
@@ -133,14 +190,24 @@ public class Channel {
 
 	}
 
-	public void setTopic(User modifier, String topic) {
+	/**
+	 * Set the topic of this channel.
+	 * @param user The user that modified the topic. Null for server
+	 * @param topic
+	 */
+	//TODO: Support server
+	public void setTopic(User user, String topic) {
 		this.topic = topic;
 		Iterator<User> iterator = userList.keySet().iterator();
 		while (iterator.hasNext()) {
-			iterator.next().send(new TopicCodec(modifier, this));
+			iterator.next().send(new TopicCodec(user, this));
 		}
 	}
 
+	/**
+	 * Retrieve the topic of the channel.
+	 * @return The topic of the channel.
+	 */
 	public String getTopic() {
 		return topic;
 	}

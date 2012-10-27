@@ -8,7 +8,7 @@ import com.greatmancode.javaserver.net.codecs.NicknameInUseCodec;
 public class NickCommand implements Command {
 
 	public void run(User conn, String[] args) {
-		User user = App.getSessionHandler().getUser(args[0]);
+		User user = App.getUserHandler().getUser(args[0]);
 		if (user == null) {
 			conn.setNickname(args[0]);
 		} else {

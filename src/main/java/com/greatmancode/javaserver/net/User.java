@@ -80,7 +80,7 @@ public class User {
 				channel.getValue().removeUser(this, true);
 			}
 		}
-		App.getSessionHandler().removeUser(this);
+		App.getUserHandler().removeUser(this);
 		network.close();
 	}
 
