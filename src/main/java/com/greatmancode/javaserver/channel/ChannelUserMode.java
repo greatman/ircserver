@@ -3,15 +3,15 @@ package com.greatmancode.javaserver.channel;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ChannelUserModes {
+public enum ChannelUserMode {
 
 	OP("o"), VOICED("v");
 
-	private static final Map<String, ChannelUserModes> NAME_MAP = new HashMap<String, ChannelUserModes>();
+	private static final Map<String, ChannelUserMode> NAME_MAP = new HashMap<String, ChannelUserMode>();
 	
 	private final String mode;
 
-	private ChannelUserModes(String mode) {
+	private ChannelUserMode(String mode) {
 		this.mode = mode;
 	}
 
@@ -19,7 +19,7 @@ public enum ChannelUserModes {
 		return mode;
 	}
 
-	public static ChannelUserModes get(String name) {
+	public static ChannelUserMode get(String name) {
 		return NAME_MAP.get(name);
 	}
 
@@ -29,7 +29,7 @@ public enum ChannelUserModes {
 	}
 	
 	static {
-		for (ChannelUserModes type : ChannelUserModes.values()) {
+		for (ChannelUserMode type : ChannelUserMode.values()) {
 			NAME_MAP.put(type.getMode(), type);
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.user.User;
 
 public class ChannelHandler {
@@ -20,6 +21,7 @@ public class ChannelHandler {
 		Channel chan = null;
 		if (!channelList.containsKey(channel)) {
 			chan = new Channel(channel);
+			channelList.put(channel, chan);
 		} else {
 			chan = channelList.get(channel);
 		}

@@ -6,11 +6,12 @@ import java.util.List;
 
 public class ChannelUser {
 
-	private final List<ChannelUserModes> userModes = new ArrayList<ChannelUserModes>();
+	private final List<ChannelUserMode> userModes = new ArrayList<ChannelUserMode>();
 	public ChannelUser() {
 	}
 	
-	public List<ChannelUserModes> getUserModes() {
+	//TODO: Send a copy.
+	public List<ChannelUserMode> getUserModes() {
 		return userModes;
 	}
 }

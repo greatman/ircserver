@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.channel.ChannelUser;
-import com.greatmancode.javaserver.channel.ChannelUserModes;
+import com.greatmancode.javaserver.channel.ChannelUserMode;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.user.User;
 
@@ -27,7 +27,7 @@ public class NamesCodec extends Codec {
 		Iterator<Entry<User, ChannelUser>> iterator = chan.getUserList().entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<User, ChannelUser> entry = iterator.next();
-			if (entry.getValue().getUserModes().contains(ChannelUserModes.OP)) {
+			if (entry.getValue().getUserModes().contains(ChannelUserMode.OP)) {
 				string.append("@");
 			}
 			string.append(entry.getKey().getNickname()).append(" ");
