@@ -17,7 +17,7 @@ public class MotdStartCodec extends Codec {
 		string.append(PREFIX);
 		string.append("375").append(" ");
 		string.append(conn.getNickname()).append(" :");
-		string.append("--- ").append(Server.getServerName()).append(" Message of the day ---");
+		string.append("--- ").append(Server.getServer().getServerName()).append(" Message of the day ---");
 
 		return string.toString();
 	}

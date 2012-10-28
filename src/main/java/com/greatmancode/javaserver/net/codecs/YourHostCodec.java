@@ -18,7 +18,7 @@ public class YourHostCodec extends Codec {
 		string.append(PREFIX);
 		string.append("002").append(" ");
 		string.append(conn.getNickname()).append(" :");
-		string.append("Your host is ").append(Server.getServerName())
+		string.append("Your host is ").append(Server.getServer().getServerName())
 				.append(", running version ").append(Server.VERSION);
 		return string.toString();
 	}

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.user.User;
 
 public class ChannelHandler {

@@ -3,7 +3,6 @@ package com.greatmancode.javaserver.user;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
@@ -75,10 +74,10 @@ public class User {
 	}
 
 	public void disconnect() {
-		for (Channel channel : Server.getChannelHandler().getUserChannels(this)) {
+		for (Channel channel : Server.getServer().getChannelHandler().getUserChannels(this)) {
 				channel.removeUser(this, true);
 		}
-		Server.getUserHandler().removeUser(this);
+		Server.getServer().getUserHandler().removeUser(this);
 		network.close();
 	}
 

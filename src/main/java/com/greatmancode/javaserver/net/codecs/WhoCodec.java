@@ -21,7 +21,7 @@ public class WhoCodec extends Codec {
 		string.append(PREFIX).append("352").append(" ").append(conn.getNickname()).append(" ");
 		string.append(chan.getName()).append(" ");
 		string.append(connMember.getNickname()).append(" ").append(connMember.getHost()).append(" ");
-		string.append(Server.getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ").append(connMember.getRealName());
+		string.append(Server.getServer().getServerName()).append(" ").append(connMember.getNickname()).append(" H :0 ").append(connMember.getRealName());
 		// TODO: Add version
         return string.toString();
 	}

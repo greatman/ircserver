@@ -17,7 +17,7 @@ public class LUserChannelsCodec extends Codec {
 		string.append(PREFIX);
 		string.append("254").append(" ");
 		string.append(conn.getNickname()).append(" ");
-		string.append(Server.getChannelHandler().getSize()).append(" :Channels formed");
+		string.append(Server.getServer().getChannelHandler().getSize()).append(" :Channels formed");
 		return string.toString();
 	}
 

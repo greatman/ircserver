@@ -13,8 +13,8 @@ public class WhoCommand implements Command {
 	public void run(User conn, String[] args) {
 		//TODO: Support more than just chans
 		//TODO: Easy to NPE
-		if (Server.getChannelHandler().getChannel(args[0]) != null) {
-			Channel chan = Server.getChannelHandler().getChannel(args[0]);
+		if (Server.getServer().getChannelHandler().getChannel(args[0]) != null) {
+			Channel chan = Server.getServer().getChannelHandler().getChannel(args[0]);
 			Iterator<User> iterator = chan.getUserList().keySet().iterator();
 			while (iterator.hasNext()) {
 				conn.send(new WhoCodec(conn, iterator.next(), chan));

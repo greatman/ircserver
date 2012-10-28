@@ -8,11 +8,11 @@ import com.greatmancode.javaserver.user.User;
 public class JoinCommand implements Command{
 
 	public void run(User user, String[] args) {
-		Channel chan = Server.getChannelHandler().getChannel(args[0]);
+		Channel chan = Server.getServer().getChannelHandler().getChannel(args[0]);
 		if (chan != null) {
 			chan.addUser(user);
 		} else {
-			chan = Server.getChannelHandler().addChannel(args[0]);
+			chan = Server.getServer().getChannelHandler().addChannel(args[0]);
 			chan.addUser(user);
 			
 		}

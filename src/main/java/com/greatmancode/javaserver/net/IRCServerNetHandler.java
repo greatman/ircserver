@@ -18,7 +18,7 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
 		ctx.setAttachment(new User(e.getChannel()));
-		Server.getUserHandler().addUser((User) ctx.getAttachment());
+		Server.getServer().getUserHandler().addUser((User) ctx.getAttachment());
 	}
 
 	@Override
@@ -31,6 +31,6 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-		Server.getLogger().log(Level.SEVERE, "Unexpected exception from downstream. ", e.getCause());
+		Server.getServer().getLogger().log(Level.SEVERE, "Unexpected exception from downstream. ", e.getCause());
 	}
 }

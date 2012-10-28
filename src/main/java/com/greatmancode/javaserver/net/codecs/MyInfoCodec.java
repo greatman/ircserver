@@ -17,8 +17,8 @@ public class MyInfoCodec extends Codec {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
 		string.append("004 ").append(conn.getNickname()).append(" ");
-		string.append(Server.getServerName()).append(" ");
-		string.append("JavaIRCServer0.1").append(" ");
+		string.append(Server.getServer().getServerName()).append(" ");
+		string.append(Server.VERSION).append(" ");
 		for (UserModes type : UserModes.values()) {
 			string.append(type);
 		}

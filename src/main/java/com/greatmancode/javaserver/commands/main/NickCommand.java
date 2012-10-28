@@ -8,7 +8,7 @@ import com.greatmancode.javaserver.user.User;
 public class NickCommand implements Command {
 
 	public void run(User conn, String[] args) {
-		User user = Server.getUserHandler().getUser(args[0]);
+		User user = Server.getServer().getUserHandler().getUser(args[0]);
 		if (user == null) {
 			conn.setNickname(args[0]);
 		} else {

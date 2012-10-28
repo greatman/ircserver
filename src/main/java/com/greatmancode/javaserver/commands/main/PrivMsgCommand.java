@@ -11,14 +11,14 @@ public class PrivMsgCommand implements Command {
 
 	public void run(User conn, String[] args) {
 		if (args[0].contains("#")) {
-			Channel chan = Server.getChannelHandler().getChannel(args[0]);
+			Channel chan = Server.getServer().getChannelHandler().getChannel(args[0]);
 			String[] message = new String[args.length - 1];
 			System.arraycopy(args, 1, message, 0, args.length - 1);
 			if (chan != null) {
 				chan.sendMessage(conn, args[1]);
 			}
 		} else {
-			User user = Server.getUserHandler().getUser(args[0]);
+			User user = Server.getServer().getUserHandler().getUser(args[0]);
 			if (user != null) {
 				user.send(new PrivMsgCodec(conn, user, args[1]));
 			} else {

@@ -16,7 +16,7 @@ public class WelcomeCodec extends Codec {
 		StringBuilder string = new StringBuilder();
 		string.append(PREFIX);
 		string.append("001 ").append(conn.getNickname()).append(" :");
-		string.append("Welcome to the ").append(Server.getServerName())
+		string.append("Welcome to the ").append(Server.getServer().getServerName())
 				.append(" Internet Relay Chat Network ")
 				.append(conn.getNickname())
 				.append(", a Java-powered IRC network!");

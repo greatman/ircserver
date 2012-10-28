@@ -29,7 +29,7 @@ public final class CommandManager {
 	
 	private static final Map<String, Command> COMMAND_LIST = new HashMap<String, Command>();
 	public static void run(User conn, String command, String[] args) {
-		Server.getLogger().info(command + " : " + Arrays.toString(args));
+		Server.getServer().getLogger().info(command + " : " + Arrays.toString(args));
 		if (COMMAND_LIST.containsKey(command.toUpperCase())) {
 			COMMAND_LIST.get(command.toUpperCase()).run(conn, args);
 		}

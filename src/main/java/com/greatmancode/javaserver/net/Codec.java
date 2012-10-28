@@ -9,7 +9,7 @@ import com.greatmancode.javaserver.Server;
  */
 public abstract class Codec {
 
-	public static final String PREFIX = ":" + Server.getServerName() + " ";
+	public static final String PREFIX = ":" + Server.getServer().getServerName() + " ";
 	
 	/**
 	 * The codec formatted to be sent.

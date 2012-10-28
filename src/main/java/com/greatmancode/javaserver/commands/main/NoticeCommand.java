@@ -10,7 +10,7 @@ public class NoticeCommand implements Command {
 	@Override
 	public void run(User conn, String[] args) {
 		if (args.length == 2) {
-			User user = Server.getUserHandler().getUser(args[0]);
+			User user = Server.getServer().getUserHandler().getUser(args[0]);
 			if (user != null) {
 				user.send(new NoticeCodec(conn, user, args[1]));
 			}

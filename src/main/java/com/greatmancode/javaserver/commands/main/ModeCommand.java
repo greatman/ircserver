@@ -13,13 +13,13 @@ public class ModeCommand implements Command {
 		if (args.length == 1) {
 			// TODO: Support user modes
 			if (args[0].contains("#")) {
-				if (Server.getChannelHandler().getChannel(args[0]) != null) {
-					conn.send(new ModeChannelCodec(args[0], Server.getChannelHandler().getChannel(args[0]).getModes()));
+				if (Server.getServer().getChannelHandler().getChannel(args[0]) != null) {
+					conn.send(new ModeChannelCodec(args[0], Server.getServer().getChannelHandler().getChannel(args[0]).getModes()));
 				}
 			}
 		} else if (args.length >= 3) {
-			if (args[0].contains("#") && Server.getChannelHandler().getChannel(args[0]) != null) {
-				Channel chan = Server.getChannelHandler().getChannel(args[0]);
+			if (args[0].contains("#") && Server.getServer().getChannelHandler().getChannel(args[0]) != null) {
+				Channel chan = Server.getServer().getChannelHandler().getChannel(args[0]);
 				if (chan.getUserList().containsKey(conn) && chan.getUserList().get(conn).getUserModes().contains(ChannelUserModes.OP)) {
 					if (args[1].contains("+")) {
 						addRemoveModeChannel(args, chan, conn, true);
@@ -42,7 +42,7 @@ public class ModeCommand implements Command {
 		char[] modes = temp[1].toCharArray();
 		for (int i = 0; i < modes.length; i++) {
 			ChannelUserModes mode = ChannelUserModes.get(String.valueOf(modes[i]));
-			User user = Server.getUserHandler().getUser(args[i + 2]);
+			User user = Server.getServer().getUserHandler().getUser(args[i + 2]);
 			if (mode != null && user != null && chan.getUserList().containsKey(user)) {
 				if (add) {
 					chan.addUserMode(conn, user, mode);

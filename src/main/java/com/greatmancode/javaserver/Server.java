@@ -11,6 +11,8 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelException;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
 import com.greatmancode.javaserver.channel.ChannelHandler;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
 import com.greatmancode.javaserver.user.UserHandler;
@@ -20,17 +22,17 @@ public final class Server {
 	/**
 	 * Contains the list of currently used channels.
 	 */
-	private static final ChannelHandler CHANNEL_HANDLER = new ChannelHandler();
+	private final ChannelHandler CHANNEL_HANDLER = new ChannelHandler();
 
 	/**
 	 * The server logger.
 	 */
-	private static final Logger log = Logger.getLogger("ircserver");
+	private final Logger log = Logger.getLogger("ircserver");
 
 	/**
 	 * The user handler.
 	 */
-	private static final UserHandler USER_HANDLER = new UserHandler();
+	private final UserHandler USER_HANDLER = new UserHandler();
 	
 	/**
 	 * The version of the server.
@@ -46,23 +48,32 @@ public final class Server {
 	/**
 	 * Contains the server name.
 	 */
-	private static String serverName = "";
+	@Parameter(names = { "-servername"}, description = "The server name")
+	private String serverName = "irc.network.net";
 
+	
+	private static Server instance = null;
+	
+	@Parameter(names = { "-port", "-p" }, description = "Port to bind to")
+	private int port = 6667;
+	
 	private Server() {
-
+		instance = this;
 	}
 
 	public static void main(String[] args) {
-
-		serverName = "irc.greatmancode.com";
+		new Server();
+		JCommander commands = new JCommander(getServer());
+		commands.parse(args);
+		getServer().getLogger().info("Launching " + VERSION + " for the server " + getServer().getServerName() + ". Please wait.");
 		ServerBootstrap bootstrap = new ServerBootstrap(new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
 		bootstrap.setPipelineFactory(new IRCServerPipelineFactory());
 
 		try {
-			bootstrap.bind(new InetSocketAddress(6667));
-			getLogger().info("Binded to port 6667! Happy IRC! CTRL + C to stop the server.");
+			bootstrap.bind(new InetSocketAddress(getServer().port));
+			getServer().getLogger().info("Binded to port " + getServer().port + "! Happy IRC! CTRL + C to stop the server.");
 		} catch (ChannelException e) {
-			getLogger().log(Level.SEVERE, "Unable to bind to port 6667!", e.getCause());
+			getServer().getLogger().log(Level.SEVERE, "Unable to bind to port " + getServer().port + "!", e.getCause());
 			System.exit(0);
 		}
 	}
@@ -72,7 +83,7 @@ public final class Server {
 	 * 
 	 * @return The server name
 	 */
-	public static String getServerName() {
+	public String getServerName() {
 		return serverName;
 	}
 
@@ -81,7 +92,7 @@ public final class Server {
 	 * 
 	 * @return The user handler.
 	 */
-	public static UserHandler getUserHandler() {
+	public UserHandler getUserHandler() {
 		return USER_HANDLER;
 	}
 
@@ -90,7 +101,7 @@ public final class Server {
 	 * 
 	 * @return The logger.
 	 */
-	public static Logger getLogger() {
+	public Logger getLogger() {
 		return log;
 	}
 
@@ -98,7 +109,11 @@ public final class Server {
 	 * Retrieve the channel handler.
 	 * @return The channel handler.
 	 */
-	public static ChannelHandler getChannelHandler() {
+	public ChannelHandler getChannelHandler() {
 		return CHANNEL_HANDLER;
+	}
+	
+	public static Server getServer() {
+		return instance;
 	}
 }
