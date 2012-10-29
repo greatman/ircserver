@@ -10,6 +10,7 @@ import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
 import com.greatmancode.javaserver.event.events.ChannelUserQuitEvent;
 import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
+import com.greatmancode.javaserver.event.events.UserJoinChannelEvent;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;
@@ -88,7 +89,7 @@ public class Channel {
 					}
 				}
 			}
-			
+
 			if (modes.size() != 0) {
 				Iterator<User> iterator2 = userList.keySet().iterator();
 				while (iterator2.hasNext()) {
@@ -157,21 +158,35 @@ public class Channel {
 		if (userList.containsKey(user)) {
 			return;
 		}
-		user.send(new JoinCodec(user, name));
-		user.send(new NoTopicCodec(user, name));
 
-		Iterator<User> iterator = userList.keySet().iterator();
-		while (iterator.hasNext()) {
-			iterator.next().send(new ChannelJoinCodec(user, this));
-		}
 		ChannelUser chanUser = new ChannelUser();
+		boolean first = false;
 		if (userList.size() == 0) {
 			chanUser.getUserModes().add(ChannelUserMode.OP);
+			first = true;
 		}
-		userList.put(user, chanUser);
 
-		user.send(new NamesCodec(user, this));
-		user.send(new NamesEndCodec(user, this));
+		UserJoinChannelEvent event = (UserJoinChannelEvent) Server.getServer().getEventManager().callEvent(new UserJoinChannelEvent(user, this, chanUser));
+		if (!event.isCancelled()) {
+			if (!first) {
+				Iterator<User> iterator = userList.keySet().iterator();
+				while (iterator.hasNext()) {
+					iterator.next().send(new ChannelJoinCodec(user, this));
+				}
+			}
+
+			user.send(new JoinCodec(user, name));
+			user.send(new NoTopicCodec(user, name));
+
+			userList.put(user, chanUser);
+
+			user.send(new NamesCodec(user, this));
+			user.send(new NamesEndCodec(user, this));
+			
+		} else if (first) {
+			Server.getServer().getChannelHandler().removeChannel(name);
+		}
+
 	}
 
 	/**
@@ -235,7 +250,7 @@ public class Channel {
 
 			}
 		}
-		
+
 	}
 
 	/**
@@ -251,16 +266,16 @@ public class Channel {
 				userList.remove(user);
 				if (reason.equals(ChannelQuitReasons.PART)) {
 					user.send(new ChannelPartCodec(user, this));
-				} else if (reason.equals(ChannelQuitReasons.DISCONNECT)){
+				} else if (reason.equals(ChannelQuitReasons.DISCONNECT)) {
 					user.send(new ChannelQuitCodec(user, this));
 				}
-				
+
 				if (reason.equals(ChannelQuitReasons.PART) || reason.equals(ChannelQuitReasons.DISCONNECT)) {
 					Iterator<User> iterator = userList.keySet().iterator();
 					while (iterator.hasNext()) {
 						if (reason.equals(ChannelQuitReasons.PART)) {
 							iterator.next().send(new ChannelPartCodec(user, this));
-							
+
 						} else if (reason.equals(ChannelQuitReasons.DISCONNECT)) {
 							iterator.next().send(new ChannelQuitCodec(user, this));
 						}
@@ -268,7 +283,7 @@ public class Channel {
 					}
 				}
 			}
-			
+
 			if (userList.size() == 0 && Server.getServer().getChannelHandler().getChannel(name) != null) {
 				Server.getServer().getChannelHandler().removeChannel(name);
 			}
@@ -291,7 +306,7 @@ public class Channel {
 				iterator.next().send(new TopicCodec(user, this));
 			}
 		}
-		
+
 	}
 
 	/**
