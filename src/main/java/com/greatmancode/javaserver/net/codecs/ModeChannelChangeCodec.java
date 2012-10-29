@@ -4,18 +4,18 @@ import java.util.List;
 
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.channel.ChannelMode;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.user.User;
 
 public class ModeChannelChangeCodec extends Codec {
 
-	private final User user;
+	private final Source source;
 	private final Channel chan;
 	private final List<ChannelMode> modes;
 	private final boolean add;
 
-	public ModeChannelChangeCodec(User user, Channel chan, List<ChannelMode> modes, boolean add) {
-		this.user = user;
+	public ModeChannelChangeCodec(Source source, Channel chan, List<ChannelMode> modes, boolean add) {
+		this.source = source;
 		this.chan = chan;
 		this.modes = modes;
 		this.add = add;
@@ -24,7 +24,7 @@ public class ModeChannelChangeCodec extends Codec {
 	@Override
 	public String encode() {
 		StringBuffer string = new StringBuffer();
-		string.append(":").append(user.getReprensentation()).append(" ");
+		string.append(":").append(source.getReprensentation()).append(" ");
 		string.append("MODE").append(" ").append(chan.getName()).append(" ");
 		if (add) {
 			string.append("+");

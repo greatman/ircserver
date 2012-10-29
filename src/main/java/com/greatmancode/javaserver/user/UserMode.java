@@ -1,4 +1,4 @@
-package com.greatmancode.javaserver.channel;
+package com.greatmancode.javaserver.user;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -75,11 +75,7 @@ public class ModeCommand implements Command {
 			ChannelUserMode mode = ChannelUserMode.get(String.valueOf(modes[i]));
 			User user = Server.getServer().getUserHandler().getUser(args[i + 2]);
 			if (mode != null && user != null && chan.getUserList().containsKey(user)) {
-				if (add) {
-					chan.addUserMode(conn, user, mode);
-				} else {
-					chan.removeUserMode(conn, user, mode);
-				}
+				chan.changeUserMode(conn, user, mode, add);
 			}
 		}
 	}

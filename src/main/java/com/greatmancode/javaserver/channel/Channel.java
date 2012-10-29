@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.event.Source;
+import com.greatmancode.javaserver.event.events.channel.ChannelModeChangeEvent;
 import com.greatmancode.javaserver.event.events.channel.ChannelTopicChangeEvent;
+import com.greatmancode.javaserver.event.events.channel.ChannelUserModeChangeEvent;
 import com.greatmancode.javaserver.event.events.channel.ChannelUserQuitEvent;
 import com.greatmancode.javaserver.event.events.channel.UserChannelKickEvent;
 import com.greatmancode.javaserver.event.events.channel.UserChannelMessageEvent;
@@ -60,45 +63,40 @@ public class Channel {
 		return modes;
 	}
 
-	public void removeMode(UserMode mode) {
-		chanModes.remove(mode);
-	}
-
-	public void changeMode(User user, List<ChannelMode> modes, boolean add) {
+	public void changeMode(Source source, List<ChannelMode> modes, boolean add) {
 		if (modes != null) {
-			if (user != null) {
-				if (!userList.get(user).getUserModes().contains(ChannelUserMode.OP)) {
-					return;
-				}
-			}
-			if (add) {
-				Iterator<ChannelMode> iterator = modes.iterator();
-				while (iterator.hasNext()) {
-					ChannelMode mode = iterator.next();
-					if (chanModes.contains(mode)) {
-						iterator.remove();
-					} else {
-						chanModes.add(mode);
+			ChannelModeChangeEvent event = (ChannelModeChangeEvent) Server.getServer().getEventManager().callEvent(new ChannelModeChangeEvent(source, this, modes, add));
+			if (!event.isCancelled()) {
+				if (add) {
+					Iterator<ChannelMode> iterator = modes.iterator();
+					while (iterator.hasNext()) {
+						ChannelMode mode = iterator.next();
+						if (chanModes.contains(mode)) {
+							iterator.remove();
+						} else {
+							chanModes.add(mode);
+						}
+					}
+				} else {
+					Iterator<ChannelMode> iterator = modes.iterator();
+					while (iterator.hasNext()) {
+						ChannelMode mode = iterator.next();
+						if (!chanModes.contains(mode)) {
+							iterator.remove();
+						}
 					}
 				}
-			} else {
-				Iterator<ChannelMode> iterator = modes.iterator();
-				while (iterator.hasNext()) {
-					ChannelMode mode = iterator.next();
-					if (!chanModes.contains(mode)) {
-						iterator.remove();
+
+				if (modes.size() != 0) {
+					Iterator<User> iterator2 = userList.keySet().iterator();
+					while (iterator2.hasNext()) {
+						iterator2.next().send(new ModeChannelChangeCodec(event.getSource(), this, modes, add));
 					}
 				}
-			}
 
-			if (modes.size() != 0) {
-				Iterator<User> iterator2 = userList.keySet().iterator();
-				while (iterator2.hasNext()) {
-					iterator2.next().send(new ModeChannelChangeCodec(user, this, modes, add));
-				}
 			}
-
-		}
+			}
+			
 
 	}
 
@@ -117,35 +115,30 @@ public class Channel {
 	 * @param user The user that is being changed.
 	 * @param mode The mode we want to add to the player.
 	 */
-	public void addUserMode(User changer, User user, ChannelUserMode mode) {
-		if (userList.containsKey(user)) {
-			ChannelUser chanUser = userList.get(user);
-			if (!chanUser.getUserModes().contains(mode)) {
-				chanUser.getUserModes().add(mode);
-				Iterator<User> iterator = userList.keySet().iterator();
-				while (iterator.hasNext()) {
-					iterator.next().send(new ModeUserChannelCodec(changer, user, this, mode, true));
+	public void changeUserMode(Source changer, User user, ChannelUserMode mode, boolean add) {
+		ChannelUser chanUser = userList.get(user);
+		if (chanUser != null) {
+			if (add) {
+				if (!chanUser.getUserModes().contains(mode)) {
+					ChannelUserModeChangeEvent event = (ChannelUserModeChangeEvent) Server.getServer().getEventManager().callEvent(new ChannelUserModeChangeEvent(changer, user, this, mode, add));
+					if (!event.isCancelled()) {
+						chanUser.getUserModes().add(mode);
+						Iterator<User> iterator = userList.keySet().iterator();
+						while (iterator.hasNext()) {
+							iterator.next().send(new ModeUserChannelCodec(changer, user, this, mode, true));
+						}
+					}
 				}
-			}
-		}
-	}
-
-	/**
-	 * Remove a mode to a user in the channel.
-	 * 
-	 * @param changer The user that is changing the mode. If the server set to null.
-	 * @param user The user that is being changed.
-	 * @param mode The mode we want to remove to the player.
-	 */
-	public void removeUserMode(User changer, User user, ChannelUserMode mode) {
-		if (userList.containsKey(user)) {
-			ChannelUser chanUser = userList.get(user);
-			if (chanUser.getUserModes().contains(mode)) {
-				chanUser.getUserModes().remove(mode);
-				Iterator<User> iterator = userList.keySet().iterator();
-				while (iterator.hasNext()) {
-					iterator.next().send(new ModeUserChannelCodec(changer, user, this, mode, false));
-				}
+				
+			} else {
+				ChannelUserModeChangeEvent event = (ChannelUserModeChangeEvent) Server.getServer().getEventManager().callEvent(new ChannelUserModeChangeEvent(changer, user, this, mode, add));
+				if (!event.isCancelled()) {
+					chanUser.getUserModes().remove(mode);
+					Iterator<User> iterator = userList.keySet().iterator();
+					while (iterator.hasNext()) {
+						iterator.next().send(new ModeUserChannelCodec(changer, user, this, mode, false));
+					}
+				}	
 			}
 		}
 	}

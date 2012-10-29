@@ -3,18 +3,18 @@ package com.greatmancode.javaserver.event.events.channel;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.event.Cancellable;
 import com.greatmancode.javaserver.event.Event;
-import com.greatmancode.javaserver.user.User;
+import com.greatmancode.javaserver.event.Source;
 
 public class ChannelTopicChangeEvent extends Event implements Cancellable {
 
-	private User user;
+	private Source source;
 	private Channel channel;
 	private String topic;
 
-	public ChannelTopicChangeEvent(Channel channel, User changer, String topic) {
+	public ChannelTopicChangeEvent(Channel channel, Source source, String topic) {
 		this.channel = channel;
 		this.topic = topic;
-		this.user = changer;
+		this.source = source;
 	}
 
 	@Override
@@ -38,11 +38,11 @@ public class ChannelTopicChangeEvent extends Event implements Cancellable {
 		this.channel = channel;
 	}
 
-	public User getUser() {
-		return user;
+	public Source getSource() {
+		return source;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setSource(Source source) {
+		this.source = source;
 	}
 }

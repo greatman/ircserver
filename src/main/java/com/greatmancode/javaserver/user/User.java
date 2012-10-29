@@ -8,6 +8,7 @@ import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.channel.ChannelQuitReasons;
 import com.greatmancode.javaserver.commands.CommandManager;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.event.events.user.UserAuthedEvent;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
@@ -16,7 +17,8 @@ import com.greatmancode.javaserver.net.codecs.ServerLaunchCodec;
 import com.greatmancode.javaserver.net.codecs.WelcomeCodec;
 import com.greatmancode.javaserver.net.codecs.YourHostCodec;
 
-public class User {
+
+public class User implements Source{
 
 	private final org.jboss.netty.channel.Channel network;
 	private String nickname, realName, host;

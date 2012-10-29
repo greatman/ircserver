@@ -16,10 +16,11 @@ import com.beust.jcommander.Parameter;
 import com.greatmancode.javaserver.channel.ChannelHandler;
 import com.greatmancode.javaserver.event.EventManager;
 import com.greatmancode.javaserver.event.ServerEventListener;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
 import com.greatmancode.javaserver.user.UserHandler;
 
-public final class Server {
+public final class Server implements Source{
 	
 	public static final int DEFAULT_PORT = 6667;
 	private final EventManager eventManager = new EventManager();
@@ -124,5 +125,11 @@ public final class Server {
 
 	public EventManager getEventManager() {
 		return eventManager;
+	}
+
+	//TODO: This
+	@Override
+	public String getReprensentation() {
+		return "";
 	}
 }
