@@ -7,6 +7,7 @@ import com.greatmancode.javaserver.channel.ChannelMode;
 import com.greatmancode.javaserver.channel.ChannelUser;
 import com.greatmancode.javaserver.channel.ChannelUserMode;
 import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
+import com.greatmancode.javaserver.event.events.NewConnectionEvent;
 import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
 
 public class ServerEventListener implements Listener {

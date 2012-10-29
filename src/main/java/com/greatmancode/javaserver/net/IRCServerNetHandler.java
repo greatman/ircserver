@@ -10,6 +10,7 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.commands.CommandManager;
+import com.greatmancode.javaserver.event.events.NewConnectionEvent;
 import com.greatmancode.javaserver.user.User;
 import com.greatmancode.javaserver.utils.Tools;
 
@@ -17,8 +18,14 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
-		ctx.setAttachment(new User(e.getChannel()));
-		Server.getServer().getUserHandler().addUser((User) ctx.getAttachment());
+		NewConnectionEvent event = (NewConnectionEvent) Server.getServer().getEventManager().callEvent(new NewConnectionEvent(e.getChannel()));
+		if (!event.isCancelled()) {
+			ctx.setAttachment(new User(e.getChannel()));
+			Server.getServer().getUserHandler().addUser((User) ctx.getAttachment());
+		} else {
+			event.getChannel().close();
+		}
+		
 	}
 
 	@Override
