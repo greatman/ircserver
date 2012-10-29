@@ -2,12 +2,13 @@ package com.greatmancode.javaserver.event;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.greatmancode.javaserver.plugin.Plugin;
 
 public class EventManager {
 
-	private HashMap<Class<?>, ListenerRegistration> eventList = new HashMap<Class<?>, ListenerRegistration>();
+	private Map<Class<?>, ListenerRegistration> eventList = new HashMap<Class<?>, ListenerRegistration>();
 	
 	public Event callEvent(Event event) {
 		if (eventList.containsKey(event.getClass())) {

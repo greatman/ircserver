@@ -26,31 +26,25 @@ public class ServerEventListener implements Listener {
 		List<ChannelMode> chanModes = event.getChannel().getModes();
 		if (chanModes.contains(ChannelMode.MODERATED)) {
 			ChannelUser chanUser = event.getChannel().getUserList().get(event.getUser());
-			if (chanUser != null) {
-				if (!chanUser.getUserModes().contains(ChannelUserMode.VOICED) && !chanUser.getUserModes().contains(ChannelUserMode.OP)) {
-					event.setCancelled(true);
-				}
+			if (chanUser != null && (!chanUser.getUserModes().contains(ChannelUserMode.VOICED) && !chanUser.getUserModes().contains(ChannelUserMode.OP))) {
+				event.setCancelled(true);
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void channelTopicChangeEvent(ChannelTopicChangeEvent event) {
 		ChannelUser chanUser = event.getChannel().getUserList().get(event.getUser());
-		if (chanUser != null) {
-			if (!chanUser.getUserModes().contains(ChannelUserMode.OP)) {
-				event.setCancelled(true);
-			}
+		if (chanUser != null && !chanUser.getUserModes().contains(ChannelUserMode.OP)) {
+			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler
 	public void userChannelKickEvent(UserChannelKickEvent event) {
 		ChannelUser chanUser = event.getChannel().getUserList().get(event.getKicker());
-		if (chanUser != null) {
-			if (!chanUser.getUserModes().contains(ChannelUserMode.OP)) {
-				event.setCancelled(true);
-			}
+		if (chanUser != null && !chanUser.getUserModes().contains(ChannelUserMode.OP)) {
+			event.setCancelled(true);
 		}
 	}
 }

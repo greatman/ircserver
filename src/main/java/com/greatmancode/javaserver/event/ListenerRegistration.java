@@ -3,11 +3,12 @@ package com.greatmancode.javaserver.event;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class ListenerRegistration {
 
-	private HashMap<Listener, Method> list = new HashMap<Listener, Method>();
+	private Map<Listener, Method> list = new HashMap<Listener, Method>();
 	
 	public void addListener(Listener listener, Method method) {
 		if (listener != null && method != null) {

@@ -21,11 +21,11 @@ import com.greatmancode.javaserver.user.UserHandler;
 
 public final class Server {
 	
-	private final EventManager EVENTMANAGER = new EventManager();
+	private final EventManager eventManager = new EventManager();
 	/**
 	 * Contains the list of currently used channels.
 	 */
-	private final ChannelHandler CHANNEL_HANDLER = new ChannelHandler();
+	private final ChannelHandler channelHandler = new ChannelHandler();
 
 	/**
 	 * The server logger.
@@ -35,7 +35,7 @@ public final class Server {
 	/**
 	 * The user handler.
 	 */
-	private final UserHandler USER_HANDLER = new UserHandler();
+	private final UserHandler userHandler = new UserHandler();
 	
 	/**
 	 * The version of the server.
@@ -97,7 +97,7 @@ public final class Server {
 	 * @return The user handler.
 	 */
 	public UserHandler getUserHandler() {
-		return USER_HANDLER;
+		return userHandler;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public final class Server {
 	 * @return The channel handler.
 	 */
 	public ChannelHandler getChannelHandler() {
-		return CHANNEL_HANDLER;
+		return channelHandler;
 	}
 	
 	public static Server getServer() {
@@ -122,6 +122,6 @@ public final class Server {
 	}
 
 	public EventManager getEventManager() {
-		return EVENTMANAGER;
+		return eventManager;
 	}
 }
