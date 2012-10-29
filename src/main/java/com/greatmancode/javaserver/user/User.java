@@ -8,6 +8,7 @@ import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.channel.ChannelQuitReasons;
 import com.greatmancode.javaserver.commands.CommandManager;
+import com.greatmancode.javaserver.event.events.UserAuthedEvent;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
 import com.greatmancode.javaserver.net.codecs.MyInfoCodec;
@@ -33,6 +34,7 @@ public class User {
 
 	private void confLoggedIn() {
 		if (!loggedIn && this.nickname != null && this.host != null) {
+			Server.getServer().getEventManager().callEvent(new UserAuthedEvent(this));
 			this.send(new WelcomeCodec(this));
 			this.send(new YourHostCodec(this));
 			this.send(new ServerLaunchCodec(this));
