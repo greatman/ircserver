@@ -1,4 +1,4 @@
-package com.greatmancode.javaserver.event.events;
+package com.greatmancode.javaserver.event.events.channel;
 
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.channel.ChannelQuitReasons;

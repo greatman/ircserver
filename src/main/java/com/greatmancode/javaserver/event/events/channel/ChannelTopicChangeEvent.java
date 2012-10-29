@@ -1,29 +1,41 @@
-package com.greatmancode.javaserver.event.events;
+package com.greatmancode.javaserver.event.events.channel;
 
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.event.Cancellable;
 import com.greatmancode.javaserver.event.Event;
 import com.greatmancode.javaserver.user.User;
 
-//TODO: Make so channel can be non-final.
-public class UserChannelMessageEvent extends Event implements Cancellable{
+public class ChannelTopicChangeEvent extends Event implements Cancellable {
 
 	private User user;
-	private final Channel channel;
-	private String message;
-	public UserChannelMessageEvent(User user, Channel channel, String message) {
-		this.user = user;
+	private Channel channel;
+	private String topic;
+
+	public ChannelTopicChangeEvent(Channel channel, User changer, String topic) {
 		this.channel = channel;
-		this.message = message;
+		this.topic = topic;
+		this.user = changer;
 	}
-	
+
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
 	}
-	
+
+	public String getTopic() {
+		return topic;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
 	public Channel getChannel() {
 		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 
 	public User getUser() {
@@ -32,13 +44,5 @@ public class UserChannelMessageEvent extends Event implements Cancellable{
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 }

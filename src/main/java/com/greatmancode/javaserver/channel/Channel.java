@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.greatmancode.javaserver.Server;
-import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
-import com.greatmancode.javaserver.event.events.ChannelUserQuitEvent;
-import com.greatmancode.javaserver.event.events.UserChannelKickEvent;
-import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
-import com.greatmancode.javaserver.event.events.UserJoinChannelEvent;
+import com.greatmancode.javaserver.event.events.channel.ChannelTopicChangeEvent;
+import com.greatmancode.javaserver.event.events.channel.ChannelUserQuitEvent;
+import com.greatmancode.javaserver.event.events.channel.UserChannelKickEvent;
+import com.greatmancode.javaserver.event.events.channel.UserChannelMessageEvent;
+import com.greatmancode.javaserver.event.events.channel.UserJoinChannelEvent;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;

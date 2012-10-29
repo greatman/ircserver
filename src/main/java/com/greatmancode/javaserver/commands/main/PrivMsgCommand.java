@@ -3,7 +3,7 @@ package com.greatmancode.javaserver.commands.main;
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.commands.Command;
-import com.greatmancode.javaserver.event.events.UserPrivateMessageEvent;
+import com.greatmancode.javaserver.event.events.user.UserPrivateMessageEvent;
 import com.greatmancode.javaserver.net.codecs.NoSuchNicknameChannelCodec;
 import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
 import com.greatmancode.javaserver.user.User;

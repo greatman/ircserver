@@ -8,7 +8,7 @@ import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.channel.ChannelQuitReasons;
 import com.greatmancode.javaserver.commands.CommandManager;
-import com.greatmancode.javaserver.event.events.UserAuthedEvent;
+import com.greatmancode.javaserver.event.events.user.UserAuthedEvent;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
 import com.greatmancode.javaserver.net.codecs.MyInfoCodec;

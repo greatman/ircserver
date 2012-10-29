@@ -1,4 +1,4 @@
-package com.greatmancode.javaserver.event.events;
+package com.greatmancode.javaserver.event.events.user;
 
 import com.greatmancode.javaserver.event.Cancellable;
 import com.greatmancode.javaserver.event.Event;

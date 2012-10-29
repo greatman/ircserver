@@ -1,4 +1,4 @@
-package com.greatmancode.javaserver.event.events;
+package com.greatmancode.javaserver.event.events.user;
 
 import com.greatmancode.javaserver.event.Event;
 import com.greatmancode.javaserver.user.User;
