@@ -14,11 +14,14 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.greatmancode.javaserver.channel.ChannelHandler;
+import com.greatmancode.javaserver.event.EventManager;
+import com.greatmancode.javaserver.event.ServerEventListener;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
 import com.greatmancode.javaserver.user.UserHandler;
 
 public final class Server {
 	
+	private final EventManager EVENTMANAGER = new EventManager();
 	/**
 	 * Contains the list of currently used channels.
 	 */
@@ -59,6 +62,7 @@ public final class Server {
 	
 	private Server() {
 		instance = this;
+		new ServerEventListener();
 	}
 
 	public static void main(String[] args) {
@@ -115,5 +119,9 @@ public final class Server {
 	
 	public static Server getServer() {
 		return instance;
+	}
+
+	public EventManager getEventManager() {
+		return EVENTMANAGER;
 	}
 }

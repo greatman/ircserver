@@ -221,9 +221,6 @@ public class Channel {
 	 * @param message The message to send to all the users.
 	 */
 	public void sendMessage(User user, String message) {
-		if (chanModes.contains(ChannelMode.MODERATED) && (!userList.get(user).getUserModes().contains(ChannelUserMode.VOICED) && !userList.get(user).getUserModes().contains(ChannelUserMode.OP))) {
-			return;
-		}
 		Iterator<User> iterator = userList.keySet().iterator();
 		while (iterator.hasNext()) {
 			User receiver = iterator.next();
