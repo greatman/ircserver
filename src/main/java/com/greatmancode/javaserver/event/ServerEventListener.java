@@ -7,6 +7,7 @@ import com.greatmancode.javaserver.channel.ChannelMode;
 import com.greatmancode.javaserver.channel.ChannelUser;
 import com.greatmancode.javaserver.channel.ChannelUserMode;
 import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
+import com.greatmancode.javaserver.event.events.UserChannelKickEvent;
 import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
 
 public class ServerEventListener implements Listener {
@@ -36,6 +37,16 @@ public class ServerEventListener implements Listener {
 	@EventHandler
 	public void channelTopicChangeEvent(ChannelTopicChangeEvent event) {
 		ChannelUser chanUser = event.getChannel().getUserList().get(event.getUser());
+		if (chanUser != null) {
+			if (!chanUser.getUserModes().contains(ChannelUserMode.OP)) {
+				event.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void userChannelKickEvent(UserChannelKickEvent event) {
+		ChannelUser chanUser = event.getChannel().getUserList().get(event.getKicker());
 		if (chanUser != null) {
 			if (!chanUser.getUserModes().contains(ChannelUserMode.OP)) {
 				event.setCancelled(true);

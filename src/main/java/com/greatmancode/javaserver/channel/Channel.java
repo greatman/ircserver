@@ -9,6 +9,7 @@ import java.util.Map;
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
 import com.greatmancode.javaserver.event.events.ChannelUserQuitEvent;
+import com.greatmancode.javaserver.event.events.UserChannelKickEvent;
 import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
 import com.greatmancode.javaserver.event.events.UserJoinChannelEvent;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
@@ -216,11 +217,15 @@ public class Channel {
 	 * @param reason The reason of the kick
 	 */
 	public void kickUser(User kicker, User kicked, String reason) {
-		Iterator<User> iterator = userList.keySet().iterator();
-		while (iterator.hasNext()) {
-			iterator.next().send(new KickCodec(kicker, kicked, this, reason));
+		UserChannelKickEvent event = (UserChannelKickEvent) Server.getServer().getEventManager().callEvent(new UserChannelKickEvent(kicker, kicked, this, reason));
+		if (!event.isCancelled()) {
+			Iterator<User> iterator = userList.keySet().iterator();
+			while (iterator.hasNext()) {
+				iterator.next().send(new KickCodec(kicker, kicked, this, reason));
+			}
+			removeUser(kicked, ChannelQuitReasons.KICKED);
 		}
-		removeUser(kicked, ChannelQuitReasons.KICKED);
+		
 	}
 
 	/**
