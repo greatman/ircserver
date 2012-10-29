@@ -21,6 +21,7 @@ import com.greatmancode.javaserver.user.UserHandler;
 
 public final class Server {
 	
+	public static final int DEFAULT_PORT = 6667;
 	private final EventManager eventManager = new EventManager();
 	/**
 	 * Contains the list of currently used channels.
@@ -58,7 +59,7 @@ public final class Server {
 	private static Server instance = null;
 	
 	@Parameter(names = { "-port", "-p" }, description = "Port to bind to")
-	private int port = 6667;
+	private int port = DEFAULT_PORT;
 	
 	private Server() {
 		instance = this;
