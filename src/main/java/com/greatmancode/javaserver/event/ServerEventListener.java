@@ -38,7 +38,6 @@ public class ServerEventListener implements Listener {
 		ChannelUser chanUser = event.getChannel().getUserList().get(event.getUser());
 		if (chanUser != null) {
 			if (!chanUser.getUserModes().contains(ChannelUserMode.OP)) {
-				System.out.println("HE ISIN'T OP!");
 				event.setCancelled(true);
 			}
 		}

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
+import com.greatmancode.javaserver.channel.ChannelQuitReasons;
 import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
@@ -75,7 +76,7 @@ public class User {
 
 	public void disconnect() {
 		for (Channel channel : Server.getServer().getChannelHandler().getUserChannels(this)) {
-				channel.removeUser(this, true);
+				channel.removeUser(this, ChannelQuitReasons.DISCONNECT);
 		}
 		Server.getServer().getUserHandler().removeUser(this);
 		network.close();

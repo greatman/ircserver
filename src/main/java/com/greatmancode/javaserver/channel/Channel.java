@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
+import com.greatmancode.javaserver.event.events.ChannelUserQuitEvent;
 import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
@@ -204,7 +205,7 @@ public class Channel {
 		while (iterator.hasNext()) {
 			iterator.next().send(new KickCodec(kicker, kicked, this, reason));
 		}
-		userList.remove(kicked);
+		removeUser(kicked, ChannelQuitReasons.KICKED);
 	}
 
 	/**
@@ -243,28 +244,35 @@ public class Channel {
 	 * @param user The user to remove
 	 * @param disconnect If the user is disconnecting or not.
 	 */
-	public void removeUser(User user, boolean disconnect) {
-		if (userList.containsKey(user)) {
-			userList.remove(user);
-		}
-		if (!disconnect) {
-			user.send(new ChannelPartCodec(user, this));
-		} else {
-			user.send(new ChannelQuitCodec(user, this));
-		}
-		Iterator<User> iterator = userList.keySet().iterator();
-		while (iterator.hasNext()) {
-			if (disconnect) {
-				iterator.next().send(new ChannelQuitCodec(user, this));
-			} else {
-				iterator.next().send(new ChannelPartCodec(user, this));
+	public void removeUser(User user, ChannelQuitReasons reason) {
+		if (user != null && reason != null) {
+			Server.getServer().getEventManager().callEvent(new ChannelUserQuitEvent(user, this, reason));
+			if (userList.containsKey(user)) {
+				userList.remove(user);
+				if (reason.equals(ChannelQuitReasons.PART)) {
+					user.send(new ChannelPartCodec(user, this));
+				} else if (reason.equals(ChannelQuitReasons.DISCONNECT)){
+					user.send(new ChannelQuitCodec(user, this));
+				}
+				
+				if (reason.equals(ChannelQuitReasons.PART) || reason.equals(ChannelQuitReasons.DISCONNECT)) {
+					Iterator<User> iterator = userList.keySet().iterator();
+					while (iterator.hasNext()) {
+						if (reason.equals(ChannelQuitReasons.PART)) {
+							iterator.next().send(new ChannelPartCodec(user, this));
+							
+						} else if (reason.equals(ChannelQuitReasons.DISCONNECT)) {
+							iterator.next().send(new ChannelQuitCodec(user, this));
+						}
+
+					}
+				}
 			}
-
+			
+			if (userList.size() == 0 && Server.getServer().getChannelHandler().getChannel(name) != null) {
+				Server.getServer().getChannelHandler().removeChannel(name);
+			}
 		}
-		if (userList.size() == 0 && Server.getServer().getChannelHandler().getChannel(name) != null) {
-			Server.getServer().getChannelHandler().removeChannel(name);
-		}
-
 	}
 
 	/**
