@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.ChannelMode;
+import com.greatmancode.javaserver.channel.ChannelUser;
 import com.greatmancode.javaserver.channel.ChannelUserMode;
+import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
 import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
 
 public class ServerEventListener implements Listener {
@@ -20,10 +22,25 @@ public class ServerEventListener implements Listener {
 
 	@EventHandler
 	public void userChannelMessageEvent(UserChannelMessageEvent event) {
-		System.out.println("ENTERED HERE");
 		List<ChannelMode> chanModes = event.getChannel().getModes();
-		if (chanModes.contains(ChannelMode.MODERATED) && (!event.getChannel().getUserList().get(event.getUser()).getUserModes().contains(ChannelUserMode.VOICED) && !event.getChannel().getUserList().get(event.getUser()).getUserModes().contains(ChannelUserMode.OP))) {
-			event.setCancelled(true);
+		if (chanModes.contains(ChannelMode.MODERATED)) {
+			ChannelUser chanUser = event.getChannel().getUserList().get(event.getUser());
+			if (chanUser != null) {
+				if (!chanUser.getUserModes().contains(ChannelUserMode.VOICED) && !chanUser.getUserModes().contains(ChannelUserMode.OP)) {
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void channelTopicChangeEvent(ChannelTopicChangeEvent event) {
+		ChannelUser chanUser = event.getChannel().getUserList().get(event.getUser());
+		if (chanUser != null) {
+			if (!chanUser.getUserModes().contains(ChannelUserMode.OP)) {
+				System.out.println("HE ISIN'T OP!");
+				event.setCancelled(true);
+			}
 		}
 	}
 }

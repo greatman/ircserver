@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.event.events.ChannelTopicChangeEvent;
+import com.greatmancode.javaserver.event.events.UserChannelMessageEvent;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;
@@ -221,14 +223,18 @@ public class Channel {
 	 * @param message The message to send to all the users.
 	 */
 	public void sendMessage(User user, String message) {
-		Iterator<User> iterator = userList.keySet().iterator();
-		while (iterator.hasNext()) {
-			User receiver = iterator.next();
-			if (!receiver.equals(user)) {
-				receiver.send(new PrivMsgCodec(user, this, message));
-			}
+		UserChannelMessageEvent event = (UserChannelMessageEvent) Server.getServer().getEventManager().callEvent(new UserChannelMessageEvent(user, this, message));
+		if (!event.isCancelled()) {
+			Iterator<User> iterator = userList.keySet().iterator();
+			while (iterator.hasNext()) {
+				User receiver = iterator.next();
+				if (!receiver.equals(user)) {
+					receiver.send(new PrivMsgCodec(user, this, message));
+				}
 
+			}
 		}
+		
 	}
 
 	/**
@@ -269,11 +275,15 @@ public class Channel {
 	 */
 	// TODO: Support server
 	public void setTopic(User user, String topic) {
-		this.topic = topic;
-		Iterator<User> iterator = userList.keySet().iterator();
-		while (iterator.hasNext()) {
-			iterator.next().send(new TopicCodec(user, this));
+		ChannelTopicChangeEvent event = (ChannelTopicChangeEvent) Server.getServer().getEventManager().callEvent(new ChannelTopicChangeEvent(this, user, topic));
+		if (!event.isCancelled()) {
+			this.topic = topic;
+			Iterator<User> iterator = userList.keySet().iterator();
+			while (iterator.hasNext()) {
+				iterator.next().send(new TopicCodec(user, this));
+			}
 		}
+		
 	}
 
 	/**
