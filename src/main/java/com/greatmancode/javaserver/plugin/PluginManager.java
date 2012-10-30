@@ -22,11 +22,12 @@ import com.greatmancode.javaserver.Server;
 
 public class PluginManager {
 
-	private Map<String, Plugin> pluginList = new HashMap<String,Plugin>();
+	private Map<String, Plugin> pluginList = new HashMap<String, Plugin>();
 	public static final File PLUGIN_FOLDER = new File(".", "plugins");
 	private URLClassLoader cl = null;
 
 	public PluginManager() {
+		System.out.println(PLUGIN_FOLDER.toString());
 		PLUGIN_FOLDER.mkdirs();
 		loadPlugins();
 	}
@@ -36,21 +37,21 @@ public class PluginManager {
 		for (File file : fileList) {
 			if (file.getName().contains(".jar")) {
 				try {
+					System.out.println("ENTERING FILE:" + file.getName());
 					URL url = file.toURI().toURL();
 					URL[] urls = new URL[] { url };
-					if (cl == null) {
-						cl = URLClassLoader.newInstance(urls);
-					}
-					InputStream configurationFile = cl.getResourceAsStream(url.toString());
-					if (configurationFile != null){
+					URLClassLoader tempClassLoader = URLClassLoader.newInstance(urls);
+					InputStream configurationFile = tempClassLoader.getResourceAsStream("plugin.xml");
+					if (configurationFile != null) {
 						DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 						DocumentBuilder db = dbf.newDocumentBuilder();
 						Document doc = db.parse(configurationFile);
 						doc.getDocumentElement().normalize();
 						String pluginName = null, description = null, mainClass = null;
-						NodeList nodeList = doc.getChildNodes();
+						NodeList nodeList = doc.getElementsByTagName("*");
 						if (nodeList.getLength() == 4) {
-							for (int i = 0; i < nodeList.getLength(); i++ ) {
+							for (int i = 0; i < nodeList.getLength(); i++) {
+								System.out.println(nodeList.item(i).getNodeName());
 								Node node = nodeList.item(i);
 								if (node.getNodeName().equals("name")) {
 									pluginName = node.getNodeValue();
@@ -59,8 +60,10 @@ public class PluginManager {
 								} else if (node.getNodeName().equals("mainClass")) {
 									mainClass = node.getNodeValue();
 								}
+								System.out.println(node.getNodeValue());
 							}
 							if (pluginName != null && description != null && mainClass != null) {
+								cl = URLClassLoader.newInstance(urls);
 								Class<?> clazz = cl.loadClass(mainClass);
 								if (Plugin.class.isAssignableFrom(clazz)) {
 									Plugin pl = (Plugin) clazz.newInstance();
@@ -71,13 +74,14 @@ public class PluginManager {
 									pl.onEnable();
 									pluginList.put(pl.name, pl);
 								} else {
-									
+
 								}
-								
+
 							} else {
 								Server.getServer().getLogger().severe("Missing information in the plugin configuration file for plugin " + file.getName());
 							}
 						} else {
+							System.out.println(nodeList.getLength());
 							Server.getServer().getLogger().severe("Invalid plugin configuration for the plugin " + file.getName());
 						}
 					} else {
@@ -112,6 +116,5 @@ public class PluginManager {
 			}
 		}
 
-		
 	}
 }

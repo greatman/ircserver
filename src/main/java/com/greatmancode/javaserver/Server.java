@@ -37,11 +37,13 @@ import com.greatmancode.javaserver.event.EventManager;
 import com.greatmancode.javaserver.event.ServerEventListener;
 import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
+import com.greatmancode.javaserver.plugin.PluginManager;
 import com.greatmancode.javaserver.user.UserHandler;
 
 public final class Server implements Source{
 	
 	public static final int DEFAULT_PORT = 6667;
+	
 	private final EventManager eventManager = new EventManager();
 	/**
 	 * Contains the list of currently used channels.
@@ -75,6 +77,7 @@ public final class Server implements Source{
 	@Parameter(names = { "-servername"}, description = "The server name")
 	private String serverName = "irc.network.net";
 
+	private PluginManager pluginManager = null;
 	
 	private static Server instance = null;
 	
@@ -84,6 +87,7 @@ public final class Server implements Source{
 	private Server() {
 		instance = this;
 		new ServerEventListener();
+		pluginManager = new PluginManager();
 	}
 
 	public static void main(String[] args) {
@@ -150,5 +154,9 @@ public final class Server implements Source{
 	@Override
 	public String getReprensentation() {
 		return "";
+	}
+
+	public PluginManager getPluginManager() {
+		return pluginManager;
 	}
 }

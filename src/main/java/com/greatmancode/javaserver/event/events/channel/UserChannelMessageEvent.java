@@ -22,16 +22,16 @@ package com.greatmancode.javaserver.event.events.channel;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.event.Cancellable;
 import com.greatmancode.javaserver.event.Event;
-import com.greatmancode.javaserver.user.User;
+import com.greatmancode.javaserver.event.Source;
 
 //TODO: Make so channel can be non-final.
 public class UserChannelMessageEvent extends Event implements Cancellable{
 
-	private User user;
+	private Source source;
 	private final Channel channel;
 	private String message;
-	public UserChannelMessageEvent(User user, Channel channel, String message) {
-		this.user = user;
+	public UserChannelMessageEvent(Source source, Channel channel, String message) {
+		this.source = source;
 		this.channel = channel;
 		this.message = message;
 	}
@@ -45,12 +45,12 @@ public class UserChannelMessageEvent extends Event implements Cancellable{
 		return channel;
 	}
 
-	public User getUser() {
-		return user;
+	public Source getSource() {
+		return source;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setSource(Source source) {
+		this.source = source;
 	}
 
 	public String getMessage() {

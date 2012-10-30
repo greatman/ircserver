@@ -46,7 +46,7 @@ public class ServerEventListener implements Listener {
 	public void userChannelMessageEvent(UserChannelMessageEvent event) {
 		List<ChannelMode> chanModes = event.getChannel().getModes();
 		if (chanModes.contains(ChannelMode.MODERATED)) {
-			ChannelUser chanUser = event.getChannel().getUserList().get(event.getUser());
+			ChannelUser chanUser = event.getChannel().getUserList().get(event.getSource());
 			if (chanUser != null && (!chanUser.getUserModes().contains(ChannelUserMode.VOICED) && !chanUser.getUserModes().contains(ChannelUserMode.OP))) {
 				event.setCancelled(true);
 			}
