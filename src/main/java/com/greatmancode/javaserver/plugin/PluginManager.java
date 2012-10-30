@@ -9,6 +9,7 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarFile;
+import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -30,7 +31,6 @@ public class PluginManager {
 	private URLClassLoader cl = null;
 
 	public PluginManager() {
-		System.out.println(PLUGIN_FOLDER.toString());
 		PLUGIN_FOLDER.mkdirs();
 		loadPlugins();
 	}
@@ -94,7 +94,6 @@ public class PluginManager {
 								Server.getServer().getLogger().severe("Missing information in the plugin configuration file for plugin " + file.getName());
 							}
 						} else {
-							System.out.println(nodeList.getLength());
 							Server.getServer().getLogger().severe("Invalid plugin configuration for the plugin " + file.getName());
 						}
 					} else {
@@ -102,27 +101,21 @@ public class PluginManager {
 					}
 					jarFile.close();
 				} catch (MalformedURLException e) {
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "Malformed URL for plugin : " + file.getName(), e.getCause());
 				} catch (ParserConfigurationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "Unable to parse the plugin.xml for plugin : " + file.getName(), e.getCause());
 				} catch (SAXException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "SAX exception for plugin : " + file.getName(), e.getCause());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "IO exception for plugin : " + file.getName(), e.getCause());
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "Main class for plugin : " + file.getName() + " not found!", e.getCause());
 				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "Unable to instantiate the mainClass for plugin : " + file.getName(), e.getCause());
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "Illegal access for plugin : " + file.getName(), e.getCause());
 				} catch (Exception e) {
-					e.printStackTrace();
+					Server.getServer().getLogger().log(Level.SEVERE, "General exception for plugin : " + file.getName(), e.getCause());
 				}
 
 			}
