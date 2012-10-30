@@ -25,10 +25,8 @@ import com.greatmancode.javaserver.Server;
 
 public abstract class Plugin {
 
-	private File dataFolder;
-	protected Plugin(String name) {
-		dataFolder = new File(".", "plugins" + File.separator + name);
-	}
+	protected File dataFolder;
+	protected String description, name;
 	
 	public abstract void onDisable();
 	public abstract void onEnable();
@@ -39,5 +37,13 @@ public abstract class Plugin {
 	
 	public Server getServer() {
 		return Server.getServer();
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }
