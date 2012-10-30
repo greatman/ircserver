@@ -19,6 +19,25 @@
  */
 package com.greatmancode.javaserver.plugin;
 
-public class Plugin {
+import java.io.File;
 
+import com.greatmancode.javaserver.Server;
+
+public abstract class Plugin {
+
+	private File dataFolder;
+	protected Plugin(String name) {
+		dataFolder = new File(".", "plugins" + File.separator + name);
+	}
+	
+	public abstract void onDisable();
+	public abstract void onEnable();
+	
+	public File getDataFolder() {
+		return dataFolder;
+	}
+	
+	public Server getServer() {
+		return Server.getServer();
+	}
 }
