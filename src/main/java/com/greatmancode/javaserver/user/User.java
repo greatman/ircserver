@@ -29,6 +29,8 @@ import com.greatmancode.javaserver.channel.ChannelQuitReasons;
 import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.event.events.user.UserAuthedEvent;
+import com.greatmancode.javaserver.event.events.user.UserChangeNickEvent;
+import com.greatmancode.javaserver.event.events.user.UserChangeRealnameEvent;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
 import com.greatmancode.javaserver.net.codecs.MyInfoCodec;
@@ -48,9 +50,12 @@ public class User implements Source{
 		return nickname;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-		confLoggedIn();
+	public void setNickname(Source source, String nickname) {
+		UserChangeNickEvent event = (UserChangeNickEvent) Server.getServer().getEventManager().callEvent(new UserChangeNickEvent(source, this, nickname));
+		if (!event.isCancelled()) {
+			this.nickname = nickname;
+			confLoggedIn();
+		}
 	}
 
 	private void confLoggedIn() {
@@ -84,16 +89,19 @@ public class User implements Source{
 		return realName;
 	}
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-		confLoggedIn();
+	public void setRealName(Source source, String realName) {
+		UserChangeRealnameEvent event = (UserChangeRealnameEvent) Server.getServer().getEventManager().callEvent(new UserChangeRealnameEvent(source, this, realName));
+		if (!event.isCancelled()) {
+			this.realName = realName;
+			confLoggedIn();
+		}
 	}
 
 	public String getHost() {
 		return host;
 	}
 
-	public void setHost(String host) {
+	protected void setHost(String host) {
 		this.host = host;
 	}
 

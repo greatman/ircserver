@@ -25,7 +25,7 @@ import com.greatmancode.javaserver.user.User;
 public class UserCommand implements Command {
 
 	public void run(User conn, String[] args) {
-		conn.setRealName(args[0]);
+		conn.setRealName(conn, args[0]);
 	}
 
 }
