@@ -6,7 +6,7 @@
 	<artifactId>javaserver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
+	<inceptionYear>2011</inceptionYear>
 	<name>javaserver</name>
 	<url>http://maven.apache.org</url>
 
@@ -88,6 +88,42 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.10.b1</version>
+				<executions>
+					<execution>
+						<phase>clean</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<quiet>false</quiet>
+					<encoding>UTF-8</encoding>
+					<strictCheck>true</strictCheck>
+					<header>${basedir}/HEADER.txt</header>
+					<keywords>
+						<keyword>${project.name}</keyword>
+						<keyword>license</keyword>
+					</keywords>
+					<mapping>
+						<java>SLASHSTAR_STYLE</java>
+					</mapping>
+					<properties>
+						<name>${project.name}</name>
+						<url>${project.organization.url}</url>
+						<copyright>Copyright (c) ${project.inceptionYear}-2012,
+							${project.organization.name}</copyright>
+					</properties>
+					<includes>
+						<include>src/main/java/**</include>
+						<include>src/test/java/**</include>
+					</includes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
