@@ -26,9 +26,12 @@ public final class Tools {
 	}
 	
 	public static String makeNiceCommand(String line) {
-
-		String[] parts = line.split(":");
-		return parts[0].split(" ")[0];
+		if (line != null) {
+			String[] parts = line.split(":");
+			return parts[0].split(" ")[0];
+		} else {
+			return null;
+		}
 	}
 
 	public static String[] makeNiceArguments(String line) {
