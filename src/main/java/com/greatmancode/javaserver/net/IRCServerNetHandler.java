@@ -28,7 +28,6 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
 import com.greatmancode.javaserver.Server;
-import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.event.events.NewConnectionEvent;
 import com.greatmancode.javaserver.user.User;
 import com.greatmancode.javaserver.utils.Tools;
@@ -52,7 +51,7 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 		String line = (String) e.getMessage();
 		String cmd = Tools.makeNiceCommand(line);
 		String[] args = Tools.makeNiceArguments(line);
-		CommandManager.run((User) ctx.getAttachment(), cmd, args);
+		Server.getServer().getCommandManager().run((User) ctx.getAttachment(), cmd, args);
 	}
 
 	@Override

@@ -33,6 +33,21 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.greatmancode.javaserver.channel.ChannelHandler;
+import com.greatmancode.javaserver.commands.CommandManager;
+import com.greatmancode.javaserver.commands.main.JoinCommand;
+import com.greatmancode.javaserver.commands.main.KickCommand;
+import com.greatmancode.javaserver.commands.main.LUsersCommand;
+import com.greatmancode.javaserver.commands.main.ModeCommand;
+import com.greatmancode.javaserver.commands.main.MotdCommand;
+import com.greatmancode.javaserver.commands.main.NickCommand;
+import com.greatmancode.javaserver.commands.main.NoticeCommand;
+import com.greatmancode.javaserver.commands.main.PartCommand;
+import com.greatmancode.javaserver.commands.main.PingCommand;
+import com.greatmancode.javaserver.commands.main.PrivMsgCommand;
+import com.greatmancode.javaserver.commands.main.QuitCommand;
+import com.greatmancode.javaserver.commands.main.TopicCommand;
+import com.greatmancode.javaserver.commands.main.UserCommand;
+import com.greatmancode.javaserver.commands.main.WhoCommand;
 import com.greatmancode.javaserver.event.EventManager;
 import com.greatmancode.javaserver.event.ServerEventListener;
 import com.greatmancode.javaserver.event.Source;
@@ -50,6 +65,8 @@ public final class Server implements Source{
 	 */
 	private final ChannelHandler channelHandler = new ChannelHandler();
 
+	
+	private final CommandManager commandManager = new CommandManager();
 	/**
 	 * The server logger.
 	 */
@@ -87,6 +104,20 @@ public final class Server implements Source{
 	private Server() {
 		instance = this;
 		new ServerEventListener();
+		getCommandManager().registerCommand("USER", new UserCommand());
+		getCommandManager().registerCommand("NICK", new NickCommand());
+		getCommandManager().registerCommand("JOIN", new JoinCommand());
+		getCommandManager().registerCommand("MODE", new ModeCommand());
+		getCommandManager().registerCommand("WHO", new WhoCommand());
+		getCommandManager().registerCommand("PRIVMSG", new PrivMsgCommand());
+		getCommandManager().registerCommand("QUIT", new QuitCommand());
+		getCommandManager().registerCommand("PING", new PingCommand());
+		getCommandManager().registerCommand("PART", new PartCommand());
+		getCommandManager().registerCommand("LUSERS", new LUsersCommand());
+		getCommandManager().registerCommand("KICK", new KickCommand());
+		getCommandManager().registerCommand("TOPIC", new TopicCommand());
+		getCommandManager().registerCommand("MOTD", new MotdCommand());
+		getCommandManager().registerCommand("NOTICE", new NoticeCommand());
 		pluginManager = new PluginManager();
 	}
 
@@ -158,5 +189,9 @@ public final class Server implements Source{
 
 	public PluginManager getPluginManager() {
 		return pluginManager;
+	}
+	
+	public CommandManager getCommandManager() {
+		return commandManager;
 	}
 }

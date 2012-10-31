@@ -26,7 +26,6 @@ import java.util.List;
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.channel.ChannelQuitReasons;
-import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.event.events.user.UserAuthedEvent;
 import com.greatmancode.javaserver.event.events.user.UserChangeNickEvent;
@@ -66,8 +65,8 @@ public class User implements Source{
 			this.send(new ServerLaunchCodec(this));
 			this.send(new MyInfoCodec(this));
 			this.send(new IsSupportCodec(this));
-			CommandManager.run(this, "LUSERS", null);
-			CommandManager.run(this, "MOTD", null);
+			Server.getServer().getCommandManager().run(this, "LUSERS", null);
+			Server.getServer().getCommandManager().run(this, "MOTD", null);
 			loggedIn = true;
 		}
 	}
