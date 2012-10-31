@@ -29,12 +29,12 @@ import com.greatmancode.javaserver.util.exceptions.command.CommandAlreadyRegiste
 
 public final class CommandManager {
 	
-	private final Map<String, Command> COMMAND_LIST = new HashMap<String, Command>();
+	private final Map<String, Command> commandManager = new HashMap<String, Command>();
 	
 	public void run(User conn, String command, String[] args) {
 		Server.getServer().getLogger().info(command + " : " + Arrays.toString(args));
-		if (COMMAND_LIST.containsKey(command.toUpperCase())) {
-			COMMAND_LIST.get(command.toUpperCase()).run(conn, args);
+		if (commandManager.containsKey(command.toUpperCase())) {
+			commandManager.get(command.toUpperCase()).run(conn, args);
 		}
 	}
 	
@@ -47,8 +47,8 @@ public final class CommandManager {
 	 */
 	public void registerCommand(String commandName, Command command) {
 		if (commandName != null && !commandName.equals("") && command != null) {
-			if (!COMMAND_LIST.containsKey(commandName.toUpperCase())) {
-				COMMAND_LIST.put(commandName.toUpperCase(), command);
+			if (!commandManager.containsKey(commandName.toUpperCase())) {
+				commandManager.put(commandName.toUpperCase(), command);
 			} else {
 				throw new CommandAlreadyRegisteredException();
 			}

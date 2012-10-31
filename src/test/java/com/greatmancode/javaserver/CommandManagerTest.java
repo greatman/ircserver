@@ -38,4 +38,10 @@ public class CommandManagerTest {
 		CommandManager cmd = new CommandManager();
 		cmd.registerCommand("", new JoinCommand());
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testIllegalArgumentExceptionValidStringNull() {
+		CommandManager cmd = new CommandManager();
+		cmd.registerCommand("join", null);
+	}
 }
