@@ -20,16 +20,18 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.channel.Channel;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.user.User;
 
 public class KickCodec extends Codec {
 
-	private final User operator, kicked;
+	private final Source operator;
+	private final User kicked;
 	private final Channel chan;
 	private final String reason;
 
-	public KickCodec(User operator, User kicked, Channel chan,
+	public KickCodec(Source operator, User kicked, Channel chan,
 			String reason) {
 		this.operator = operator;
 		this.kicked = kicked;

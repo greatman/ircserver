@@ -21,15 +21,17 @@ package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.channel.Channel;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.user.User;
 
 public class WhoCodec extends Codec {
 
-	private final User conn, connMember;
+	private final Source conn;
+	private final User connMember;
 	private final Channel chan;
 
-	public WhoCodec(User conn, User connMember, Channel chan) {
+	public WhoCodec(Source conn, User connMember, Channel chan) {
 		this.conn = conn;
 		this.chan = chan;
 		this.connMember = connMember;

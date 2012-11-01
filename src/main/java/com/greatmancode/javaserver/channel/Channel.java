@@ -217,7 +217,7 @@ public class Channel {
 	 * @param kicker The kicker.
 	 * @param kicked The kicked.
 	 */
-	public void kickUser(User kicker, User kicked) {
+	public void kickUser(Source kicker, User kicked) {
 		kickUser(kicker, kicked, kicked.getNickname());
 	}
 
@@ -228,7 +228,7 @@ public class Channel {
 	 * @param kicked The kicked.
 	 * @param reason The reason of the kick
 	 */
-	public void kickUser(User kicker, User kicked, String reason) {
+	public void kickUser(Source kicker, User kicked, String reason) {
 		UserChannelKickEvent event = (UserChannelKickEvent) Server.getServer().getEventManager().callEvent(new UserChannelKickEvent(kicker, kicked, this, reason));
 		if (!event.isCancelled()) {
 			Iterator<User> iterator = userList.keySet().iterator();
@@ -310,17 +310,17 @@ public class Channel {
 	/**
 	 * Set the topic of this channel.
 	 * 
-	 * @param user The user that modified the topic. Null for server
+	 * @param source The user that modified the topic. Null for server
 	 * @param topic
 	 */
 	// TODO: Support server
-	public void setTopic(User user, String topic) {
-		ChannelTopicChangeEvent event = (ChannelTopicChangeEvent) Server.getServer().getEventManager().callEvent(new ChannelTopicChangeEvent(this, user, topic));
+	public void setTopic(Source source, String topic) {
+		ChannelTopicChangeEvent event = (ChannelTopicChangeEvent) Server.getServer().getEventManager().callEvent(new ChannelTopicChangeEvent(this, source, topic));
 		if (!event.isCancelled()) {
 			this.topic = topic;
 			Iterator<User> iterator = userList.keySet().iterator();
 			while (iterator.hasNext()) {
-				iterator.next().send(new TopicCodec(user, this));
+				iterator.next().send(new TopicCodec(source, this));
 			}
 		}
 

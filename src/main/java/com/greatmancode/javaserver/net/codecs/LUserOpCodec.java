@@ -19,14 +19,14 @@
  */
 package com.greatmancode.javaserver.net.codecs;
 
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.user.User;
 
 public class LUserOpCodec extends Codec {
 
-	private final User conn;
+	private final Source conn;
 
-	public LUserOpCodec(User conn) {
+	public LUserOpCodec(Source conn) {
 		this.conn = conn;
 	}
 

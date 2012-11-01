@@ -22,26 +22,28 @@ package com.greatmancode.javaserver.event.events.channel;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.event.Cancellable;
 import com.greatmancode.javaserver.event.Event;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.user.User;
 
 public class UserChannelKickEvent extends Event implements Cancellable {
 
-	private User kicker, kicked;
+	private User kicked;
+	private Source kicker;
 	private Channel channel;
 	private String reason;
 
-	public UserChannelKickEvent(User kicker, User kicked, Channel channel, String reason) {
+	public UserChannelKickEvent(Source kicker, User kicked, Channel channel, String reason) {
 		this.kicker = kicker;
 		this.kicked = kicked;
 		this.channel = channel;
 		this.reason = reason;
 	}
 
-	public User getKicker() {
+	public Source getKicker() {
 		return kicker;
 	}
 
-	public void setKicker(User kicker) {
+	public void setKicker(Source kicker) {
 		this.kicker = kicker;
 	}
 

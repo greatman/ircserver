@@ -20,12 +20,12 @@
 package com.greatmancode.javaserver.commands.main;
 
 import com.greatmancode.javaserver.commands.Command;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.codecs.PingCodec;
-import com.greatmancode.javaserver.user.User;
 
 public class PingCommand implements Command {
 
-	public void run(User conn, String[] args) {
+	public void run(Source source, String[] args) {
 		String ping = args[0];
 		if (args.length > 1) {
 			ping += " :";
@@ -36,7 +36,7 @@ public class PingCommand implements Command {
 				}
 			}
 		}
-		conn.send(new PingCodec(ping));
+		source.send(new PingCodec(ping));
 
 	}
 

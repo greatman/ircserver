@@ -20,14 +20,14 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.user.User;
 
 public class MotdStartCodec extends Codec {
 
-	private final User conn;
+	private final Source conn;
 
-	public MotdStartCodec(User conn) {
+	public MotdStartCodec(Source conn) {
 		this.conn = conn;
 	}
 

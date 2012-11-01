@@ -19,15 +19,17 @@
  */
 package com.greatmancode.javaserver.net.codecs;
 
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.user.User;
 
 public class NoticeCodec extends Codec {
 
-	private final User sender, receiver;
+	private final Source sender;
+	private final User receiver;
 	private final String text;
 
-	public NoticeCodec(User sender, User receiver, String text) {
+	public NoticeCodec(Source sender, User receiver, String text) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.text = text;

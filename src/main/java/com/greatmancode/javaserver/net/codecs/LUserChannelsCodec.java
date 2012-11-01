@@ -20,13 +20,13 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.user.User;
 
 public class LUserChannelsCodec extends Codec {
 
-	private final User conn;
-	public LUserChannelsCodec(User conn) {
+	private final Source conn;
+	public LUserChannelsCodec(Source conn) {
 		this.conn = conn;
 	}
 

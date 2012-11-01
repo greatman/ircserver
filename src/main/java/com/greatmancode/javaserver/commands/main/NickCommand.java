@@ -21,17 +21,22 @@ package com.greatmancode.javaserver.commands.main;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.commands.Command;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.codecs.NicknameInUseCodec;
 import com.greatmancode.javaserver.user.User;
 
 public class NickCommand implements Command {
 
-	public void run(User conn, String[] args) {
-		User user = Server.getServer().getUserHandler().getUser(args[0]);
-		if (user == null) {
-			conn.setNickname(conn, args[0]);
-		} else {
-			conn.send(new NicknameInUseCodec(args[0]));
+	public void run(Source source, String[] args) {
+		if (source instanceof User) {
+			User realSource = (User) source;
+			User user = Server.getServer().getUserHandler().getUser(args[0]);
+			if (user == null) {
+				realSource.setNickname(realSource, args[0]);
+			} else {
+				realSource.send(new NicknameInUseCodec(args[0]));
+			}
 		}
+		
 	}
 }

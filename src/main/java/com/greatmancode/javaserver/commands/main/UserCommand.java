@@ -20,12 +20,16 @@
 package com.greatmancode.javaserver.commands.main;
 
 import com.greatmancode.javaserver.commands.Command;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.user.User;
 
 public class UserCommand implements Command {
 
-	public void run(User conn, String[] args) {
-		conn.setRealName(conn, args[0]);
+	public void run(Source source, String[] args) {
+		if (source instanceof User) {
+			((User)source).setRealName((User) source, args[0]);
+		}
+		
 	}
 
 }

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.user.User;
 import com.greatmancode.javaserver.util.exceptions.command.CommandAlreadyRegisteredException;
 
@@ -31,7 +32,7 @@ public final class CommandManager {
 	
 	private final Map<String, Command> commandManager = new HashMap<String, Command>();
 	
-	public void run(User conn, String command, String[] args) {
+	public void run(Source conn, String command, String[] args) {
 		Server.getServer().getLogger().info(command + " : " + Arrays.toString(args));
 		if (commandManager.containsKey(command.toUpperCase())) {
 			commandManager.get(command.toUpperCase()).run(conn, args);

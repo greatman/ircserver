@@ -20,14 +20,14 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.Server;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.user.User;
 
 public class LUserClientCodec extends Codec {
 
-	private final User conn;
+	private final Source conn;
 
-	public LUserClientCodec(User conn) {
+	public LUserClientCodec(Source conn) {
 		this.conn = conn;
 	}
 

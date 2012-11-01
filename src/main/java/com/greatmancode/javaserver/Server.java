@@ -48,9 +48,11 @@ import com.greatmancode.javaserver.commands.main.QuitCommand;
 import com.greatmancode.javaserver.commands.main.TopicCommand;
 import com.greatmancode.javaserver.commands.main.UserCommand;
 import com.greatmancode.javaserver.commands.main.WhoCommand;
+import com.greatmancode.javaserver.commands.main.console.StopCommand;
 import com.greatmancode.javaserver.event.EventManager;
 import com.greatmancode.javaserver.event.ServerEventListener;
 import com.greatmancode.javaserver.event.Source;
+import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.IRCServerPipelineFactory;
 import com.greatmancode.javaserver.plugin.PluginManager;
 import com.greatmancode.javaserver.user.UserHandler;
@@ -118,6 +120,7 @@ public final class Server implements Source{
 		getCommandManager().registerCommand("TOPIC", new TopicCommand());
 		getCommandManager().registerCommand("MOTD", new MotdCommand());
 		getCommandManager().registerCommand("NOTICE", new NoticeCommand());
+		getCommandManager().registerCommand("/STOP", new StopCommand());
 		pluginManager = new PluginManager();
 	}
 
@@ -136,6 +139,7 @@ public final class Server implements Source{
 			getServer().getLogger().log(Level.SEVERE, "Unable to bind to port " + getServer().port + "!", e.getCause());
 			System.exit(0);
 		}
+		new Terminal();
 	}
 
 	/**
@@ -193,5 +197,16 @@ public final class Server implements Source{
 	
 	public CommandManager getCommandManager() {
 		return commandManager;
+	}
+
+	@Override
+	public void send(Codec content) {
+		// TODO Auto-generated method stub
+		getLogger().info(content.encode());
+	}
+
+	@Override
+	public String getNickname() {
+		return "Server";
 	}
 }

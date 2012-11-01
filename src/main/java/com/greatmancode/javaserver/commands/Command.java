@@ -19,7 +19,7 @@
  */
 package com.greatmancode.javaserver.commands;
 
-import com.greatmancode.javaserver.user.User;
+import com.greatmancode.javaserver.event.Source;
 
 /**
  * Represents a command
@@ -33,5 +33,5 @@ public interface Command {
 	 * @param user The user than ran this command.
 	 * @param args The arguments sent by the user.
 	 */
-	void run(User user, String[] args);
+	void run(Source source, String[] args);
 }

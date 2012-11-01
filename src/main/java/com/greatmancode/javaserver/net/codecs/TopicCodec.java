@@ -20,15 +20,16 @@
 package com.greatmancode.javaserver.net.codecs;
 
 import com.greatmancode.javaserver.channel.Channel;
+import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.user.User;
 
 public class TopicCodec extends Codec {
 
-	private final User conn;
+	private final Source conn;
 	private final Channel chan;
 
-	public TopicCodec(User conn, Channel chan) {
+	public TopicCodec(Source conn, Channel chan) {
 		this.conn = conn;
 		this.chan = chan;
 	}
