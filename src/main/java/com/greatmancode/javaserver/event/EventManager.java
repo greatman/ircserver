@@ -27,11 +27,11 @@ import com.greatmancode.javaserver.plugin.Plugin;
 
 public class EventManager {
 
-	private Map<Class<?>, ListenerRegistration> eventList = new HashMap<Class<?>, ListenerRegistration>();
+	private Map<String, ListenerRegistration> eventList = new HashMap<String, ListenerRegistration>();
 	
 	public Event callEvent(Event event) {
-		if (eventList.containsKey(event.getClass())) {
-			eventList.get(event.getClass()).callEvent(event);
+		if (eventList.containsKey(event.getClass().getName())) {
+			eventList.get(event.getClass().getName()).callEvent(event);
 		}
 		return event;
 	}
@@ -58,12 +58,12 @@ public class EventManager {
 					if (parameters.length == 1) {
 						for (Class<?> parameter : parameters) {
 							if (Event.class.isAssignableFrom(parameter)) {
-								if (eventList.containsKey(parameter.getClass())) {
-									eventList.get(parameter).addListener(listener, method);
+								if (eventList.containsKey(parameter.getName())) {
+									eventList.get(parameter.getName()).addListener(listener, method);
 								} else {
 									ListenerRegistration registration = new ListenerRegistration();
 									registration.addListener(listener, method);
-									eventList.put(parameter, registration);
+									eventList.put(parameter.getName(), registration);
 								}
 								
 							}
