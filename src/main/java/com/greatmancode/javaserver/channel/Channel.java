@@ -36,7 +36,6 @@ import com.greatmancode.javaserver.event.events.channel.UserChannelMessageEvent;
 import com.greatmancode.javaserver.event.events.channel.UserJoinChannelEvent;
 import com.greatmancode.javaserver.net.codecs.ChannelJoinCodec;
 import com.greatmancode.javaserver.net.codecs.ChannelPartCodec;
-import com.greatmancode.javaserver.net.codecs.ChannelQuitCodec;
 import com.greatmancode.javaserver.net.codecs.JoinCodec;
 import com.greatmancode.javaserver.net.codecs.KickCodec;
 import com.greatmancode.javaserver.net.codecs.ModeChannelChangeCodec;
@@ -45,6 +44,7 @@ import com.greatmancode.javaserver.net.codecs.NamesCodec;
 import com.greatmancode.javaserver.net.codecs.NamesEndCodec;
 import com.greatmancode.javaserver.net.codecs.NoTopicCodec;
 import com.greatmancode.javaserver.net.codecs.PrivMsgCodec;
+import com.greatmancode.javaserver.net.codecs.QuitCodec;
 import com.greatmancode.javaserver.net.codecs.TopicCodec;
 import com.greatmancode.javaserver.user.User;
 
@@ -60,7 +60,7 @@ public class Channel {
 
 	private Map<User, ChannelUser> userList = new HashMap<User, ChannelUser>();
 	private final String name;
-	private String topic;
+	private String topic = "";
 	private List<ChannelMode> chanModes = new ArrayList<ChannelMode>();
 
 	public Channel(String name) {
@@ -284,7 +284,7 @@ public class Channel {
 				if (reason.equals(ChannelQuitReasons.PART)) {
 					user.send(new ChannelPartCodec(user, this));
 				} else if (reason.equals(ChannelQuitReasons.DISCONNECT)) {
-					user.send(new ChannelQuitCodec(user, this));
+					user.send(new QuitCodec(user));
 				}
 
 				if (reason.equals(ChannelQuitReasons.PART) || reason.equals(ChannelQuitReasons.DISCONNECT)) {
@@ -294,7 +294,7 @@ public class Channel {
 							iterator.next().send(new ChannelPartCodec(user, this));
 
 						} else if (reason.equals(ChannelQuitReasons.DISCONNECT)) {
-							iterator.next().send(new ChannelQuitCodec(user, this));
+							iterator.next().send(new QuitCodec(user));
 						}
 
 					}
@@ -317,7 +317,11 @@ public class Channel {
 	public void setTopic(Source source, String topic) {
 		ChannelTopicChangeEvent event = (ChannelTopicChangeEvent) Server.getServer().getEventManager().callEvent(new ChannelTopicChangeEvent(this, source, topic));
 		if (!event.isCancelled()) {
-			this.topic = topic;
+			if (topic == null ){
+				this.topic = "";
+			} else {
+				this.topic = topic;
+			}
 			Iterator<User> iterator = userList.keySet().iterator();
 			while (iterator.hasNext()) {
 				iterator.next().send(new TopicCodec(source, this));

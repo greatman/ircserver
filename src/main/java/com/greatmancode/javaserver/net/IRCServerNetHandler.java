@@ -19,8 +19,7 @@
  */
 package com.greatmancode.javaserver.net;
 
-import java.util.logging.Level;
-
+import org.apache.log4j.Level;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
@@ -38,6 +37,7 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
 		NewConnectionEvent event = (NewConnectionEvent) Server.getServer().getEventManager().callEvent(new NewConnectionEvent(e.getChannel()));
 		if (!event.isCancelled()) {
+			Server.getServer().getLogger().info("Connection from: " + e.getChannel().getRemoteAddress());
 			ctx.setAttachment(new User(e.getChannel()));
 			Server.getServer().getUserHandler().addUser((User) ctx.getAttachment());
 		} else {
@@ -56,6 +56,6 @@ public class IRCServerNetHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-		Server.getServer().getLogger().log(Level.SEVERE, "Unexpected exception from downstream. ", e.getCause());
+		Server.getServer().getLogger().log(Level.ERROR, "Unexpected exception from downstream. ", e.getCause());
 	}
 }

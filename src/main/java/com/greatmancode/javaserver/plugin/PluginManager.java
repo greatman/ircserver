@@ -8,13 +8,13 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarFile;
-import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Level;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -86,35 +86,35 @@ public class PluginManager {
 									pluginList.put(pl.name, pl);
 									Server.getServer().getLogger().info(pluginName + " loaded!");
 								} else {
-									Server.getServer().getLogger().severe("Invalid main class for the plugin " + file.getName() + "! It needs to extends Plugin!");
+									Server.getServer().getLogger().log(Level.ERROR, "Invalid main class for the plugin " + file.getName() + "! It needs to extends Plugin!");
 								}
 								
 							} else {
-								Server.getServer().getLogger().severe("Missing information in the plugin configuration file for plugin " + file.getName());
+								Server.getServer().getLogger().log(Level.ERROR, "Missing information in the plugin configuration file for plugin " + file.getName());
 							}
 						} else {
-							Server.getServer().getLogger().severe("Invalid plugin configuration for the plugin " + file.getName());
+							Server.getServer().getLogger().log(Level.ERROR, "Invalid plugin configuration for the plugin " + file.getName());
 						}
 					} else {
-						Server.getServer().getLogger().severe("The file " + file.getName() + " doesn't have a plugin configuration file!");
+						Server.getServer().getLogger().log(Level.ERROR, "The file " + file.getName() + " doesn't have a plugin configuration file!");
 					}
 					jarFile.close();
 				} catch (MalformedURLException e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "Malformed URL for plugin : " + file.getName(), e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "Malformed URL for plugin : " + file.getName(), e.getCause());
 				} catch (ParserConfigurationException e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "Unable to parse the plugin.xml for plugin : " + file.getName(), e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "Unable to parse the plugin.xml for plugin : " + file.getName(), e.getCause());
 				} catch (SAXException e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "SAX exception for plugin : " + file.getName(), e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "SAX exception for plugin : " + file.getName(), e.getCause());
 				} catch (IOException e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "IO exception for plugin : " + file.getName(), e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "IO exception for plugin : " + file.getName(), e.getCause());
 				} catch (ClassNotFoundException e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "Main class for plugin : " + file.getName() + " not found!", e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "Main class for plugin : " + file.getName() + " not found!", e.getCause());
 				} catch (InstantiationException e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "Unable to instantiate the mainClass for plugin : " + file.getName(), e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "Unable to instantiate the mainClass for plugin : " + file.getName(), e.getCause());
 				} catch (IllegalAccessException e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "Illegal access for plugin : " + file.getName(), e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "Illegal access for plugin : " + file.getName(), e.getCause());
 				} catch (Exception e) {
-					Server.getServer().getLogger().log(Level.SEVERE, "General exception for plugin : " + file.getName(), e.getCause());
+					Server.getServer().getLogger().log(Level.ERROR, "General exception for plugin : " + file.getName(), e.getCause());
 				}
 
 			}

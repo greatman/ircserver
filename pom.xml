@@ -22,16 +22,21 @@
 	</repositories>
 	<dependencies>
 		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-            <groupId>jline</groupId>
-            <artifactId>jline</artifactId>
-            <version>1.0</version>
-        </dependency>
+			<groupId>jline</groupId>
+			<artifactId>jline</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>com.beust</groupId>
 			<artifactId>jcommander</artifactId>
@@ -58,6 +63,7 @@
 				<directory>${basedir}/src/main/resources</directory>
 				<includes>
 					<include>*.xml</include>
+					<include>*.properties</include>
 				</includes>
 			</resource>
 		</resources>

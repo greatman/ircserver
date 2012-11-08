@@ -23,9 +23,10 @@ import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelException;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
@@ -37,6 +38,7 @@ import com.greatmancode.javaserver.commands.CommandManager;
 import com.greatmancode.javaserver.commands.main.JoinCommand;
 import com.greatmancode.javaserver.commands.main.KickCommand;
 import com.greatmancode.javaserver.commands.main.LUsersCommand;
+import com.greatmancode.javaserver.commands.main.ListCommand;
 import com.greatmancode.javaserver.commands.main.ModeCommand;
 import com.greatmancode.javaserver.commands.main.MotdCommand;
 import com.greatmancode.javaserver.commands.main.NickCommand;
@@ -120,6 +122,7 @@ public final class Server implements Source{
 		getCommandManager().registerCommand("TOPIC", new TopicCommand());
 		getCommandManager().registerCommand("MOTD", new MotdCommand());
 		getCommandManager().registerCommand("NOTICE", new NoticeCommand());
+		getCommandManager().registerCommand("LIST", new ListCommand());
 		getCommandManager().registerCommand("/STOP", new StopCommand());
 		pluginManager = new PluginManager();
 	}
@@ -136,7 +139,7 @@ public final class Server implements Source{
 			bootstrap.bind(new InetSocketAddress(getServer().port));
 			getServer().getLogger().info("Binded to port " + getServer().port + "! Happy IRC! CTRL + C to stop the server.");
 		} catch (ChannelException e) {
-			getServer().getLogger().log(Level.SEVERE, "Unable to bind to port " + getServer().port + "!", e.getCause());
+			getServer().getLogger().log(Level.ERROR, "Unable to bind to port " + getServer().port + "!", e.getCause());
 			System.exit(0);
 		}
 		new Terminal();

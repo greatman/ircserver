@@ -20,6 +20,7 @@
 package com.greatmancode.javaserver.channel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,7 @@ public class ChannelHandler {
 	 */
 	void removeChannel(String channel) {
 		if (channelList.containsKey(channel)) {
+			System.out.println("CHANNEL FOUND");
 			channelList.remove(channel);
 		}
 	}
@@ -82,11 +84,23 @@ public class ChannelHandler {
 		List<Channel> userChannelList = new ArrayList<Channel>();
 		
 		for (Map.Entry<String, Channel> channel : channelList.entrySet()) {
-			if (channel.getValue().getUserList().containsKey(this)) {
+			if (channel.getValue().getUserList().containsKey(user)) {
 				userChannelList.add(channel.getValue());
 			}
 		}
-		
+
 		return userChannelList;
+	}
+	
+	/**
+	 * Returns a COPY of the channel list.
+	 * @return The channel list
+	 */
+	public List<Channel> getChannelList() {
+		List<Channel> list = new ArrayList<Channel>();
+		for (Channel channel : channelList.values()) {
+			list.add(channel);
+		}
+		return list;
 	}
 }

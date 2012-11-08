@@ -105,8 +105,8 @@ public class User implements Source{
 	}
 
 	public void disconnect() {
-		for (Channel channel : Server.getServer().getChannelHandler().getUserChannels(this)) {
-				channel.removeUser(this, ChannelQuitReasons.DISCONNECT);
+		for (Channel channel : Server.getServer().getChannelHandler().getUserChannels(this)) {	
+			channel.removeUser(this, ChannelQuitReasons.DISCONNECT);
 		}
 		Server.getServer().getUserHandler().removeUser(this);
 		network.close();
