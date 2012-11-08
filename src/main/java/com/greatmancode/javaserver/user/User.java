@@ -33,6 +33,7 @@ import com.greatmancode.javaserver.event.events.user.UserChangeRealnameEvent;
 import com.greatmancode.javaserver.net.Codec;
 import com.greatmancode.javaserver.net.codecs.IsSupportCodec;
 import com.greatmancode.javaserver.net.codecs.MyInfoCodec;
+import com.greatmancode.javaserver.net.codecs.NickCodec;
 import com.greatmancode.javaserver.net.codecs.ServerLaunchCodec;
 import com.greatmancode.javaserver.net.codecs.WelcomeCodec;
 import com.greatmancode.javaserver.net.codecs.YourHostCodec;
@@ -52,7 +53,13 @@ public class User implements Source{
 	public void setNickname(Source source, String nickname) {
 		UserChangeNickEvent event = (UserChangeNickEvent) Server.getServer().getEventManager().callEvent(new UserChangeNickEvent(source, this, nickname));
 		if (!event.isCancelled()) {
+			for (Channel channel : Server.getServer().getChannelHandler().getUserChannels(this)) {	
+				for (User user : channel.getUserList().keySet()) {
+					user.send(new NickCodec(this, nickname));
+				}
+			}
 			this.nickname = nickname;
+			
 			confLoggedIn();
 		}
 	}

@@ -19,6 +19,24 @@
  */
 package com.greatmancode.javaserver.net.codecs;
 
-public class NickCodec {
+import com.greatmancode.javaserver.event.Source;
+import com.greatmancode.javaserver.net.Codec;
+
+public class NickCodec extends Codec {
+
+	private final Source user;
+	private final String newNick;
+
+	public NickCodec(Source user, String newNick) {
+		this.user = user;
+		this.newNick = newNick;
+	}
+
+	@Override
+	public String encode() {
+		StringBuilder string = new StringBuilder();
+		string.append(":").append(user.getReprensentation()).append(" NICK ").append(":").append(newNick);
+		return string.toString();
+	}
 
 }
