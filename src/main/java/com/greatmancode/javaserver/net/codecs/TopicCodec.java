@@ -22,7 +22,6 @@ package com.greatmancode.javaserver.net.codecs;
 import com.greatmancode.javaserver.channel.Channel;
 import com.greatmancode.javaserver.event.Source;
 import com.greatmancode.javaserver.net.Codec;
-import com.greatmancode.javaserver.user.User;
 
 public class TopicCodec extends Codec {
 

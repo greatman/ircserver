@@ -72,7 +72,6 @@ public class ServerEventListener implements Listener {
 	public void channelModeChangeEvent(ChannelModeChangeEvent event) {
 		ChannelUser chanUser = event.getChannel().getUserList().get(event.getSource());
 		if ((chanUser != null && !chanUser.getUserModes().contains(ChannelUserMode.OP))) {
-			//System.out.println("LOLWUT:" + chanUser + ":::" + chanUser.getUserModes().contains(arg0));
 			event.setCancelled(true);
 		}
 	}

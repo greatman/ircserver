@@ -28,10 +28,8 @@ import com.greatmancode.javaserver.user.User;
 public class PartCommand implements Command {
 
 	public void run(Source user, String[] args) {
-		if (user instanceof User) {
-			if (args.length >= 1 && Server.getServer().getChannelHandler().getChannel(args[0]) != null && Server.getServer().getChannelHandler().getChannel(args[0]).getUserList().containsKey(user)) {
-				Server.getServer().getChannelHandler().getChannel(args[0]).removeUser((User) user, ChannelQuitReasons.PART);
-			}
+		if (user instanceof User && args.length >= 1 && Server.getServer().getChannelHandler().getChannel(args[0]) != null && Server.getServer().getChannelHandler().getChannel(args[0]).getUserList().containsKey(user)) {
+			Server.getServer().getChannelHandler().getChannel(args[0]).removeUser((User) user, ChannelQuitReasons.PART);
 		}
 	}
 

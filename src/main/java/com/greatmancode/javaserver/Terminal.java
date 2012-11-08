@@ -1,7 +1,6 @@
 package com.greatmancode.javaserver;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import com.greatmancode.javaserver.utils.Tools;
 
@@ -14,8 +13,6 @@ public class Terminal {
 		try {
 			reader = new ConsoleReader();
 			reader.setBellEnabled(false);
-			
-			PrintWriter out = new PrintWriter(System.out);
 
 			String line;
 			while ((line = readLine(reader, "")) != null) {

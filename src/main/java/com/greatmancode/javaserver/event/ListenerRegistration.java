@@ -37,7 +37,6 @@ public class ListenerRegistration {
 	
 	protected void callEvent(Event event) {
 		for (Entry<Listener, Method> methodList : list.entrySet()) {
-			System.out.println(methodList.getKey().getClass().getName());
 			try {
 				methodList.getValue().invoke(methodList.getKey(), event);
 			} catch (IllegalAccessException e) {

@@ -25,7 +25,6 @@ import java.util.Map;
 
 import com.greatmancode.javaserver.Server;
 import com.greatmancode.javaserver.event.Source;
-import com.greatmancode.javaserver.user.User;
 import com.greatmancode.javaserver.util.exceptions.command.CommandAlreadyRegisteredException;
 
 public final class CommandManager {
