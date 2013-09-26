@@ -49,6 +49,7 @@ import com.greatmancode.javaserver.commands.main.QuitCommand;
 import com.greatmancode.javaserver.commands.main.TopicCommand;
 import com.greatmancode.javaserver.commands.main.UserCommand;
 import com.greatmancode.javaserver.commands.main.WhoCommand;
+import com.greatmancode.javaserver.commands.main.WhoisCommand;
 import com.greatmancode.javaserver.commands.main.console.StopCommand;
 import com.greatmancode.javaserver.event.EventManager;
 import com.greatmancode.javaserver.event.ServerEventListener;
@@ -123,6 +124,7 @@ public final class Server implements Source{
 		getCommandManager().registerCommand("NOTICE", new NoticeCommand());
 		getCommandManager().registerCommand("LIST", new ListCommand());
 		getCommandManager().registerCommand("/STOP", new StopCommand());
+		getCommandManager().registerCommand("WHOIS", new WhoisCommand());
 		pluginManager = new PluginManager();
 	}
 
